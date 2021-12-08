@@ -1,4 +1,4 @@
-package models.game2048;
+package game2048;
 
 import javalib.worldimages.*;
 

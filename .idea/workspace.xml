@@ -5,32 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46609c8e-6f72-40ac-bb45-f51d82ee8f34" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Game2048Base/Game2048Base.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/game2048/Game2048.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/game2048/KeyEventHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/game2048/Scoreboard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/grid2048/Grid2048.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/square/EmptyTile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/square/Square.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/square/Tile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/utility/Utility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/test/java/models/grid2048/Grid2048Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/test/java/models/square/SquareTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/test/java/models/square/TileTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Intelligence/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Player/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/ExamplesGame2048.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EmptyTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EmptyTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/EventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExamplesGame2048.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GamePlay2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/GamePlay2048.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Grid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PosnAndIsSameValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PosnAndIsSameValue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scoreboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Scoreboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Square.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Tile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/grid2048/Grid2048Move.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game2048Collect/Game2048Collect.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game2048Collect/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/heuristic/GameHeuristic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/heuristic/PreferUpHeuristic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/src/main/java/models/game2048/Game2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/Game2048.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/src/main/java/models/game2048/KeyEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/KeyEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/src/main/java/models/game2048/Scoreboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/Scoreboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/game2048/Game2048.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/game2048/KeyEventHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/game2048/Scoreboard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Intelligence/Game2048Intelligence.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Intelligence/Game2048Intelligence.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Intelligence/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Intelligence/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Player/Game2048Player.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/Game2048Player.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Player/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Player/src/main/java/gameplay/KeyEventGamePlay.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Player/src/main/java/gameplay/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/src/main/java/playgame/PlayGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Player/src/test/java/gameplay/KeyEventGamePlayTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/test/java/game2048/Game2048Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Player/target/classes/gameplay/KeyEventGamePlay.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/target/classes/gameplay/KeyEventGamePlay.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Player/target/classes/gameplay/PlayGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/target/classes/gameplay/PlayGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Player/target/test-classes/gameplay/KeyEventGamePlayTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,12 +40,21 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1uxDpkIi3Wf2Y2DWLbUJbVGS4YS" />
   <component name="ProjectViewState">
@@ -60,6 +69,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -75,17 +85,18 @@
       <recent name="$PROJECT_DIR$/src/test/java" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
       <recent name="models.grid2048" />
       <recent name="models" />
     </key>
   </component>
   <component name="RunManager" selected="Application.PlayGame">
     <configuration name="Game2048" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="models.game2048.Game2048" />
+      <option name="MAIN_CLASS_NAME" value="game2048.Game2048" />
       <module name="Game2048Base" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="models.game2048.*" />
+          <option name="PATTERN" value="game2048.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -94,11 +105,11 @@
       </method>
     </configuration>
     <configuration name="PlayGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="gameplay.PlayGame" />
+      <option name="MAIN_CLASS_NAME" value="playgame.PlayGame" />
       <module name="Game2048Player" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="gameplay.*" />
+          <option name="PATTERN" value="playgame.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>

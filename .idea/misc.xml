@@ -11,6 +11,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/Game2048Core/pom.xml" />
+        <option value="$PROJECT_DIR$/Grid2048Collect/pom.xml" />
         <option value="$PROJECT_DIR$/module/pom.xml" />
       </set>
     </option>

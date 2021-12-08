@@ -1,9 +1,9 @@
-package gameplay;
+package playgame;
 
 import javalib.funworld.*;
 import javalib.worldimages.*;
-import models.game2048.Game2048;
-import models.game2048.Scoreboard;
+import game2048.Game2048;
+import game2048.Scoreboard;
 import models.grid2048.Grid2048;
 import models.square.Square;
 import java.awt.*;
@@ -15,10 +15,8 @@ public class PlayGame extends World {
 
     public static void main (String[] args) {
         PlayGame g = new PlayGame();
-        Game2048 game2048 = new Game2048();
+        Game2048 game2048 = new Game2048(new Grid2048().initializeStartingGrid(), new Scoreboard(0));
         g.setGame2048(game2048);
-        g.getGame2048().setGrid2048(new Grid2048().initializeStartingGrid());
-        g.getGame2048().setScoreboard(new Scoreboard(0));
         g.bigBang(Square.SIDE_LENGTH * 6,Square.SIDE_LENGTH * 6,1);
     }
 
@@ -47,22 +45,28 @@ public class PlayGame extends World {
     public World onKeyEvent(String s) {
 
         PlayGame updatedPlayGame = new PlayGame();
+        Game2048 updatedGame2048;
 
-        if (s.equals("left")) {
-            updatedPlayGame.setGame2048(KeyEventGamePlay.handleLeftEvent(this.getGame2048()).getResultGame2048());
-            return updatedPlayGame;
-        }
-        if (s.equals("right")) {
-            updatedPlayGame.setGame2048(KeyEventGamePlay.handleRightEvent(this.getGame2048()).getResultGame2048());
+        if (s.equals("up")) {
+            updatedGame2048 = this.getGame2048().handleUpEvent().getUpdatedGame2048();
+            updatedPlayGame.setGame2048(updatedGame2048);
             return updatedPlayGame;
         }
         if (s.equals("down")) {
-            updatedPlayGame.setGame2048(KeyEventGamePlay.handleDownEvent(this.getGame2048()).getResultGame2048());
+            updatedGame2048 = this.getGame2048().handleDownEvent().getUpdatedGame2048();
+            updatedPlayGame.setGame2048(updatedGame2048);
             return updatedPlayGame;
         }
-        if (s.equals("up")) {
-            updatedPlayGame.setGame2048(KeyEventGamePlay.handleUpEvent(this.getGame2048()).getResultGame2048());
+        if (s.equals("left")) {
+            updatedGame2048 = this.getGame2048().handleLeftEvent().getUpdatedGame2048();
+            updatedPlayGame.setGame2048(updatedGame2048);
             return updatedPlayGame;
+        }
+        if (s.equals("right")) {
+            updatedGame2048 = this.getGame2048().handleRightEvent().getUpdatedGame2048();
+            updatedPlayGame.setGame2048(updatedGame2048);
+            return updatedPlayGame;
+
         } else {
             return this; }
 
@@ -70,10 +74,10 @@ public class PlayGame extends World {
 
     boolean isGameOver () {
 
-        Grid2048 gridUp = KeyEventGamePlay.handleUpEvent(this.getGame2048()).getResultGame2048().getGrid2048();
-        Grid2048 gridDown = KeyEventGamePlay.handleDownEvent(this.getGame2048()).getResultGame2048().getGrid2048();
-        Grid2048 gridRight = KeyEventGamePlay.handleRightEvent(this.getGame2048()).getResultGame2048().getGrid2048();
-        Grid2048 gridLeft = KeyEventGamePlay.handleLeftEvent(this.getGame2048()).getResultGame2048().getGrid2048();
+        Grid2048 gridUp = this.getGame2048().handleUpEvent().getUpdatedGame2048().getGrid2048();
+        Grid2048 gridDown = this.getGame2048().handleDownEvent().getUpdatedGame2048().getGrid2048();
+        Grid2048 gridRight = this.getGame2048().handleRightEvent().getUpdatedGame2048().getGrid2048();
+        Grid2048 gridLeft = this.getGame2048().handleLeftEvent().getUpdatedGame2048().getGrid2048();
         Grid2048 currentGrid = this.getGame2048().getGrid2048();
 
         return
@@ -82,6 +86,7 @@ public class PlayGame extends World {
                         gridRight.isSameGrid(currentGrid) &&
                         gridLeft.isSameGrid(currentGrid);
     }
+
 
     public Game2048 getGame2048() {
         return game2048;

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Game2048Intelligence</artifactId>
+    <artifactId>Game2048Collect</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.example</groupId>

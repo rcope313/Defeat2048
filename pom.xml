@@ -12,6 +12,7 @@
         <module>Game2048Base</module>
         <module>Game2048Intelligence</module>
         <module>Game2048Player</module>
+        <module>Game2048Collect</module>
     </modules>
 
     <properties>

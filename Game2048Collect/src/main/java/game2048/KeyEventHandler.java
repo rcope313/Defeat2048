@@ -1,8 +1,8 @@
-package models.game2048;
+package game2048;
 
 public class KeyEventHandler {
     boolean tilesMoved;
-    Game2048 resultGame2048;
+    Game2048 updatedGame2048;
 
     public KeyEventHandler(boolean tilesMoved) {
         this.tilesMoved = tilesMoved;
@@ -10,7 +10,7 @@ public class KeyEventHandler {
 
     public KeyEventHandler() {}
 
-    public KeyEventHandler(boolean tilesMoved, Game2048 resultGame2048) {
+    public KeyEventHandler(boolean tilesMoved, Game2048 updatedGame2048) {
         this.tilesMoved = tilesMoved;
     }
 
@@ -22,11 +22,11 @@ public class KeyEventHandler {
         this.tilesMoved = tilesMoved;
     }
 
-    public Game2048 getResultGame2048() {
-        return resultGame2048;
+    public Game2048 getUpdatedGame2048() {
+        return updatedGame2048;
     }
 
-    public void setResultGame2048(Game2048 resultGame2048) {
-        this.resultGame2048 = resultGame2048;
+    public void setUpdatedGame2048(Game2048 updatedGame2048) {
+        this.updatedGame2048 = updatedGame2048;
     }
 }

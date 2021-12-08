@@ -1,7 +1,6 @@
-package gameplay;
+package game2048;
 
 import javalib.worldimages.Posn;
-import models.game2048.*;
 import models.grid2048.*;
 import models.square.*;
 import org.junit.Test;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
-public class KeyEventGamePlayTest {
+public class Game2048Test {
 
     Grid2048 g0, g1, gUpEvent00, gUpEvent01, gUpEvent10, gUpEvent11, gNoTilesMoved;
     Square[] rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3,
@@ -193,22 +192,18 @@ public class KeyEventGamePlayTest {
     @Test
     public void testNoTilesMovedKeyHandler () {
         this.initData();
-        Game2048 uninstantiatedGame = new Game2048();
-        uninstantiatedGame.setScoreboard(new Scoreboard(0));
-        uninstantiatedGame.setGrid2048(gNoTilesMoved);
+        Game2048 uninstantiatedGame = new Game2048(gNoTilesMoved, new Scoreboard(0));
 
-        Game2048 compareGame = new Game2048();
-        compareGame.setScoreboard(new Scoreboard(0));
-        compareGame.setGrid2048(gNoTilesMoved);
+        Game2048 compareGame = new Game2048(gNoTilesMoved, new Scoreboard(0));
 
         KeyEventHandler compareKeyEventHandler = new KeyEventHandler();
         compareKeyEventHandler.setTilesMoved(false);
-        compareKeyEventHandler.setResultGame2048(compareGame);
+        compareKeyEventHandler.setUpdatedGame2048(compareGame);
 
-        KeyEventHandler instantiatedKeyEventHandler = KeyEventGamePlay.handleUpEvent(uninstantiatedGame);
+        KeyEventHandler instantiatedKeyEventHandler = uninstantiatedGame.handleUpEvent();
         assertThat(instantiatedKeyEventHandler.isTilesMoved()).isFalse();
         assertThat(instantiatedKeyEventHandler
-                .getResultGame2048()
+                .getUpdatedGame2048()
                 .getGrid2048()
                 .isSameGrid(compareGame.getGrid2048()))
                 .isTrue();
@@ -217,18 +212,15 @@ public class KeyEventGamePlayTest {
     @Test
     public void testTilesMovedKeyHandler () {
         this.initData();
-        Game2048 uninstantiatedGame = new Game2048();
-        uninstantiatedGame.setScoreboard(new Scoreboard(0));
-        uninstantiatedGame.setGrid2048(gUpEvent10);
+        Game2048 uninstantiatedGame = new Game2048(gUpEvent10, new Scoreboard(0));
 
-        Game2048 compareGame = new Game2048();
-        compareGame.setScoreboard(new Scoreboard(4));
-        compareGame.setGrid2048(gUpEvent11);
+        Game2048 compareGame = new Game2048(gUpEvent11, new Scoreboard(4));
+
         KeyEventHandler compareKeyEventHandler = new KeyEventHandler();
         compareKeyEventHandler.setTilesMoved(false);
-        compareKeyEventHandler.setResultGame2048(compareGame);
+        compareKeyEventHandler.setUpdatedGame2048(compareGame);
 
-        KeyEventHandler instantiatedKeyEventHandler = KeyEventGamePlay.handleUpEvent(uninstantiatedGame);
+        KeyEventHandler instantiatedKeyEventHandler = uninstantiatedGame.handleUpEvent();
         assertThat(instantiatedKeyEventHandler.isTilesMoved()).isTrue();
 
     }
@@ -236,19 +228,16 @@ public class KeyEventGamePlayTest {
     @Test
     public void handleUpEventTestTilesMovedNoScoreboardChange () {
         this.initData();
-        Game2048 uninstantiatedGame = new Game2048();
-        uninstantiatedGame.setScoreboard(new Scoreboard(0));
-        uninstantiatedGame.setGrid2048(gUpEvent00);
+        Game2048 uninstantiatedGame = new Game2048(gUpEvent00, new Scoreboard(0));
 
-        Game2048 compareGame = new Game2048();
-        compareGame.setScoreboard(new Scoreboard(0));
-        compareGame.setGrid2048(gUpEvent01);
+        Game2048 compareGame = new Game2048(gUpEvent01, new Scoreboard(0));
+
         KeyEventHandler compareKeyEventHandler = new KeyEventHandler();
         compareKeyEventHandler.setTilesMoved(false);
-        compareKeyEventHandler.setResultGame2048(compareGame);
+        compareKeyEventHandler.setUpdatedGame2048(compareGame);
 
-        KeyEventHandler instantiatedKeyEventHandler = KeyEventGamePlay.handleUpEvent(uninstantiatedGame);
-        Square[][] instantiatedGrid = instantiatedKeyEventHandler.getResultGame2048().getGrid2048().getGrid();
+        KeyEventHandler instantiatedKeyEventHandler = uninstantiatedGame.handleUpEvent();
+        Square[][] instantiatedGrid = instantiatedKeyEventHandler.getUpdatedGame2048().getGrid2048().getGrid();
         List<Square> resultList = new ArrayList<>();
 
         resultList.addAll(Arrays.stream(instantiatedGrid[0]).filter(Square::isTile).collect(Collectors.toList()));
@@ -258,7 +247,7 @@ public class KeyEventGamePlayTest {
 
         assertThat(resultList.size()).isEqualTo(2);
         assertThat(resultList).extracting("position").contains(new Posn (0,1));
-        assertThat(instantiatedKeyEventHandler.getResultGame2048().getScoreboard().getPoints())
+        assertThat(instantiatedKeyEventHandler.getUpdatedGame2048().getScoreboard().getPoints())
                 .isEqualTo(compareGame.getScoreboard().getPoints());
 
     }
@@ -266,19 +255,16 @@ public class KeyEventGamePlayTest {
     @Test
     public void handleUpEventTestTilesMovedScoreboardChange () {
         this.initData();
-        Game2048 uninstantiatedGame = new Game2048();
-        uninstantiatedGame.setScoreboard(new Scoreboard(0));
-        uninstantiatedGame.setGrid2048(gUpEvent10);
+        Game2048 uninstantiatedGame = new Game2048(gUpEvent10, new Scoreboard(0));
 
-        Game2048 compareGame = new Game2048();
-        compareGame.setScoreboard(new Scoreboard(4));
-        compareGame.setGrid2048(gUpEvent11);
+        Game2048 compareGame = new Game2048(gUpEvent11, new Scoreboard(4));
+
         KeyEventHandler compareKeyEventHandler = new KeyEventHandler();
         compareKeyEventHandler.setTilesMoved(false);
-        compareKeyEventHandler.setResultGame2048(compareGame);
+        compareKeyEventHandler.setUpdatedGame2048(compareGame);
 
-        KeyEventHandler instantiatedKeyEventHandler = KeyEventGamePlay.handleUpEvent(uninstantiatedGame);
-        Square[][] instantiatedGrid = instantiatedKeyEventHandler.getResultGame2048().getGrid2048().getGrid();
+        KeyEventHandler instantiatedKeyEventHandler = uninstantiatedGame.handleUpEvent();
+        Square[][] instantiatedGrid = instantiatedKeyEventHandler.getUpdatedGame2048().getGrid2048().getGrid();
         List<Square> resultList = new ArrayList<>();
 
         resultList.addAll(Arrays.stream(instantiatedGrid[0]).filter(Square::isTile).collect(Collectors.toList()));
@@ -289,7 +275,7 @@ public class KeyEventGamePlayTest {
         assertThat(resultList.size()).isEqualTo(2);
         assertThat(resultList).extracting("position").contains(new Posn (0,1));
         assertThat(resultList).extracting("value").contains(4);
-        assertThat(instantiatedKeyEventHandler.getResultGame2048().getScoreboard().getPoints())
+        assertThat(instantiatedKeyEventHandler.getUpdatedGame2048().getScoreboard().getPoints())
                 .isEqualTo(compareGame.getScoreboard().getPoints());
 
     }
@@ -298,22 +284,22 @@ public class KeyEventGamePlayTest {
     public void buildUpdatedSquareByUpEvent () {
         this.initData();
         Tile tile0 = new Tile (2, new Posn (1,2));
-        Square compareSquare0 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g0.getGrid(), "up", tile0, tile0.getPosition());
+        Square compareSquare0 = Game2048.buildUpdatedSquareByKeyEvent(g0.getGrid(), "up", tile0, tile0.getPosition());
         Tile testTile0 = new Tile (2, new Posn (0,2));
         assertThat(testTile0.isSameSquare(compareSquare0)).isEqualTo(true);
 
         Tile tile1 = new Tile (2, new Posn (0,3));
-        Square compareSquare1 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g0.getGrid(), "up", tile1, tile1.getPosition());
+        Square compareSquare1 = Game2048.buildUpdatedSquareByKeyEvent(g0.getGrid(), "up", tile1, tile1.getPosition());
         Tile testTile1 = new Tile (2, new Posn (0,3));
         assertThat(testTile1.isSameSquare(compareSquare1)).isEqualTo(true);
 
         Tile tile2 = new Tile (4, new Posn (2,2));
-        Square compareSquare2 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g1.getGrid(), "up", tile2, tile2.getPosition());
+        Square compareSquare2 = Game2048.buildUpdatedSquareByKeyEvent(g1.getGrid(), "up", tile2, tile2.getPosition());
         Tile testTile2 = new Tile (4, new Posn (1,2));
         assertThat(testTile2.isSameSquare(compareSquare2)).isEqualTo(true);
 
         Tile tile3 = new Tile (2, new Posn (2,2));
-        Square compareSquare3 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g1.getGrid(), "up", tile3, tile3.getPosition());
+        Square compareSquare3 = Game2048.buildUpdatedSquareByKeyEvent(g1.getGrid(), "up", tile3, tile3.getPosition());
         Tile testTile3 = new Tile (4, new Posn (0,2));
         assertThat(testTile3.isSameSquare(compareSquare3)).isEqualTo(true);
 
@@ -323,22 +309,22 @@ public class KeyEventGamePlayTest {
     public void buildUpdatedSquareByDownEvent () {
         this.initData();
         Tile tile0 = new Tile (2, new Posn (1,2));
-        Square compareSquare0 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g0.getGrid(), "down", tile0, tile0.getPosition());
+        Square compareSquare0 = Game2048.buildUpdatedSquareByKeyEvent(g0.getGrid(), "down", tile0, tile0.getPosition());
         Tile testTile0 = new Tile (2, new Posn (3,2));
         assertThat(testTile0.isSameSquare(compareSquare0)).isEqualTo(true);
 
         Tile tile1 = new Tile (2, new Posn (3,3));
-        Square compareSquare1 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g0.getGrid(), "down", tile1, tile1.getPosition());
+        Square compareSquare1 = Game2048.buildUpdatedSquareByKeyEvent(g0.getGrid(), "down", tile1, tile1.getPosition());
         Tile testTile1 = new Tile (2, new Posn (3,3));
         assertThat(testTile1.isSameSquare(compareSquare1)).isEqualTo(true);
 
         Tile tile2 = new Tile (4, new Posn (1,2));
-        Square compareSquare2 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g1.getGrid(), "down", tile2, tile2.getPosition());
+        Square compareSquare2 = Game2048.buildUpdatedSquareByKeyEvent(g1.getGrid(), "down", tile2, tile2.getPosition());
         Tile testTile2 = new Tile (4, new Posn (2,2));
         assertThat(testTile2.isSameSquare(compareSquare2)).isEqualTo(true);
 
         Tile tile3 = new Tile (2, new Posn (1,2));
-        Square compareSquare3 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g1.getGrid(), "down", tile3, tile3.getPosition());
+        Square compareSquare3 = Game2048.buildUpdatedSquareByKeyEvent(g1.getGrid(), "down", tile3, tile3.getPosition());
         Tile testTile3 = new Tile (4, new Posn (3,2));
         assertThat(testTile3.isSameSquare(compareSquare3)).isEqualTo(true);
     }
@@ -347,22 +333,22 @@ public class KeyEventGamePlayTest {
     public void buildUpdatedSquareByLeftEvent () {
         this.initData();
         Tile tile0 = new Tile (2, new Posn (1,2));
-        Square compareSquare0 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g0.getGrid(), "left", tile0, tile0.getPosition());
+        Square compareSquare0 = Game2048.buildUpdatedSquareByKeyEvent(g0.getGrid(), "left", tile0, tile0.getPosition());
         Tile testTile0 = new Tile (2, new Posn (1,0));
         assertThat(testTile0.isSameSquare(compareSquare0)).isEqualTo(true);
 
         Tile tile1 = new Tile (2, new Posn (0,0));
-        Square compareSquare1 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g0.getGrid(), "left", tile1, tile1.getPosition());
+        Square compareSquare1 = Game2048.buildUpdatedSquareByKeyEvent(g0.getGrid(), "left", tile1, tile1.getPosition());
         Tile testTile1 = new Tile (2, new Posn (0,0));
         assertThat(testTile1.isSameSquare(compareSquare1)).isEqualTo(true);
 
         Tile tile2 = new Tile (4, new Posn (2,2));
-        Square compareSquare2 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g1.getGrid(), "left", tile2, tile2.getPosition());
+        Square compareSquare2 = Game2048.buildUpdatedSquareByKeyEvent(g1.getGrid(), "left", tile2, tile2.getPosition());
         Tile testTile2 = new Tile (4, new Posn (2,1));
         assertThat(testTile2.isSameSquare(compareSquare2)).isEqualTo(true);
 
         Tile tile3 = new Tile (2, new Posn (2,2));
-        Square compareSquare3 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g1.getGrid(), "left", tile3, tile3.getPosition());
+        Square compareSquare3 = Game2048.buildUpdatedSquareByKeyEvent(g1.getGrid(), "left", tile3, tile3.getPosition());
         Tile testTile3 = new Tile (4, new Posn (2,0));
         assertThat(testTile3.isSameSquare(compareSquare3)).isEqualTo(true);
     }
@@ -371,22 +357,22 @@ public class KeyEventGamePlayTest {
     public void buildUpdatedSquareByRightEvent () {
         this.initData();
         Tile tile0 = new Tile (2, new Posn (1,2));
-        Square compareSquare0 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g0.getGrid(), "right", tile0, tile0.getPosition());
+        Square compareSquare0 = Game2048.buildUpdatedSquareByKeyEvent(g0.getGrid(), "right", tile0, tile0.getPosition());
         Tile testTile0 = new Tile (2, new Posn (1,3));
         assertThat(testTile0.isSameSquare(compareSquare0)).isEqualTo(true);
 
         Tile tile1 = new Tile (2, new Posn (3,3));
-        Square compareSquare1 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g0.getGrid(), "right", tile1, tile1.getPosition());
+        Square compareSquare1 = Game2048.buildUpdatedSquareByKeyEvent(g0.getGrid(), "right", tile1, tile1.getPosition());
         Tile testTile1 = new Tile (2, new Posn (3,3));
         assertThat(testTile1.isSameSquare(compareSquare1)).isEqualTo(true);
 
         Tile tile2 = new Tile (4, new Posn (1,1));
-        Square compareSquare2 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g1.getGrid(), "right", tile2, tile2.getPosition());
+        Square compareSquare2 = Game2048.buildUpdatedSquareByKeyEvent(g1.getGrid(), "right", tile2, tile2.getPosition());
         Tile testTile2 = new Tile (4, new Posn (1,2));
         assertThat(testTile2.isSameSquare(compareSquare2)).isEqualTo(true);
 
         Tile tile3 = new Tile (2, new Posn (1,1));
-        Square compareSquare3 = KeyEventGamePlay.buildUpdatedSquareByKeyEvent(g1.getGrid(), "right", tile3, tile3.getPosition());
+        Square compareSquare3 = Game2048.buildUpdatedSquareByKeyEvent(g1.getGrid(), "right", tile3, tile3.getPosition());
         Tile testTile3 = new Tile (4, new Posn (1,3));
         assertThat(testTile3.isSameSquare(compareSquare3)).isEqualTo(true);
 
