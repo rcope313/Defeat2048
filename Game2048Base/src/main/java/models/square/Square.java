@@ -9,7 +9,6 @@ public abstract class Square {
     public Posn position;
     public int value;
 
-
     public abstract boolean isTile();
 
     public abstract boolean isEmptyTile();

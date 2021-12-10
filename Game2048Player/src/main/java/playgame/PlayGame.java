@@ -4,7 +4,7 @@ import javalib.funworld.*;
 import javalib.worldimages.*;
 import game2048.Game2048;
 import game2048.Scoreboard;
-import models.grid2048.Grid2048;
+import models.grid2048.Board2048;
 import models.square.Square;
 import java.awt.*;
 
@@ -15,7 +15,7 @@ public class PlayGame extends World {
 
     public static void main (String[] args) {
         PlayGame g = new PlayGame();
-        Game2048 game2048 = new Game2048(new Grid2048().initializeStartingGrid(), new Scoreboard(0));
+        Game2048 game2048 = new Game2048(new Board2048().initializeStartingGrid(), new Scoreboard(0));
         g.setGame2048(game2048);
         g.bigBang(Square.SIDE_LENGTH * 6,Square.SIDE_LENGTH * 6,1);
     }
@@ -23,7 +23,7 @@ public class PlayGame extends World {
     @Override
     public WorldScene makeScene() {
         WorldScene s = new WorldScene(Square.SIDE_LENGTH * 6, Square.SIDE_LENGTH * 6);
-        return s.placeImageXY(this.getGame2048().getGrid2048().drawGrid(), Square.SIDE_LENGTH * 3, Square.SIDE_LENGTH * 3)
+        return s.placeImageXY(this.getGame2048().getBoard2048().drawGrid(), Square.SIDE_LENGTH * 3, Square.SIDE_LENGTH * 3)
                 .placeImageXY(this.getGame2048().getScoreboard().drawScoreboard(), Scoreboard.WIDTH/2 + 10 , Scoreboard.HEIGHT);
     }
 
@@ -74,11 +74,11 @@ public class PlayGame extends World {
 
     boolean isGameOver () {
 
-        Grid2048 gridUp = this.getGame2048().handleUpEvent().getUpdatedGame2048().getGrid2048();
-        Grid2048 gridDown = this.getGame2048().handleDownEvent().getUpdatedGame2048().getGrid2048();
-        Grid2048 gridRight = this.getGame2048().handleRightEvent().getUpdatedGame2048().getGrid2048();
-        Grid2048 gridLeft = this.getGame2048().handleLeftEvent().getUpdatedGame2048().getGrid2048();
-        Grid2048 currentGrid = this.getGame2048().getGrid2048();
+        Board2048 gridUp = this.getGame2048().handleUpEvent().getUpdatedGame2048().getBoard2048();
+        Board2048 gridDown = this.getGame2048().handleDownEvent().getUpdatedGame2048().getBoard2048();
+        Board2048 gridRight = this.getGame2048().handleRightEvent().getUpdatedGame2048().getBoard2048();
+        Board2048 gridLeft = this.getGame2048().handleLeftEvent().getUpdatedGame2048().getBoard2048();
+        Board2048 currentGrid = this.getGame2048().getBoard2048();
 
         return
                 gridUp.isSameGrid(currentGrid) &&

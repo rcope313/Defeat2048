@@ -5,32 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46609c8e-6f72-40ac-bb45-f51d82ee8f34" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/grid2048/Grid2048Move.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Collect/Game2048Collect.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Collect/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/heuristic/GameHeuristic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/heuristic/PreferUpHeuristic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/Game2048Event.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/heuristic/SnakeHeuristic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/models/HeuristicScore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Game2048Intelligence/src/test/java/heuristic/SnakeHeuristicTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Base/src/main/java/models/game2048/Game2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/Game2048.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Base/src/main/java/models/game2048/KeyEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/KeyEventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Base/src/main/java/models/game2048/Scoreboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/Scoreboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/game2048/Game2048.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/game2048/KeyEventHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/game2048/Scoreboard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/src/main/java/models/grid2048/Grid2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/grid2048/Board2048.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/src/main/java/models/grid2048/Grid2048Move.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/src/main/java/models/square/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Base/src/main/java/models/square/Square.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/src/test/java/models/grid2048/Grid2048Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Base/src/test/java/models/grid2048/Board2048Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/grid2048/Grid2048.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/grid2048/Grid2048Move.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/square/Square.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Base/target/classes/models/square/Square.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Base/target/test-classes/models/grid2048/Grid2048Test.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/Game2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/Game2048.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Collect/src/test/java/game2048/Game2048Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/test/java/game2048/Game2048Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Collect/target/classes/game2048/Game2048.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/target/classes/game2048/Game2048.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Collect/target/test-classes/game2048/Game2048Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/target/test-classes/game2048/Game2048Test.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game2048Intelligence/Game2048Intelligence.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Intelligence/Game2048Intelligence.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Game2048Intelligence/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Intelligence/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/Game2048Player.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/Game2048Player.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/src/main/java/gameplay/KeyEventGamePlay.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/src/main/java/gameplay/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/src/main/java/playgame/PlayGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/src/test/java/gameplay/KeyEventGamePlayTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/test/java/game2048/Game2048Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/target/classes/gameplay/KeyEventGamePlay.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/target/classes/gameplay/KeyEventGamePlay.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/target/classes/gameplay/PlayGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/target/classes/gameplay/PlayGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/target/test-classes/gameplay/KeyEventGamePlayTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/heuristic/GameHeuristic.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/heuristic/GameHeuristic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/heuristic/PreferUpHeuristic.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Intelligence/src/main/java/heuristic/PreferUpHeuristic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game2048Player/src/main/java/playgame/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/src/main/java/playgame/PlayGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,25 +81,14 @@
       <recent name="$PROJECT_DIR$/src/test/java" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="" />
+      <recent name="models.square" />
       <recent name="models.grid2048" />
+      <recent name="game2048" />
+      <recent name="" />
       <recent name="models" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.PlayGame">
-    <configuration name="Game2048" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="game2048.Game2048" />
-      <module name="Game2048Base" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="game2048.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.SnakeHeuristicTest.testEvaluateGameStateHeuristicScore">
     <configuration name="PlayGame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="playgame.PlayGame" />
       <module name="Game2048Player" />
@@ -117,17 +102,64 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Grid2048Test.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Game2048Base" />
+    <configuration name="Game2048Test.testEvaluateGameStateScore" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game2048Collect" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="models.grid2048.*" />
+          <option name="PATTERN" value="game2048.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="models.grid2048" />
-      <option name="MAIN_CLASS_NAME" value="models.grid2048.Grid2048Test" />
-      <option name="METHOD_NAME" value="test" />
+      <option name="PACKAGE_NAME" value="game2048" />
+      <option name="MAIN_CLASS_NAME" value="game2048.Game2048Test" />
+      <option name="METHOD_NAME" value="testEvaluateGameStateScore" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameHeuristicTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game2048Intelligence" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="heuristic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="heuristic" />
+      <option name="MAIN_CLASS_NAME" value="heuristic.GameHeuristicTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SnakeHeuristicTest.testEvaluateGameStateHeuristicScore" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game2048Intelligence" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="heuristic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="heuristic" />
+      <option name="MAIN_CLASS_NAME" value="heuristic.SnakeHeuristicTest" />
+      <option name="METHOD_NAME" value="testEvaluateGameStateHeuristicScore" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SnakeHeuristicTest.testEvaluateGameStateScore" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Game2048Intelligence" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="heuristic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="heuristic" />
+      <option name="MAIN_CLASS_NAME" value="heuristic.SnakeHeuristicTest" />
+      <option name="METHOD_NAME" value="testEvaluateGameStateScore" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -135,9 +167,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.SnakeHeuristicTest.testEvaluateGameStateHeuristicScore" />
+        <item itemvalue="JUnit.SnakeHeuristicTest.testEvaluateGameStateScore" />
+        <item itemvalue="JUnit.Game2048Test.testEvaluateGameStateScore" />
+        <item itemvalue="JUnit.GameHeuristicTest" />
         <item itemvalue="Application.PlayGame" />
-        <item itemvalue="Application.Game2048" />
-        <item itemvalue="JUnit.Grid2048Test.test" />
       </list>
     </recent_temporary>
   </component>
@@ -163,5 +197,20 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/Game2048Intelligence/src/test/java/heuristic/SnakeHeuristicTest.java</url>
+          <line>109</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalStateException" package="java.lang" />
+          <option name="timeStamp" value="6" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

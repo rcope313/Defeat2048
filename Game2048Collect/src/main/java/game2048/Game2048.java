@@ -1,7 +1,7 @@
 package game2048;
 
 import javalib.worldimages.Posn;
-import models.grid2048.Grid2048;
+import models.grid2048.Board2048;
 import models.square.EmptyTile;
 import models.square.Square;
 import models.square.Tile;
@@ -9,11 +9,11 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Game2048 {
-    public final Grid2048 grid2048;
+    public final Board2048 board2048;
     public final Scoreboard scoreboard;
 
-    public Game2048(Grid2048 grid2048, Scoreboard scoreboard) {
-        this.grid2048 = grid2048;
+    public Game2048(Board2048 board2048, Scoreboard scoreboard) {
+        this.board2048 = board2048;
         this.scoreboard = scoreboard;
     }
 
@@ -22,7 +22,7 @@ public class Game2048 {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods();
 
         for (int idxRow = 0; idxRow < 4; idxRow++ ) {
-            Arrays.stream(this.getGrid2048().getGrid()[idxRow]).forEach((square) ->
+            Arrays.stream(this.getBoard2048().getGrid()[idxRow]).forEach((square) ->
                     handleCurrentSquare(square,"up", keyEventHandler));
         }
 
@@ -35,7 +35,7 @@ public class Game2048 {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods();
 
         for (int idxRow = 3; idxRow >= 0; idxRow-- ) {
-            Arrays.stream(this.getGrid2048().getGrid()[idxRow]).forEach((square) ->
+            Arrays.stream(this.getBoard2048().getGrid()[idxRow]).forEach((square) ->
                     handleCurrentSquare(square, "down", keyEventHandler));
         }
 
@@ -48,7 +48,7 @@ public class Game2048 {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods();
 
         for (int idxRow = 0; idxRow < 4; idxRow++) {
-            Arrays.stream(this.getGrid2048().getGrid()[idxRow]).forEach((square) ->
+            Arrays.stream(this.getBoard2048().getGrid()[idxRow]).forEach((square) ->
                     handleCurrentSquare(square, "left", keyEventHandler));
         }
 
@@ -61,7 +61,7 @@ public class Game2048 {
 
         for (int idxRow = 0; idxRow < 4; idxRow++) {
             for (int idxColumn = 3; idxColumn >= 0; idxColumn--) {
-                Square[][] currentGrid = this.getGrid2048().getGrid();
+                Square[][] currentGrid = this.getBoard2048().getGrid();
                 handleCurrentSquare(currentGrid[idxRow][idxColumn], "right", keyEventHandler);
             }
         }
@@ -82,7 +82,7 @@ public class Game2048 {
 
         int value = staticSquare.getValue();
         Posn staticSquarePosn = staticSquare.getPosition();
-        Square[][] resultGrid = keyEventHandler.getUpdatedGame2048().getGrid2048().getGrid();
+        Square[][] resultGrid = keyEventHandler.getUpdatedGame2048().getBoard2048().getGrid();
 
         resultGrid[staticSquarePosn.x][staticSquarePosn.y] = new Tile(value, staticSquarePosn);
         Square updatedSquare = buildUpdatedSquareByKeyEvent(resultGrid, keyEvent, staticSquare, staticSquare.getPosition());
@@ -106,10 +106,10 @@ public class Game2048 {
 
     static KeyEventHandler handleCurrentEmptyTile (Square staticSquare, KeyEventHandler keyEventHandler) {
         Posn staticSquarePosn = staticSquare.getPosition();
-        Grid2048 resultGrid2048 = keyEventHandler.getUpdatedGame2048().getGrid2048();
+        Board2048 resultBoard2048 = keyEventHandler.getUpdatedGame2048().getBoard2048();
 
-        resultGrid2048.getGrid()[staticSquarePosn.x][staticSquarePosn.y] = new EmptyTile(staticSquarePosn);
-        resultGrid2048.getEmptyTilePosns().add(new Posn(staticSquarePosn.x, staticSquarePosn.y));
+        resultBoard2048.getGrid()[staticSquarePosn.x][staticSquarePosn.y] = new EmptyTile(staticSquarePosn);
+        resultBoard2048.getEmptyTilePosns().add(new Posn(staticSquarePosn.x, staticSquarePosn.y));
 
         return keyEventHandler;
     }
@@ -204,21 +204,21 @@ public class Game2048 {
 
     static KeyEventHandler createRandomTile (KeyEventHandler keyEventHandler) {
 
-        Grid2048 grid2048 = keyEventHandler.getUpdatedGame2048().getGrid2048();
+        Board2048 board2048 = keyEventHandler.getUpdatedGame2048().getBoard2048();
 
         if (keyEventHandler.isTilesMoved()) {
-            Posn[] emptyTilePosnsArray = grid2048.getEmptyTilePosns().toArray(new Posn[0]);
+            Posn[] emptyTilePosnsArray = board2048.getEmptyTilePosns().toArray(new Posn[0]);
             int randomInt = new Random().nextInt(emptyTilePosnsArray.length);
             Posn randomTilePosn = emptyTilePosnsArray[randomInt];
 
-            grid2048.getGrid()[randomTilePosn.x][randomTilePosn.y] = new Tile(Tile.weightedRandomTileValue(), randomTilePosn);
+            board2048.getGrid()[randomTilePosn.x][randomTilePosn.y] = new Tile(Tile.weightedRandomTileValue(), randomTilePosn);
         }
 
         return keyEventHandler;
     }
 
     KeyEventHandler initializeKeyEventMethods () {
-        Grid2048 resultGrid = new Grid2048();
+        Board2048 resultGrid = new Board2048();
         resultGrid.createEmptyTilesOnGrid();
 
         Game2048 resultGame = new Game2048(resultGrid, new Scoreboard(this.getScoreboard().getPoints()));
@@ -231,8 +231,8 @@ public class Game2048 {
     }
 
 
-    public Grid2048 getGrid2048() {
-        return grid2048;
+    public Board2048 getBoard2048() {
+        return board2048;
     }
 
     public Scoreboard getScoreboard() {

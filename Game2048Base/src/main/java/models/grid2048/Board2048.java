@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Grid2048 {
+public class Board2048 {
 
     public Square[][] grid;
     static WorldImage IMAGE = new RectangleImage (
@@ -16,16 +16,16 @@ public class Grid2048 {
             OutlineMode.OUTLINE,
             Color.BLACK);
 
-    public Grid2048() {
+    public Board2048() {
         this.grid = new Square[4][4];
 
     }
 
-    public Grid2048(Square[][] grid) {
+    public Board2048(Square[][] grid) {
         this.grid = grid;
     }
 
-    public Grid2048 initializeStartingGrid() {
+    public Board2048 initializeStartingGrid() {
         this.createEmptyTilesOnGrid();
         this.addRandomTilesToGrid();
 
@@ -90,7 +90,7 @@ public class Grid2048 {
         return emptyTilePosns;
     }
 
-    public boolean isSameGrid (Grid2048 that) {
+    public boolean isSameGrid (Board2048 that) {
 
         for (int idxRow = 0; idxRow < this.grid.length; idxRow ++) {
 

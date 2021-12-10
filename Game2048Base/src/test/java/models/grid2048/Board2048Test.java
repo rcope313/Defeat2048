@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Grid2048Test {
+public class Board2048Test {
     EmptyTile tEmpty;
     Tile t2, t4, t8, t16;
-    Grid2048 g0, g1, g2;
+    Board2048 g0, g1, g2;
     Square[] rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3,
             row0, row1, row2, row3;
 
@@ -48,9 +48,9 @@ public class Grid2048Test {
         row2 = new Square[] {tEmpty, tEmpty, t8, t2};
         row3 = new Square[] {t4, tEmpty, tEmpty, t16};
 
-        g0 = new Grid2048();
-        g1 = new Grid2048(new Square[][] {rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3});
-        g2 = new Grid2048(new Square[][] {row0, row1, row2, row3});
+        g0 = new Board2048();
+        g1 = new Board2048(new Square[][] {rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3});
+        g2 = new Board2048(new Square[][] {row0, row1, row2, row3});
     }
 
     @Test
