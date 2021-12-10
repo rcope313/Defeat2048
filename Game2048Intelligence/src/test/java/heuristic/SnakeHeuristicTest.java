@@ -205,15 +205,23 @@ public class SnakeHeuristicTest {
     public void testGameHeuristicClassFields() {
         this.initData();
         Board2048 emptyBoard = gh0.getGame2048().getBoard2048();
-        assertThat(gh0.getGame2048Up().getBoard2048().isSameBoard(emptyBoard)).isTrue();
-        assertThat(gh0.getGame2048Down().getBoard2048().isSameBoard(emptyBoard)).isTrue();
-        assertThat(gh0.getGame2048Left().getBoard2048().isSameBoard(emptyBoard)).isTrue();
-        assertThat(gh0.getGame2048Right().getBoard2048().isSameBoard(emptyBoard)).isTrue();
+        assertThat(gh0.getKeyEventUp().getUpdatedGame2048().getBoard2048()).isEqualTo(emptyBoard);
+        assertThat(gh0.getKeyEventUp().isTilesMoved()).isFalse();
+        assertThat(gh0.getKeyEventDown().getUpdatedGame2048().getBoard2048()).isEqualTo(emptyBoard);
+        assertThat(gh0.getKeyEventDown().isTilesMoved()).isFalse();
+        assertThat(gh0.getKeyEventLeft().getUpdatedGame2048().getBoard2048()).isEqualTo(emptyBoard);
+        assertThat(gh0.getKeyEventLeft().isTilesMoved()).isFalse();
+        assertThat(gh0.getKeyEventRight().getUpdatedGame2048().getBoard2048()).isEqualTo(emptyBoard);
+        assertThat(gh0.getKeyEventRight().isTilesMoved()).isFalse();
 
-        assertThat(ghBase.getGame2048Up().getBoard2048().isSameBoard(bUp)).isTrue();
-        assertThat(ghBase.getGame2048Down().getBoard2048().isSameBoard(bDown)).isTrue();
-        assertThat(ghBase.getGame2048Left().getBoard2048().isSameBoard(bLeft)).isTrue();
-        assertThat(ghBase.getGame2048Right().getBoard2048().isSameBoard(bRight)).isTrue();
+        assertThat(ghBase.getKeyEventUp().getUpdatedGame2048().getBoard2048()).isEqualTo(bUp);
+        assertThat(ghBase.getKeyEventUp().isTilesMoved()).isTrue();
+        assertThat(ghBase.getKeyEventDown().getUpdatedGame2048().getBoard2048()).isEqualTo(bDown);
+        assertThat(ghBase.getKeyEventDown().isTilesMoved()).isTrue();
+        assertThat(ghBase.getKeyEventLeft().getUpdatedGame2048().getBoard2048()).isEqualTo(bLeft);
+        assertThat(ghBase.getKeyEventLeft().isTilesMoved()).isTrue();
+        assertThat(ghBase.getKeyEventRight().getUpdatedGame2048().getBoard2048()).isEqualTo(bRight);
+        assertThat(ghBase.getKeyEventRight().isTilesMoved()).isTrue();
     }
 
     @Test

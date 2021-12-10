@@ -2,23 +2,24 @@ package heuristic;
 
 import game2048.Game2048;
 import game2048.Game2048Event;
+import game2048.KeyEventHandler;
 
 public abstract class GameHeuristic {
     public final Game2048 game2048;
-    public Game2048 game2048Up;
-    public Game2048 game2048Down;
-    public Game2048 game2048Left;
-    public Game2048 game2048Right;
+    public KeyEventHandler keyEventUp;
+    public KeyEventHandler keyEventDown;
+    public KeyEventHandler keyEventLeft;
+    public KeyEventHandler keyEventRight;
 
     public GameHeuristic(Game2048 game2048) {
         this.game2048 = game2048;
-        this.game2048Up = Game2048Event.UP.buildNewGame2048StateOnKeyEvent(this.getGame2048());
-        this.game2048Down = Game2048Event.DOWN.buildNewGame2048StateOnKeyEvent(this.getGame2048());
-        this.game2048Left = Game2048Event.LEFT.buildNewGame2048StateOnKeyEvent(this.getGame2048());
-        this.game2048Right = Game2048Event.RIGHT.buildNewGame2048StateOnKeyEvent(this.getGame2048());
+        this.keyEventUp = Game2048Event.UP.buildNewGame2048StateOnKeyEvent(this.getGame2048());
+        this.keyEventDown = Game2048Event.DOWN.buildNewGame2048StateOnKeyEvent(this.getGame2048());
+        this.keyEventLeft = Game2048Event.LEFT.buildNewGame2048StateOnKeyEvent(this.getGame2048());
+        this.keyEventRight = Game2048Event.RIGHT.buildNewGame2048StateOnKeyEvent(this.getGame2048());
     }
 
-    public abstract Game2048 evaluateNextGameState();
+    public abstract KeyEventHandler evaluateNextGameState();
 
     public abstract int evaluateGameStateHeuristicScore(Game2048 game);
 
@@ -26,32 +27,36 @@ public abstract class GameHeuristic {
         return game2048;
     }
 
-    public Game2048 getGame2048Up() {
-        return game2048Up;
+    public KeyEventHandler getKeyEventUp() {
+        return keyEventUp;
     }
 
-    public Game2048 getGame2048Down() {
-        return game2048Down;
+    public void setKeyEventUp(KeyEventHandler keyEventUp) {
+        this.keyEventUp = keyEventUp;
     }
 
-    public void setGame2048Down(Game2048 game2048Down) {
-        this.game2048Down = game2048Down;
+    public KeyEventHandler getKeyEventDown() {
+        return keyEventDown;
     }
 
-    public Game2048 getGame2048Left() {
-        return game2048Left;
+    public void setKeyEventDown(KeyEventHandler keyEventDown) {
+        this.keyEventDown = keyEventDown;
     }
 
-    public void setGame2048Left(Game2048 game2048Left) {
-        this.game2048Left = game2048Left;
+    public KeyEventHandler getKeyEventLeft() {
+        return keyEventLeft;
     }
 
-    public Game2048 getGame2048Right() {
-        return game2048Right;
+    public void setKeyEventLeft(KeyEventHandler keyEventLeft) {
+        this.keyEventLeft = keyEventLeft;
     }
 
-    public void setGame2048Right(Game2048 game2048Right) {
-        this.game2048Right = game2048Right;
+    public KeyEventHandler getKeyEventRight() {
+        return keyEventRight;
+    }
+
+    public void setKeyEventRight(KeyEventHandler keyEventRight) {
+        this.keyEventRight = keyEventRight;
     }
 }
 

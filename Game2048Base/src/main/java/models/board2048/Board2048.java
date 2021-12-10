@@ -21,6 +21,23 @@ public class Board2048 {
 
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Board2048 otherBoard = (Board2048) obj;
+
+        for (int idxRow = 0; idxRow < this.grid.length; idxRow ++) {
+
+            for (int idxColumn = 0; idxColumn < this.grid[idxRow].length; idxColumn++ ) {
+
+                if (!this.grid[idxRow][idxColumn].isSameSquare(otherBoard.grid[idxRow][idxColumn])) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     public Board2048(Square[][] grid) {
         this.grid = grid;
     }
@@ -88,22 +105,6 @@ public class Board2048 {
             }
         }
         return emptyTilePosns;
-    }
-
-    public boolean isSameBoard(Board2048 that) {
-
-        for (int idxRow = 0; idxRow < this.grid.length; idxRow ++) {
-
-            for (int idxColumn = 0; idxColumn < this.grid[idxRow].length; idxColumn++ ) {
-
-                if (!this.grid[idxRow][idxColumn].isSameSquare(that.grid[idxRow][idxColumn])) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-
     }
 
     public Square[][] getGrid() {

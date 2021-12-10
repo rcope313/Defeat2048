@@ -78,13 +78,13 @@ public class PlayGame extends World {
         Board2048 gridDown = this.getGame2048().handleDownEvent().getUpdatedGame2048().getBoard2048();
         Board2048 gridRight = this.getGame2048().handleRightEvent().getUpdatedGame2048().getBoard2048();
         Board2048 gridLeft = this.getGame2048().handleLeftEvent().getUpdatedGame2048().getBoard2048();
-        Board2048 currentGrid = this.getGame2048().getBoard2048();
+        Board2048 currentBorad = this.getGame2048().getBoard2048();
 
         return
-                gridUp.isSameBoard(currentGrid) &&
-                        gridDown.isSameBoard(currentGrid) &&
-                        gridRight.isSameBoard(currentGrid) &&
-                        gridLeft.isSameBoard(currentGrid);
+                gridUp.equals(currentBorad) &&
+                        gridDown.equals(currentBorad) &&
+                        gridRight.equals(currentBorad) &&
+                        gridLeft.equals(currentBorad);
     }
 
 

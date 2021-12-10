@@ -207,9 +207,8 @@ public class Game2048Test {
         assertThat(instantiatedKeyEventHandler.isTilesMoved()).isFalse();
         assertThat(instantiatedKeyEventHandler
                 .getUpdatedGame2048()
-                .getBoard2048()
-                .isSameBoard(compareGame.getBoard2048()))
-                .isTrue();
+                .getBoard2048())
+                .isEqualTo(compareGame.getBoard2048());
     }
 
     @Test

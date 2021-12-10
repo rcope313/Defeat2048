@@ -1,6 +1,7 @@
 package heuristic;
 
 import game2048.Game2048;
+import game2048.KeyEventHandler;
 import javalib.worldimages.Posn;
 import models.HeuristicScore;
 import models.square.*;
@@ -13,7 +14,7 @@ public class SnakeHeuristic extends GameHeuristic {
     }
 
     @Override
-    public Game2048 evaluateNextGameState() {
+    public KeyEventHandler evaluateNextGameState() {
         return null;
     }
 

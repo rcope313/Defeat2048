@@ -78,7 +78,7 @@ public class Board2048Test {
         this.initData();
 
         g0.createEmptyTilesOnGrid();
-        assertThat(g0.isSameBoard(g1)).isEqualTo(true);
+        assertThat(g0).isEqualTo(g1);
 
         g0.addRandomTilesToGrid();
         List<Square> resultList = new ArrayList<>();
