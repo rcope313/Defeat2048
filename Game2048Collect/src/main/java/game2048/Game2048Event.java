@@ -6,13 +6,13 @@ public enum Game2048Event {
     public Game2048 buildNewGame2048StateOnKeyEvent(Game2048 game2048) {
         switch(this) {
             case UP:
-                return game2048.handleUpEvent().getUpdatedGame2048();
+                return game2048.handleUpEventNoRandomTile().getUpdatedGame2048();
             case DOWN:
-                return game2048.handleDownEvent().getUpdatedGame2048();
+                return game2048.handleDownEventNoRandomTile().getUpdatedGame2048();
             case RIGHT:
-                return game2048.handleRightEvent().getUpdatedGame2048();
+                return game2048.handleRightEventNoRandomTile().getUpdatedGame2048();
             case LEFT:
-                return game2048.handleLeftEvent().getUpdatedGame2048();
+                return game2048.handleLeftEventNoRandomTile().getUpdatedGame2048();
             default:
                 return null;
         }

@@ -1,7 +1,7 @@
 package game2048;
 
 import javalib.worldimages.Posn;
-import models.grid2048.Board2048;
+import models.board2048.Board2048;
 import models.square.EmptyTile;
 import models.square.Square;
 import models.square.Tile;
@@ -67,6 +67,55 @@ public class Game2048 {
         }
 
         createRandomTile(keyEventHandler);
+        return keyEventHandler;
+    }
+
+    public KeyEventHandler handleUpEventNoRandomTile() {
+
+        KeyEventHandler keyEventHandler = initializeKeyEventMethods();
+
+        for (int idxRow = 0; idxRow < 4; idxRow++ ) {
+            Arrays.stream(this.getBoard2048().getGrid()[idxRow]).forEach((square) ->
+                    handleCurrentSquare(square,"up", keyEventHandler));
+        }
+
+        return keyEventHandler;
+
+    }
+
+    public KeyEventHandler handleDownEventNoRandomTile() {
+        KeyEventHandler keyEventHandler = initializeKeyEventMethods();
+
+        for (int idxRow = 3; idxRow >= 0; idxRow-- ) {
+            Arrays.stream(this.getBoard2048().getGrid()[idxRow]).forEach((square) ->
+                    handleCurrentSquare(square, "down", keyEventHandler));
+        }
+
+        return keyEventHandler;
+
+    }
+
+    public KeyEventHandler handleLeftEventNoRandomTile() {
+        KeyEventHandler keyEventHandler = initializeKeyEventMethods();
+
+        for (int idxRow = 0; idxRow < 4; idxRow++) {
+            Arrays.stream(this.getBoard2048().getGrid()[idxRow]).forEach((square) ->
+                    handleCurrentSquare(square, "left", keyEventHandler));
+        }
+
+        return keyEventHandler;
+    }
+
+    public KeyEventHandler handleRightEventNoRandomTile() {
+        KeyEventHandler keyEventHandler = initializeKeyEventMethods();
+
+        for (int idxRow = 0; idxRow < 4; idxRow++) {
+            for (int idxColumn = 3; idxColumn >= 0; idxColumn--) {
+                Square[][] currentGrid = this.getBoard2048().getGrid();
+                handleCurrentSquare(currentGrid[idxRow][idxColumn], "right", keyEventHandler);
+            }
+        }
+
         return keyEventHandler;
     }
 

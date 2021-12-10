@@ -4,7 +4,7 @@ import javalib.funworld.*;
 import javalib.worldimages.*;
 import game2048.Game2048;
 import game2048.Scoreboard;
-import models.grid2048.Board2048;
+import models.board2048.Board2048;
 import models.square.Square;
 import java.awt.*;
 
@@ -81,10 +81,10 @@ public class PlayGame extends World {
         Board2048 currentGrid = this.getGame2048().getBoard2048();
 
         return
-                gridUp.isSameGrid(currentGrid) &&
-                        gridDown.isSameGrid(currentGrid) &&
-                        gridRight.isSameGrid(currentGrid) &&
-                        gridLeft.isSameGrid(currentGrid);
+                gridUp.isSameBoard(currentGrid) &&
+                        gridDown.isSameBoard(currentGrid) &&
+                        gridRight.isSameBoard(currentGrid) &&
+                        gridLeft.isSameBoard(currentGrid);
     }
 
 

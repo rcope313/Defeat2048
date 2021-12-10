@@ -1,4 +1,4 @@
-package models.grid2048;
+package models.board2048;
 
 import javalib.worldimages.*;
 import models.square.*;
@@ -90,7 +90,7 @@ public class Board2048 {
         return emptyTilePosns;
     }
 
-    public boolean isSameGrid (Board2048 that) {
+    public boolean isSameBoard(Board2048 that) {
 
         for (int idxRow = 0; idxRow < this.grid.length; idxRow ++) {
 

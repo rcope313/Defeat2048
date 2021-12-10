@@ -1,7 +1,7 @@
 package game2048;
 
 import javalib.worldimages.Posn;
-import models.grid2048.*;
+import models.board2048.*;
 import models.square.*;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -208,7 +208,7 @@ public class Game2048Test {
         assertThat(instantiatedKeyEventHandler
                 .getUpdatedGame2048()
                 .getBoard2048()
-                .isSameGrid(compareGame.getBoard2048()))
+                .isSameBoard(compareGame.getBoard2048()))
                 .isTrue();
     }
 

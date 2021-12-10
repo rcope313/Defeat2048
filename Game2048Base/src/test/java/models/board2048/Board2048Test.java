@@ -1,4 +1,4 @@
-package models.grid2048;
+package models.board2048;
 
 import javalib.worldimages.Posn;
 import models.square.*;
@@ -78,7 +78,7 @@ public class Board2048Test {
         this.initData();
 
         g0.createEmptyTilesOnGrid();
-        assertThat(g0.isSameGrid(g1)).isEqualTo(true);
+        assertThat(g0.isSameBoard(g1)).isEqualTo(true);
 
         g0.addRandomTilesToGrid();
         List<Square> resultList = new ArrayList<>();
