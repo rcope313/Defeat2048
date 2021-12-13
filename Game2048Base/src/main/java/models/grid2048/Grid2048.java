@@ -1,16 +1,22 @@
 package models.grid2048;
 
-import javalib.worldimages.*;
-import models.square.*;
+import javalib.worldimages.OutlineMode;
+import javalib.worldimages.OverlayOffsetImage;
+import javalib.worldimages.Posn;
+import javalib.worldimages.RectangleImage;
+import javalib.worldimages.WorldImage;
+import models.square.EmptyTile;
+import models.square.Square;
+import models.square.Tile;
 import utility.Utility;
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Grid2048 {
 
     public Square[][] grid;
-    static WorldImage IMAGE = new RectangleImage (
+    static WorldImage IMAGE = new RectangleImage(
             Square.SIDE_LENGTH * 4,
             Square.SIDE_LENGTH * 4,
             OutlineMode.OUTLINE,
@@ -18,7 +24,6 @@ public class Grid2048 {
 
     public Grid2048() {
         this.grid = new Square[4][4];
-
     }
 
     public Grid2048(Square[][] grid) {
@@ -35,7 +40,7 @@ public class Grid2048 {
     public void createEmptyTilesOnGrid() {
         for (int idxRow = 0; idxRow < 4; idxRow ++) {
             for (int idxColumn = 0; idxColumn < 4; idxColumn ++) {
-                this.getGrid()[idxRow][idxColumn] = new EmptyTile(new Posn (idxRow, idxColumn));
+                this.getGrid()[idxRow][idxColumn] = new EmptyTile(new Posn(idxRow, idxColumn));
             }
         }
     }

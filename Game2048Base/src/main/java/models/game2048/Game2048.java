@@ -6,10 +6,6 @@ public class Game2048 {
     Grid2048 grid2048;
     Scoreboard scoreboard;
 
-    public static void main (String[] args) {
-        System.out.print("hello world!");
-    }
-
     public Grid2048 getGrid2048() {
         return grid2048;
     }
