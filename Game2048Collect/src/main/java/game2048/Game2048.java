@@ -26,7 +26,7 @@ public class Game2048 {
                     handleCurrentSquare(square,"up", keyEventHandler));
         }
 
-        createRandomTile(keyEventHandler);
+        addRandomTileOnKeyEventHandler(keyEventHandler);
         return keyEventHandler;
 
     }
@@ -39,7 +39,7 @@ public class Game2048 {
                     handleCurrentSquare(square, "down", keyEventHandler));
         }
 
-        createRandomTile(keyEventHandler);
+        addRandomTileOnKeyEventHandler(keyEventHandler);
         return keyEventHandler;
 
     }
@@ -52,7 +52,7 @@ public class Game2048 {
                     handleCurrentSquare(square, "left", keyEventHandler));
         }
 
-        createRandomTile(keyEventHandler);
+        addRandomTileOnKeyEventHandler(keyEventHandler);
         return keyEventHandler;
     }
 
@@ -66,7 +66,7 @@ public class Game2048 {
             }
         }
 
-        createRandomTile(keyEventHandler);
+        addRandomTileOnKeyEventHandler(keyEventHandler);
         return keyEventHandler;
     }
 
@@ -119,15 +119,15 @@ public class Game2048 {
         return keyEventHandler;
     }
 
-    KeyEventHandler handleCurrentSquare (Square staticSquare, String keyEvent, KeyEventHandler keyEventHandler) {
+    void handleCurrentSquare (Square staticSquare, String keyEvent, KeyEventHandler keyEventHandler) {
         if (staticSquare.isTile()) {
-            return handleCurrentTile(staticSquare, keyEvent, keyEventHandler);
+            handleCurrentTile(staticSquare, keyEvent, keyEventHandler);
         } else {
-            return handleCurrentEmptyTile(staticSquare, keyEventHandler);
+            handleCurrentEmptyTile(staticSquare, keyEventHandler);
         }
     }
 
-    KeyEventHandler handleCurrentTile (Square staticSquare, String keyEvent, KeyEventHandler keyEventHandler) {
+    void handleCurrentTile (Square staticSquare, String keyEvent, KeyEventHandler keyEventHandler) {
 
         int value = staticSquare.getValue();
         Posn staticSquarePosn = staticSquare.getPosition();
@@ -136,31 +136,26 @@ public class Game2048 {
         resultGrid[staticSquarePosn.x][staticSquarePosn.y] = new Tile(value, staticSquarePosn);
         Square updatedSquare = buildUpdatedSquareByKeyEvent(resultGrid, keyEvent, staticSquare, staticSquare.getPosition());
 
-        if (updatedSquare.getPosition().equals(staticSquare.getPosition())) {
-            return keyEventHandler;
+        if (!updatedSquare.getPosition().equals(staticSquare.getPosition())) {
+            if (updatedSquare.getValue() == staticSquare.getValue() * 2) {
+                int currentPoints = this.getScoreboard().getPoints();
+                keyEventHandler.getUpdatedGame2048().getScoreboard().setPoints(currentPoints + updatedSquare.getValue());
+            }
+            resultGrid[updatedSquare.getPosition().x][updatedSquare.getPosition().y] = updatedSquare;
+            resultGrid[staticSquarePosn.x][staticSquarePosn.y] = new EmptyTile(staticSquarePosn);
+            keyEventHandler.setTilesMoved(true);
 
         }
-        if (updatedSquare.getValue() == staticSquare.getValue() * 2) {
-            int currentPoints = this.getScoreboard().getPoints();
-            keyEventHandler.getUpdatedGame2048().getScoreboard().setPoints(currentPoints + updatedSquare.getValue());
-
-        }
-        resultGrid[updatedSquare.getPosition().x][updatedSquare.getPosition().y] = updatedSquare;
-        resultGrid[staticSquarePosn.x][staticSquarePosn.y] = new EmptyTile(staticSquarePosn);
-        keyEventHandler.setTilesMoved(true);
-
-        return keyEventHandler;
 
     }
 
-    static KeyEventHandler handleCurrentEmptyTile (Square staticSquare, KeyEventHandler keyEventHandler) {
+    void handleCurrentEmptyTile (Square staticSquare, KeyEventHandler keyEventHandler) {
         Posn staticSquarePosn = staticSquare.getPosition();
         Board2048 resultBoard2048 = keyEventHandler.getUpdatedGame2048().getBoard2048();
 
         resultBoard2048.getGrid()[staticSquarePosn.x][staticSquarePosn.y] = new EmptyTile(staticSquarePosn);
         resultBoard2048.getEmptyTilePosns().add(new Posn(staticSquarePosn.x, staticSquarePosn.y));
 
-        return keyEventHandler;
     }
 
     static Square buildUpdatedSquareByKeyEvent(Square[][] grid, String keyEvent, Square staticSquare, Posn tilePosnToUpdate) {
@@ -251,7 +246,7 @@ public class Game2048 {
 
     }
 
-    static KeyEventHandler createRandomTile (KeyEventHandler keyEventHandler) {
+    public static void addRandomTileOnKeyEventHandler(KeyEventHandler keyEventHandler) {
 
         Board2048 board2048 = keyEventHandler.getUpdatedGame2048().getBoard2048();
 
@@ -263,7 +258,7 @@ public class Game2048 {
             board2048.getGrid()[randomTilePosn.x][randomTilePosn.y] = new Tile(Tile.weightedRandomTileValue(), randomTilePosn);
         }
 
-        return keyEventHandler;
+
     }
 
     KeyEventHandler initializeKeyEventMethods () {

@@ -10,7 +10,6 @@ import models.square.Tile;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.BiPredicate;
 
 import static org.assertj.core.api.Assertions.*;
 
