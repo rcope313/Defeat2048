@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46609c8e-6f72-40ac-bb45-f51d82ee8f34" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Game2048Player/src/main/java/heuristic/PlayGameHeuristic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Player/src/test/java/heuristic/PlayGameHeuristicTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Player/target/classes/heuristic/PlayGameHeuristic.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Game2048Player/target/classes/manual/PlayGameManual.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Base/target/classes/models/board2048/Board2048.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Base/target/classes/models/board2048/Board2048.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Base/target/test-classes/models/board2048/Board2048Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Base/target/test-classes/models/board2048/Board2048Test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/Game2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/src/main/java/game2048/Game2048.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Collect/target/classes/game2048/Game2048.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/target/classes/game2048/Game2048.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Collect/target/test-classes/game2048/Game2048Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Collect/target/test-classes/game2048/Game2048Test.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Intelligence/src/test/java/heuristic/PreferUpHeuristicTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Intelligence/src/test/java/heuristic/PreferUpHeuristicTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Intelligence/target/test-classes/heuristic/PreferUpHeuristicTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Intelligence/target/test-classes/heuristic/PreferUpHeuristicTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Intelligence/target/test-classes/heuristic/SnakeHeuristicTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Intelligence/target/test-classes/heuristic/SnakeHeuristicTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/Game2048Player.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/Game2048Player.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/src/main/java/playgame/PlayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game2048Player/src/main/java/manual/PlayGameManual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game2048Player/target/classes/playgame/PlayGame.class" beforeDir="false" />
-    </list>
+    <list default="true" id="46609c8e-6f72-40ac-bb45-f51d82ee8f34" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
