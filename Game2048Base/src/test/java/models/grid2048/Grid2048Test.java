@@ -73,14 +73,14 @@ public class Grid2048Test {
     }
 
     @Test
-    public void itCreatesEmptySquaresOntoANestedArray () {
+    public void itCreatesEmptySquaresOntoANestedArray() {
         this.initData();
         Grid2048.createEmptySquaresOnGrid(g0.getGrid());
         assertThat(g0.isSameGrid(g1)).isEqualTo(true);
     }
 
     @Test
-    public void itAddsTwoRandomTilesToInitializedGrid () {
+    public void itAddsTwoRandomTilesToInitializedGrid() {
         this.initData();
         Grid2048.addTwoRandomTilesForInitializedGrid(g1.getGrid());
         List<Square> resultList = new ArrayList<>();

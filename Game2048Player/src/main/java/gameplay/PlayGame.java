@@ -48,7 +48,6 @@ public class PlayGame extends World {
 
     @Override
     public World onKeyEvent(String s) {
-
         PlayGame updatedPlayGame = new PlayGame();
 
         if (s.equals("left")) {
@@ -68,7 +67,6 @@ public class PlayGame extends World {
             return updatedPlayGame;
         } else {
             return this; }
-
     }
 
     boolean isGameOver () {
@@ -79,8 +77,7 @@ public class PlayGame extends World {
         Grid2048 gridLeft = KeyEventGamePlay.handleLeftEvent(this.getGame2048()).getResultGame2048().getGrid2048();
         Grid2048 currentGrid = this.getGame2048().getGrid2048();
 
-        return
-                gridUp.isSameGrid(currentGrid) &&
+        return gridUp.isSameGrid(currentGrid) &&
                         gridDown.isSameGrid(currentGrid) &&
                         gridRight.isSameGrid(currentGrid) &&
                         gridLeft.isSameGrid(currentGrid);

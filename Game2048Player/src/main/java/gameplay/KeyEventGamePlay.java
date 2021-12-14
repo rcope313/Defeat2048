@@ -14,30 +14,25 @@ import java.util.Random;
 public class KeyEventGamePlay {
 
     public static KeyEventHandler handleUpEvent(Game2048 staticGame) {
-
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(staticGame);
 
         for (int idxRow = 0; idxRow < 4; idxRow++ ) {
             Arrays.stream(staticGame.getGrid2048().getGrid()[idxRow]).forEach((square) ->
                     handleCurrentSquare(square, staticGame,"up", keyEventHandler));
         }
-
         createRandomTile(keyEventHandler);
         return keyEventHandler;
-
     }
 
     public static KeyEventHandler handleDownEvent(Game2048 staticGame) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(staticGame);
 
-        for (int idxRow = 3; idxRow >= 0; idxRow-- ) {
+        for (int idxRow = 3; idxRow >= 0; idxRow--) {
             Arrays.stream(staticGame.getGrid2048().getGrid()[idxRow]).forEach((square) ->
                     handleCurrentSquare(square, staticGame,"down", keyEventHandler));
         }
-
         createRandomTile(keyEventHandler);
         return keyEventHandler;
-
     }
 
     public static KeyEventHandler handleLeftEvent(Game2048 staticGame) {
@@ -47,7 +42,6 @@ public class KeyEventGamePlay {
             Arrays.stream(staticGame.getGrid2048().getGrid()[idxRow]).forEach((square) ->
                     handleCurrentSquare(square, staticGame, "left", keyEventHandler));
         }
-
         createRandomTile(keyEventHandler);
         return keyEventHandler;
     }
@@ -55,19 +49,17 @@ public class KeyEventGamePlay {
     public static KeyEventHandler handleRightEvent(Game2048 staticGame) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(staticGame);
 
-
         for (int idxRow = 0; idxRow < 4; idxRow++) {
             for (int idxColumn = 3; idxColumn >= 0; idxColumn--) {
                 Square[][] currentGrid = staticGame.getGrid2048().getGrid();
                 handleCurrentSquare(currentGrid[idxRow][idxColumn], staticGame, "right", keyEventHandler);
             }
         }
-
         createRandomTile(keyEventHandler);
         return keyEventHandler;
     }
 
-    static KeyEventHandler handleCurrentSquare (Square staticSquare, Game2048 staticGame, String keyEvent, KeyEventHandler keyEventHandler) {
+    static KeyEventHandler handleCurrentSquare(Square staticSquare, Game2048 staticGame, String keyEvent, KeyEventHandler keyEventHandler) {
         if (staticSquare.isTile()) {
             return handleCurrentTile(staticSquare, staticGame, keyEvent, keyEventHandler);
         } else {
@@ -75,7 +67,7 @@ public class KeyEventGamePlay {
         }
     }
 
-    static KeyEventHandler handleCurrentTile (Square staticSquare, Game2048 staticGame, String keyEvent, KeyEventHandler keyEventHandler) {
+    static KeyEventHandler handleCurrentTile(Square staticSquare, Game2048 staticGame, String keyEvent, KeyEventHandler keyEventHandler) {
 
         int value = staticSquare.getValue();
         Posn staticSquarePosn = staticSquare.getPosition();
@@ -101,7 +93,7 @@ public class KeyEventGamePlay {
 
     }
 
-    static KeyEventHandler handleCurrentEmptyTile (Square staticSquare, KeyEventHandler keyEventHandler) {
+    static KeyEventHandler handleCurrentEmptyTile(Square staticSquare, KeyEventHandler keyEventHandler) {
         Posn staticSquarePosn = staticSquare.getPosition();
         Grid2048 resultGrid2048 = keyEventHandler.getResultGame2048().getGrid2048();
 
@@ -199,7 +191,7 @@ public class KeyEventGamePlay {
 
     }
 
-    static KeyEventHandler createRandomTile (KeyEventHandler keyEventHandler) {
+    static KeyEventHandler createRandomTile(KeyEventHandler keyEventHandler) {
 
         Grid2048 grid2048 = keyEventHandler.getResultGame2048().getGrid2048();
 
@@ -214,7 +206,7 @@ public class KeyEventGamePlay {
         return keyEventHandler;
     }
 
-    static KeyEventHandler initializeKeyEventMethods (Game2048 staticGame) {
+    static KeyEventHandler initializeKeyEventMethods(Game2048 staticGame) {
         Square[][] grid = new Square[4][4];
         Grid2048.createEmptySquaresOnGrid(grid);
         Grid2048 grid2048 = new Grid2048(grid);
@@ -229,46 +221,4 @@ public class KeyEventGamePlay {
 
         return keyEventHandler;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -14,11 +14,11 @@ public class Scoreboard {
     public static int HEIGHT = 50;
     public static WorldImage IMAGE = new RectangleImage(WIDTH, HEIGHT, OutlineMode.SOLID, Color.BLACK);
 
-    public Scoreboard (int points) {
+    public Scoreboard(int points) {
         this.points = points;
     }
 
-    public WorldImage drawScoreboard () {
+    public WorldImage drawScoreboard() {
         return new OverlayImage
                 (new TextImage(Integer.toString(this.points), 30, Color.WHITE),
                         this.IMAGE);
