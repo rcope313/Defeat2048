@@ -22,4 +22,3 @@ public class Game2048 {
         this.scoreboard = scoreboard;
     }
 }
-

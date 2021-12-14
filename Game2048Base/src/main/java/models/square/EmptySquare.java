@@ -62,4 +62,3 @@ public class EmptySquare extends Square {
         return this.getPosition().equals(that.getPosition());
     }
 }
-

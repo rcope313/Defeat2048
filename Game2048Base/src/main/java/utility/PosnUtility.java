@@ -23,4 +23,3 @@ public class PosnUtility {
         return result;
     }
 }
-
