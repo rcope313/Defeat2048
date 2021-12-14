@@ -34,13 +34,13 @@ public class Grid2048 {
     private static Square[][] initializeStartingGrid() {
         Square[][] grid = new Square[4][4];
 
-        createEmptyTilesOnGrid(grid);
+        createEmptySquaresOnGrid(grid);
         addTwoRandomTilesForInitializedGrid(grid);
 
         return grid;
     }
 
-    public static void createEmptyTilesOnGrid(Square[][] grid) {
+    public static void createEmptySquaresOnGrid(Square[][] grid) {
         for (int idxRow = 0; idxRow < 4; idxRow ++) {
             for (int idxColumn = 0; idxColumn < 4; idxColumn ++) {
                 grid[idxRow][idxColumn] = new EmptySquare(new Posn(idxRow, idxColumn));
@@ -115,5 +115,5 @@ public class Grid2048 {
     public Square[][] getGrid() {
         return grid;
     }
-
 }
+

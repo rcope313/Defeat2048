@@ -54,8 +54,7 @@ public class Grid2048Test {
     }
 
     @Test
-    public void testRandomnessOfTilesToGrid() {
-
+    public void itDetectsAndThrowsErrorOnTooManyTiles() {
         for (int count = 0; count < 50; count++) {
             this.initData();
             Grid2048.addTwoRandomTilesForInitializedGrid(g1.getGrid());
@@ -74,35 +73,32 @@ public class Grid2048Test {
     }
 
     @Test
-    public void testInitializeStartingGridHelperMethods () {
+    public void itCreatesEmptySquaresOntoANestedArray () {
         this.initData();
-
-        Grid2048.createEmptyTilesOnGrid(g0.getGrid());
+        Grid2048.createEmptySquaresOnGrid(g0.getGrid());
         assertThat(g0.isSameGrid(g1)).isEqualTo(true);
+    }
 
-        Grid2048.addTwoRandomTilesForInitializedGrid(g0.getGrid());
+    @Test
+    public void itAddsTwoRandomTilesToInitializedGrid () {
+        this.initData();
+        Grid2048.addTwoRandomTilesForInitializedGrid(g1.getGrid());
         List<Square> resultList = new ArrayList<>();
-        resultList.addAll(Arrays.stream(g0.getGrid()[0]).filter(Square::isTile).collect(Collectors.toList()));
-        resultList.addAll(Arrays.stream(g0.getGrid()[1]).filter(Square::isTile).collect(Collectors.toList()));
-        resultList.addAll(Arrays.stream(g0.getGrid()[2]).filter(Square::isTile).collect(Collectors.toList()));
-        resultList.addAll(Arrays.stream(g0.getGrid()[3]).filter(Square::isTile).collect(Collectors.toList()));
-
+        resultList.addAll(Arrays.stream(g1.getGrid()[0]).filter(Square::isTile).collect(Collectors.toList()));
+        resultList.addAll(Arrays.stream(g1.getGrid()[1]).filter(Square::isTile).collect(Collectors.toList()));
+        resultList.addAll(Arrays.stream(g1.getGrid()[2]).filter(Square::isTile).collect(Collectors.toList()));
+        resultList.addAll(Arrays.stream(g1.getGrid()[3]).filter(Square::isTile).collect(Collectors.toList()));
         assertThat(resultList.size()).isEqualTo(2);
     }
 
     @Test
-    public void testInitializeStartingGrid () {
+    public void itInitializeStartingGrid() {
         Grid2048 aGrid = new Grid2048();
-
         List<Square> resultList = new ArrayList<>();
         resultList.addAll(Arrays.stream(aGrid.getGrid()[0]).filter(Square::isTile).collect(Collectors.toList()));
         resultList.addAll(Arrays.stream(aGrid.getGrid()[1]).filter(Square::isTile).collect(Collectors.toList()));
         resultList.addAll(Arrays.stream(aGrid.getGrid()[2]).filter(Square::isTile).collect(Collectors.toList()));
         resultList.addAll(Arrays.stream(aGrid.getGrid()[3]).filter(Square::isTile).collect(Collectors.toList()));
-
         assertThat(resultList.size()).isEqualTo(2);
     }
-
-
-
 }

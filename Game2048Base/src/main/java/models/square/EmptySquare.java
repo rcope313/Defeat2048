@@ -61,6 +61,5 @@ public class EmptySquare extends Square {
     public boolean isSameEmptyTile(EmptySquare that) {
         return this.getPosition().equals(that.getPosition());
     }
-
-
 }
+

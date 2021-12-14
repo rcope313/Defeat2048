@@ -216,7 +216,7 @@ public class KeyEventGamePlay {
 
     static KeyEventHandler initializeKeyEventMethods (Game2048 staticGame) {
         Square[][] grid = new Square[4][4];
-        Grid2048.createEmptyTilesOnGrid(grid);
+        Grid2048.createEmptySquaresOnGrid(grid);
         Grid2048 grid2048 = new Grid2048(grid);
 
         Game2048 resultGame = new Game2048();

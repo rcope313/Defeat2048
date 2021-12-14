@@ -12,7 +12,6 @@ public class Game2048 {
 
     public void setGrid2048(Grid2048 grid2048) {
         this.grid2048 = grid2048;
-
     }
 
     public Scoreboard getScoreboard() {
@@ -23,3 +22,4 @@ public class Game2048 {
         this.scoreboard = scoreboard;
     }
 }
+
