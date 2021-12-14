@@ -9,7 +9,7 @@ import javalib.worldimages.WorldImage;
 import models.square.EmptySquare;
 import models.square.Square;
 import models.square.Tile;
-import utility.Utility;
+import utility.PosnUtility;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,7 +50,7 @@ public class Grid2048 {
 
     @VisibleForTesting
     static void addTwoRandomTilesForInitializedGrid(Square[][] grid) {
-        ArrayList<Posn> tilePosns = Utility.createRandomPosns();
+        ArrayList<Posn> tilePosns = PosnUtility.createRandomPosns();
         Posn t0Posn = new Posn (tilePosns.get(0).x, tilePosns.get(0).y);
         Posn t1Posn = new Posn (tilePosns.get(1).x, tilePosns.get(1).y);
         int t0Value = Tile.weightedRandomTileValue();
