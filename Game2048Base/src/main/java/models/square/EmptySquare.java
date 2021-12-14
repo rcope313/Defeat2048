@@ -1,11 +1,16 @@
 package models.square;
 
-import javalib.worldimages.*;
-import java.awt.*;
 
-public class EmptyTile extends Square {
+import javalib.worldimages.OutlineMode;
+import javalib.worldimages.OverlayImage;
+import javalib.worldimages.Posn;
+import javalib.worldimages.RectangleImage;
 
-    public EmptyTile() {
+import java.awt.Color;
+
+public class EmptySquare extends Square {
+
+    public EmptySquare() {
         this.value = 0;
         this.image =
                 new OverlayImage
@@ -19,7 +24,7 @@ public class EmptyTile extends Square {
                                         Color.DARK_GRAY)));
     }
 
-    public EmptyTile(Posn position) {
+    public EmptySquare(Posn position) {
         this.position = position;
         this.value = 0;
         this.image =
@@ -53,12 +58,8 @@ public class EmptyTile extends Square {
     }
 
     @Override
-    public boolean isSameEmptyTile(EmptyTile that) {
-        if (this.getPosition().equals(that.getPosition())) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isSameEmptyTile(EmptySquare that) {
+        return this.getPosition().equals(that.getPosition());
     }
 
 

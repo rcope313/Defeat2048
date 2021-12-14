@@ -1,8 +1,13 @@
 package models.game2048;
 
-import javalib.worldimages.*;
 
-import java.awt.*;
+import javalib.worldimages.OutlineMode;
+import javalib.worldimages.OverlayImage;
+import javalib.worldimages.RectangleImage;
+import javalib.worldimages.TextImage;
+import javalib.worldimages.WorldImage;
+import java.awt.Color;
+
 
 public class Scoreboard {
 

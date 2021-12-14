@@ -1,6 +1,12 @@
 package models.square;
 
-import javalib.worldimages.*;
+import javalib.worldimages.OutlineMode;
+import javalib.worldimages.OverlayImage;
+import javalib.worldimages.Posn;
+import javalib.worldimages.RectangleImage;
+import javalib.worldimages.TextImage;
+import javalib.worldimages.WorldImage;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -252,7 +258,7 @@ public class Tile extends Square {
     }
 
     @Override
-    public boolean isSameEmptyTile(EmptyTile that) {
+    public boolean isSameEmptyTile(EmptySquare that) {
         return false;
     }
 

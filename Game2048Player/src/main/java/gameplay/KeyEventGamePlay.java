@@ -5,7 +5,7 @@ import models.game2048.Game2048;
 import models.game2048.KeyEventHandler;
 import models.game2048.Scoreboard;
 import models.grid2048.Grid2048;
-import models.square.EmptyTile;
+import models.square.EmptySquare;
 import models.square.Square;
 import models.square.Tile;
 import java.util.Arrays;
@@ -94,7 +94,7 @@ public class KeyEventGamePlay {
 
         }
         resultGrid[updatedSquare.getPosition().x][updatedSquare.getPosition().y] = updatedSquare;
-        resultGrid[staticSquarePosn.x][staticSquarePosn.y] = new EmptyTile(staticSquarePosn);
+        resultGrid[staticSquarePosn.x][staticSquarePosn.y] = new EmptySquare(staticSquarePosn);
         keyEventHandler.setTilesMoved(true);
 
         return keyEventHandler;
@@ -105,7 +105,7 @@ public class KeyEventGamePlay {
         Posn staticSquarePosn = staticSquare.getPosition();
         Grid2048 resultGrid2048 = keyEventHandler.getResultGame2048().getGrid2048();
 
-        resultGrid2048.getGrid()[staticSquarePosn.x][staticSquarePosn.y] = new EmptyTile(staticSquarePosn);
+        resultGrid2048.getGrid()[staticSquarePosn.x][staticSquarePosn.y] = new EmptySquare(staticSquarePosn);
         resultGrid2048.getEmptyTilePosns().add(new Posn(staticSquarePosn.x, staticSquarePosn.y));
 
         return keyEventHandler;
@@ -215,11 +215,12 @@ public class KeyEventGamePlay {
     }
 
     static KeyEventHandler initializeKeyEventMethods (Game2048 staticGame) {
-        Grid2048 resultGrid = new Grid2048();
-        resultGrid.createEmptyTilesOnGrid();
+        Square[][] grid = new Square[4][4];
+        Grid2048.createEmptyTilesOnGrid(grid);
+        Grid2048 grid2048 = new Grid2048(grid);
 
         Game2048 resultGame = new Game2048();
-        resultGame.setGrid2048(resultGrid);
+        resultGame.setGrid2048(grid2048);
         resultGame.setScoreboard(new Scoreboard(staticGame.getScoreboard().getPoints()));
 
         KeyEventHandler keyEventHandler = new KeyEventHandler();

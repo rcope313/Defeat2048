@@ -9,7 +9,6 @@ public abstract class Square {
     public Posn position;
     public int value;
 
-
     public abstract boolean isTile();
 
     public abstract boolean isEmptyTile();
@@ -18,7 +17,7 @@ public abstract class Square {
 
     public abstract boolean isSameTile(Tile that);
 
-    public abstract boolean isSameEmptyTile(EmptyTile that);
+    public abstract boolean isSameEmptyTile(EmptySquare that);
 
     public WorldImage getImage() {
         return image;

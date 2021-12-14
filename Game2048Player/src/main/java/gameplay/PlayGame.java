@@ -1,12 +1,15 @@
 package gameplay;
 
-import javalib.funworld.*;
-import javalib.worldimages.*;
+import javalib.funworld.World;
+import javalib.funworld.WorldScene;
+import javalib.worldimages.TextImage;
+import javalib.worldimages.WorldEnd;
 import models.game2048.Game2048;
 import models.game2048.Scoreboard;
 import models.grid2048.Grid2048;
 import models.square.Square;
-import java.awt.*;
+import java.awt.Color;
+
 
 public class PlayGame extends World {
     public Game2048 game2048;
@@ -17,7 +20,7 @@ public class PlayGame extends World {
         PlayGame g = new PlayGame();
         Game2048 game2048 = new Game2048();
         g.setGame2048(game2048);
-        g.getGame2048().setGrid2048(new Grid2048().initializeStartingGrid());
+        g.getGame2048().setGrid2048(new Grid2048());
         g.getGame2048().setScoreboard(new Scoreboard(0));
         g.bigBang(Square.SIDE_LENGTH * 6,Square.SIDE_LENGTH * 6,1);
     }
