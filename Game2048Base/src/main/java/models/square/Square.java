@@ -4,7 +4,7 @@ import javalib.worldimages.Posn;
 import javalib.worldimages.WorldImage;
 
 public abstract class Square {
-    public static int SIDE_LENGTH = 100;
+    public final static int SIDE_LENGTH = 100;
     public WorldImage image;
     public Posn position;
     public int value;

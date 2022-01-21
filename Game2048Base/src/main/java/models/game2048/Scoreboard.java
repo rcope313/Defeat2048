@@ -9,10 +9,10 @@ import java.awt.Color;
 
 public class Scoreboard {
 
-    public int points;
-    public static int WIDTH = 200;
-    public static int HEIGHT = 50;
-    public static WorldImage IMAGE = new RectangleImage(WIDTH, HEIGHT, OutlineMode.SOLID, Color.BLACK);
+    private final int points;
+    public final static int WIDTH = 200;
+    public final static int HEIGHT = 50;
+    public final static WorldImage IMAGE = new RectangleImage(WIDTH, HEIGHT, OutlineMode.SOLID, Color.BLACK);
 
     public Scoreboard(int points) {
         this.points = points;
@@ -26,9 +26,5 @@ public class Scoreboard {
 
     public int getPoints() {
         return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
     }
 }
