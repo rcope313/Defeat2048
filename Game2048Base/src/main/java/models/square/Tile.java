@@ -10,6 +10,8 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tile extends Square {
+    private static final int TILE_SEED_LOW_VALUE = 2;
+    private static final int TILE_SEED_HIGH_VALUE = 4;
 
     public Tile(int value, Posn position) {
         super(value, position);
@@ -18,11 +20,10 @@ public class Tile extends Square {
     public static int weightedRandomTileValue() {
         Random r = new Random();
         int threshold = r.nextInt(101);
-
         if (threshold > 10) {
-            return 2;
+            return TILE_SEED_LOW_VALUE;
         } else {
-            return 4;
+            return TILE_SEED_HIGH_VALUE;
         }
     }
 
