@@ -6,6 +6,13 @@ public class Game2048 {
     Grid2048 grid2048;
     Scoreboard scoreboard;
 
+    public Game2048() {}
+
+    public Game2048(Grid2048 grid2048, Scoreboard scoreboard) {
+        this.grid2048 = grid2048;
+        this.scoreboard = scoreboard;
+    }
+
     public Grid2048 getGrid2048() {
         return grid2048;
     }
