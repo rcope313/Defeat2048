@@ -3,7 +3,6 @@ package models.game2048;
 import models.grid2048.Grid2048;
 
 public class KeyEventHandler {
-
     private boolean tilesMoved;
     private Grid2048 grid2048;
     private Scoreboard scoreboard;

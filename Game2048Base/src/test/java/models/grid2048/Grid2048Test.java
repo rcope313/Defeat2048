@@ -16,7 +16,6 @@ public class Grid2048Test {
     Square[][] squareArray0, squareArrayNoTilesMovedUpLeftRight, getSquareArrayNoTilesMovedDownLeftRight;
 
     void initData() {
-
         squareArray0 = new Square[][] {
             new Square[]{
                 new EmptySquare(new Posn(0,0)),

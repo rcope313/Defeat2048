@@ -245,7 +245,7 @@ public class Grid2048 {
         return new OverlayOffsetImage(currentGrid,
                 Square.SIDE_LENGTH * dxOffset + (Square.SIDE_LENGTH / 2.0),
                 Square.SIDE_LENGTH * dyOffset + (Square.SIDE_LENGTH / 2.0),
-                s.image);
+                s.getImage());
     }
 
     private HashSet<Posn> getEmptyTilePosns() {
@@ -265,7 +265,7 @@ public class Grid2048 {
         if (obj instanceof Grid2048) {
             for (int idxRow = 0; idxRow < this.grid.length; idxRow ++) {
                 for (int idxColumn = 0; idxColumn < this.grid[idxRow].length; idxColumn++ ) {
-                    if (!this.grid[idxRow][idxColumn].isSameSquare(((Grid2048) obj).grid[idxRow][idxColumn])) {
+                    if (!this.grid[idxRow][idxColumn].equals(((Grid2048) obj).grid[idxRow][idxColumn])) {
                         return false;
                     }
                 }

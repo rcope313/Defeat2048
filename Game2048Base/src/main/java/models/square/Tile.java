@@ -11,15 +11,8 @@ import java.util.Random;
 
 public class Tile extends Square {
 
-    public Tile(int value) {
-        this.image = tileImage(value);
-        this.value = value;
-    }
-
     public Tile(int value, Posn position) {
-        this.value = value;
-        this.position = position;
-        this.image = tileImage(value);
+        super(value, position);
     }
 
     public static int weightedRandomTileValue() {
@@ -33,8 +26,8 @@ public class Tile extends Square {
         }
     }
 
-    static WorldImage tileImage(int value) {
-
+    @Override
+    public OverlayImage buildImage() {
         if (value == 2) {
             WorldImage nonBorder =
                     (new OverlayImage
@@ -188,19 +181,4 @@ public class Tile extends Square {
         return false;
     }
 
-    @Override
-    public boolean isSameSquare(Square that) {
-        return that.isSameTile(this);
-    }
-
-    @Override
-    public boolean isSameTile(Tile that) {
-        return this.getValue() == that.getValue() &&
-                this.getPosition().equals(that.getPosition());
-    }
-
-    @Override
-    public boolean isSameEmptyTile(EmptySquare that) {
-        return false;
-    }
 }
