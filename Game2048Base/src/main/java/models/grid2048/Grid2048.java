@@ -260,19 +260,19 @@ public class Grid2048 {
         return emptyTilePosns;
     }
 
-    public boolean isSameGrid(Grid2048 that) {
-
-        for (int idxRow = 0; idxRow < this.grid.length; idxRow ++) {
-
-            for (int idxColumn = 0; idxColumn < this.grid[idxRow].length; idxColumn++ ) {
-
-                if (!this.grid[idxRow][idxColumn].isSameSquare(that.grid[idxRow][idxColumn])) {
-                    return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Grid2048) {
+            for (int idxRow = 0; idxRow < this.grid.length; idxRow ++) {
+                for (int idxColumn = 0; idxColumn < this.grid[idxRow].length; idxColumn++ ) {
+                    if (!this.grid[idxRow][idxColumn].isSameSquare(((Grid2048) obj).grid[idxRow][idxColumn])) {
+                        return false;
+                    }
                 }
             }
+            return true;
+        } else {
+            return false;
         }
-
-        return true;
-
     }
 }

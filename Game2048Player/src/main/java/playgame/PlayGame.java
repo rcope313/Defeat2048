@@ -82,10 +82,10 @@ public class PlayGame extends World {
                 .getResultGame2048().getGrid2048();
         Grid2048 currentGrid = this.getGame2048().getGrid2048();
 
-        return gridUp.isSameGrid(currentGrid) &&
-                        gridDown.isSameGrid(currentGrid) &&
-                        gridRight.isSameGrid(currentGrid) &&
-                        gridLeft.isSameGrid(currentGrid);
+        return  gridUp.equals(currentGrid)
+                && gridDown.equals(currentGrid)
+                && gridRight.equals(currentGrid)
+                && gridLeft.equals(currentGrid);
     }
 
     public Game2048 getGame2048() {
