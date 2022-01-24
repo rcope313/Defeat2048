@@ -6,6 +6,12 @@ import javalib.worldimages.WorldImage;
 
 public abstract class Square {
     public final static int SIDE_LENGTH = 100;
+    static final int BORDER_OFFSET = 5;
+    static final double SMALL_VALUE_TEXT_SIZE_OFFSET = .4;
+    static final double MEDIUM_VALUE_TEXT_SIZE_OFFSET = .35;
+    static final double LARGE_VALUE_TEXT_SIZE_OFFSET = .3;
+    static final double VERY_LARGE_VALUE_TEXT_SIZE_OFFSET = .3;
+
     private final WorldImage image;
     private final Posn position;
     final int value;

@@ -21,7 +21,8 @@ import java.util.Random;
 public class Grid2048 {
     @VisibleForTesting
     final Square[][] grid;
-    private final static WorldImage IMAGE = new RectangleImage(Square.SIDE_LENGTH * 4, Square.SIDE_LENGTH * 4, OutlineMode.OUTLINE, Color.BLACK);
+    private final static WorldImage GRID_IMAGE = new RectangleImage(Square.SIDE_LENGTH * 4, Square.SIDE_LENGTH * 4, OutlineMode.OUTLINE, Color.BLACK);
+    private final static int SQUARES_PER_AXIS = 4;
 
     public Grid2048() {
         this.grid = initializeStartingGrid();
@@ -33,7 +34,7 @@ public class Grid2048 {
 
     public KeyEventHandler handleUpEvent(Scoreboard scoreboard) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
-        for (int idxRow = 0; idxRow < 4; idxRow++ ) {
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++ ) {
             Arrays.stream(grid[idxRow]).forEach((square) ->
                     handleCurrentSquareByUpdatingKeyEventHandler(square,"up", keyEventHandler));
         }
@@ -43,7 +44,7 @@ public class Grid2048 {
 
     public KeyEventHandler handleDownEvent(Scoreboard scoreboard) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
-        for (int idxRow = 3; idxRow >= 0; idxRow--) {
+        for (int idxRow = SQUARES_PER_AXIS - 1; idxRow >= 0; idxRow--) {
             Arrays.stream(grid[idxRow]).forEach((square) ->
                     handleCurrentSquareByUpdatingKeyEventHandler(square,"down", keyEventHandler));
         }
@@ -53,7 +54,7 @@ public class Grid2048 {
 
     public KeyEventHandler handleLeftEvent(Scoreboard scoreboard) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
-        for (int idxRow = 0; idxRow < 4; idxRow++) {
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
             Arrays.stream(grid[idxRow]).forEach((square) ->
                     handleCurrentSquareByUpdatingKeyEventHandler(square, "left", keyEventHandler));
         }
@@ -63,8 +64,8 @@ public class Grid2048 {
 
     public KeyEventHandler handleRightEvent(Scoreboard scoreboard) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
-        for (int idxRow = 0; idxRow < 4; idxRow++) {
-            for (int idxColumn = 3; idxColumn >= 0; idxColumn--) {
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
+            for (int idxColumn = SQUARES_PER_AXIS - 1; idxColumn >= 0; idxColumn--) {
                 handleCurrentSquareByUpdatingKeyEventHandler(grid[idxRow][idxColumn],"right", keyEventHandler);
             }
         }
@@ -203,9 +204,9 @@ public class Grid2048 {
 
     @VisibleForTesting
     static Square[][] createEmptySquaresOnGrid() {
-        Square[][] grid = new Square[4][4];
-        for (int idxRow = 0; idxRow < 4; idxRow ++) {
-            for (int idxColumn = 0; idxColumn < 4; idxColumn ++) {
+        Square[][] grid = new Square[SQUARES_PER_AXIS][SQUARES_PER_AXIS];
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow ++) {
+            for (int idxColumn = 0; idxColumn < SQUARES_PER_AXIS; idxColumn ++) {
                 grid[idxRow][idxColumn] = new EmptySquare(new Posn(idxRow, idxColumn));
             }
         }
@@ -225,18 +226,18 @@ public class Grid2048 {
     }
 
     public WorldImage drawGrid() {
-        WorldImage resultGrid = IMAGE;
-        int dxOffset = -2;
-        int dyOffset = -2;
+        WorldImage resultGrid = GRID_IMAGE;
+        int dxOffset = -SQUARES_PER_AXIS/2;
+        int dyOffset = -SQUARES_PER_AXIS/2;
 
-        for (int idxRow = 0; idxRow < 4; idxRow++) {
-            for (int idxColumn = 0; idxColumn < 4; idxColumn++) {
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
+            for (int idxColumn = 0; idxColumn < SQUARES_PER_AXIS; idxColumn++) {
                 Square s = grid[idxRow][idxColumn];
                 resultGrid = drawNextSquareOnGridByPosnOffset(resultGrid, s, dxOffset, dyOffset);
                 dxOffset ++;
             }
             dyOffset ++;
-            dxOffset = -2;
+            dxOffset = -SQUARES_PER_AXIS/2;
         }
         return resultGrid;
     }
@@ -250,8 +251,8 @@ public class Grid2048 {
 
     private HashSet<Posn> getEmptyTilePosns() {
         HashSet<Posn> emptyTilePosns = new HashSet<>();
-        for (int idxRow = 0; idxRow < 4; idxRow ++) {
-            for (int idxColumn = 0; idxColumn < 4; idxColumn++) {
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow ++) {
+            for (int idxColumn = 0; idxColumn < SQUARES_PER_AXIS; idxColumn++) {
                 if (grid[idxRow][idxColumn].isEmptyTile()) {
                     emptyTilePosns.add(new Posn(idxRow, idxColumn));
                 }

@@ -15,8 +15,8 @@ public class EmptySquare extends Square {
     @Override
     public OverlayImage buildImage() {
         return new OverlayImage
-                (new RectangleImage(Square.SIDE_LENGTH - 5,
-                        Square.SIDE_LENGTH - 5,
+                (new RectangleImage(Square.SIDE_LENGTH - BORDER_OFFSET,
+                        Square.SIDE_LENGTH - BORDER_OFFSET,
                         OutlineMode.SOLID,
                         Color.GRAY),
                         (new RectangleImage(Square.SIDE_LENGTH,

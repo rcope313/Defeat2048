@@ -32,9 +32,9 @@ public class Tile extends Square {
         if (value == 2) {
             WorldImage nonBorder =
                     (new OverlayImage
-                            (new TextImage(Integer.toString(value), SIDE_LENGTH * .4, Color.black),
-                                    (new RectangleImage(SIDE_LENGTH - 5,
-                                            SIDE_LENGTH - 5,
+                            (new TextImage(Integer.toString(value), SIDE_LENGTH * SMALL_VALUE_TEXT_SIZE_OFFSET, Color.black),
+                                    (new RectangleImage(SIDE_LENGTH - BORDER_OFFSET,
+                                            SIDE_LENGTH - BORDER_OFFSET,
                                             OutlineMode.SOLID,
                                             Color.WHITE))));
             return new OverlayImage
@@ -47,9 +47,9 @@ public class Tile extends Square {
         if (value == 4) {
             WorldImage nonBorder =
                     (new OverlayImage
-                            (new TextImage(Integer.toString(value), SIDE_LENGTH * .4, Color.black),
-                                    (new RectangleImage(SIDE_LENGTH - 5,
-                                            SIDE_LENGTH - 5,
+                            (new TextImage(Integer.toString(value), SIDE_LENGTH * SMALL_VALUE_TEXT_SIZE_OFFSET, Color.black),
+                                    (new RectangleImage(SIDE_LENGTH - BORDER_OFFSET,
+                                            SIDE_LENGTH - BORDER_OFFSET,
                                             OutlineMode.SOLID,
                                             Color.LIGHT_GRAY))));
             return new OverlayImage
@@ -62,9 +62,9 @@ public class Tile extends Square {
         if (value == 8 || value == 16 || value == 32) {
             WorldImage nonBorder =
                     (new OverlayImage
-                            (new TextImage(Integer.toString(value), SIDE_LENGTH * .4, Color.black),
-                                    (new RectangleImage(SIDE_LENGTH - 5,
-                                            SIDE_LENGTH - 5,
+                            (new TextImage(Integer.toString(value), SIDE_LENGTH * SMALL_VALUE_TEXT_SIZE_OFFSET, Color.black),
+                                    (new RectangleImage(SIDE_LENGTH - BORDER_OFFSET,
+                                            SIDE_LENGTH - BORDER_OFFSET,
                                             OutlineMode.SOLID,
                                             Color.PINK))));
             return new OverlayImage
@@ -78,8 +78,8 @@ public class Tile extends Square {
             WorldImage nonBorder =
                     (new OverlayImage
                             (new TextImage(Integer.toString(value), SIDE_LENGTH * .4, Color.black),
-                                    (new RectangleImage(SIDE_LENGTH - 5,
-                                            SIDE_LENGTH - 5,
+                                    (new RectangleImage(SIDE_LENGTH - BORDER_OFFSET,
+                                            SIDE_LENGTH - BORDER_OFFSET,
                                             OutlineMode.SOLID,
                                             Color.RED))));
             return new OverlayImage
@@ -93,9 +93,9 @@ public class Tile extends Square {
         if (value == 128 || value == 256) {
             WorldImage nonBorder =
                     (new OverlayImage
-                            (new TextImage(Integer.toString(value), SIDE_LENGTH * .35, Color.black),
-                                    (new RectangleImage(SIDE_LENGTH - 5,
-                                            SIDE_LENGTH - 5,
+                            (new TextImage(Integer.toString(value), SIDE_LENGTH * MEDIUM_VALUE_TEXT_SIZE_OFFSET, Color.black),
+                                    (new RectangleImage(SIDE_LENGTH - BORDER_OFFSET,
+                                            SIDE_LENGTH - BORDER_OFFSET,
                                             OutlineMode.SOLID,
                                             Color.YELLOW))));
             return new OverlayImage
@@ -108,9 +108,9 @@ public class Tile extends Square {
         if (value == 512) {
             WorldImage nonBorder =
                     (new OverlayImage
-                            (new TextImage(Integer.toString(value), SIDE_LENGTH * .35, Color.black),
-                                    (new RectangleImage(SIDE_LENGTH - 5,
-                                            SIDE_LENGTH - 5,
+                            (new TextImage(Integer.toString(value), SIDE_LENGTH * MEDIUM_VALUE_TEXT_SIZE_OFFSET, Color.black),
+                                    (new RectangleImage(SIDE_LENGTH - BORDER_OFFSET,
+                                            SIDE_LENGTH - BORDER_OFFSET,
                                             OutlineMode.SOLID,
                                             Color.ORANGE))));
             return new OverlayImage
@@ -123,9 +123,9 @@ public class Tile extends Square {
         if (value == 1024 || value == 2048) {
             WorldImage nonBorder =
                     (new OverlayImage
-                            (new TextImage(Integer.toString(value), SIDE_LENGTH * .3, Color.black),
-                                    (new RectangleImage(SIDE_LENGTH - 5,
-                                            SIDE_LENGTH - 5,
+                            (new TextImage(Integer.toString(value), SIDE_LENGTH * LARGE_VALUE_TEXT_SIZE_OFFSET, Color.black),
+                                    (new RectangleImage(SIDE_LENGTH - BORDER_OFFSET,
+                                            SIDE_LENGTH - BORDER_OFFSET,
                                             OutlineMode.SOLID,
                                             Color.ORANGE))));
             return new OverlayImage
@@ -138,9 +138,9 @@ public class Tile extends Square {
         if (value == 4096 ||value == 8192) {
             WorldImage nonBorder =
                     (new OverlayImage
-                            (new TextImage(Integer.toString(value), SIDE_LENGTH * .3, Color.black),
-                                    (new RectangleImage(SIDE_LENGTH - 5,
-                                            SIDE_LENGTH - 5,
+                            (new TextImage(Integer.toString(value), SIDE_LENGTH * LARGE_VALUE_TEXT_SIZE_OFFSET, Color.black),
+                                    (new RectangleImage(SIDE_LENGTH - BORDER_OFFSET,
+                                            SIDE_LENGTH - BORDER_OFFSET,
                                             OutlineMode.SOLID,
                                             Color.CYAN))));
             return new OverlayImage
@@ -154,10 +154,10 @@ public class Tile extends Square {
             WorldImage nonBorder =
                     (new OverlayImage
                             (new TextImage (Integer.toString(value),
-                                    SIDE_LENGTH * .2,
+                                    SIDE_LENGTH * VERY_LARGE_VALUE_TEXT_SIZE_OFFSET,
                                     Color.black),
-                                    (new RectangleImage(SIDE_LENGTH - 5,
-                                            SIDE_LENGTH - 5,
+                                    (new RectangleImage(SIDE_LENGTH - BORDER_OFFSET,
+                                            SIDE_LENGTH - BORDER_OFFSET,
                                             OutlineMode.SOLID,
                                             Color.CYAN))));
             return new OverlayImage
