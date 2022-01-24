@@ -1,16 +1,11 @@
 package utility;
 
 import javalib.worldimages.Posn;
-import models.square.Square;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Utility {
-
-    public static Square[] reverseArray(Square[] rowArray) {
-        return rowArray;
-    }
+public class PosnUtility {
 
     public static ArrayList<Posn> createRandomPosns() {
         ArrayList<Posn> result;
