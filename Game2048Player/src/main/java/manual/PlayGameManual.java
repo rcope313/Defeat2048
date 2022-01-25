@@ -10,9 +10,11 @@ import models.game2048.KeyEventHandler;
 import models.game2048.Scoreboard;
 import models.grid2048.Grid2048;
 import models.square.Square;
+import playgame.PlayGame;
+
 import java.awt.Color;
 
-public class PlayGameManual extends World {
+public class PlayGameManual extends World implements PlayGame {
     private final Game2048 game2048;
 
     public PlayGameManual(Game2048 game2048) {
@@ -22,19 +24,19 @@ public class PlayGameManual extends World {
     public static void main (String[] args) {
         Game2048 newGame = new Game2048(new Grid2048(), new Scoreboard(0));
         PlayGameManual g = new PlayGameManual(newGame);
-        g.bigBang(Square.SIDE_LENGTH * 6,Square.SIDE_LENGTH * 6,1);
+        g.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE,Square.SIDE_LENGTH * WINDOW_SIZE,MANUAL_SPEED);
     }
 
     @Override
     public WorldScene makeScene() {
-        WorldScene s = new WorldScene(Square.SIDE_LENGTH * 6, Square.SIDE_LENGTH * 6);
-        return s.placeImageXY(this.getGame2048().getGrid2048().drawGrid(), Square.SIDE_LENGTH * 3, Square.SIDE_LENGTH * 3)
-                .placeImageXY(this.getGame2048().getScoreboard().drawScoreboard(), Scoreboard.WIDTH/2 + 10 , Scoreboard.HEIGHT);
+        WorldScene s = new WorldScene(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE);
+        return s.placeImageXY(this.getGame2048().getGrid2048().drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE/2, Square.SIDE_LENGTH * WINDOW_SIZE/2)
+                .placeImageXY(this.getGame2048().getScoreboard().drawScoreboard(), Scoreboard.WIDTH/2 + SCOREBOARD_POSN_OFFSET , Scoreboard.HEIGHT);
     }
 
     @Override
     public WorldScene lastScene (String msg) {
-        return this.makeScene().placeImageXY(new TextImage(msg, 100, Color.BLACK), Square.SIDE_LENGTH * 3, Square.SIDE_LENGTH * 3);
+        return this.makeScene().placeImageXY(new TextImage(msg, WINDOW_TEXT_SIZE, Color.BLACK), Square.SIDE_LENGTH * WINDOW_SIZE/2, Square.SIDE_LENGTH * WINDOW_SIZE/2);
     }
 
     @Override

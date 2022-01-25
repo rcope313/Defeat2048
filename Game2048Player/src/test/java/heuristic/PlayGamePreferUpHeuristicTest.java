@@ -2,7 +2,7 @@ package heuristic;
 
 import org.junit.Test;
 
-public class PlayGameHeuristicTest {
+public class PlayGamePreferUpHeuristicTest {
 
     void initData() {
 
