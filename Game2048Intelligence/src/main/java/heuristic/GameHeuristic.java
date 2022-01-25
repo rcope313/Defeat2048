@@ -1,62 +1,52 @@
 package heuristic;
 
-import game2048.Game2048;
-import game2048.Game2048Event;
-import game2048.KeyEventHandler;
+import models.game2048.Scoreboard;
+import models.grid2048.Grid2048;
+import models.grid2048.Grid2048Event;
+import models.game2048.KeyEventHandler;
 
 public abstract class GameHeuristic {
-    public final Game2048 game2048;
-    public KeyEventHandler keyEventUp;
-    public KeyEventHandler keyEventDown;
-    public KeyEventHandler keyEventLeft;
-    public KeyEventHandler keyEventRight;
+    private final Grid2048 grid2048;
+    private final Scoreboard scoreboard;
+    private final KeyEventHandler keyEventUp;
+    private final KeyEventHandler keyEventDown;
+    private final KeyEventHandler keyEventLeft;
+    private final KeyEventHandler keyEventRight;
 
-    public GameHeuristic(Game2048 game2048) {
-        this.game2048 = game2048;
-        this.keyEventUp = Game2048Event.UP.buildNewGame2048StateOnKeyEvent(this.getGame2048());
-        this.keyEventDown = Game2048Event.DOWN.buildNewGame2048StateOnKeyEvent(this.getGame2048());
-        this.keyEventLeft = Game2048Event.LEFT.buildNewGame2048StateOnKeyEvent(this.getGame2048());
-        this.keyEventRight = Game2048Event.RIGHT.buildNewGame2048StateOnKeyEvent(this.getGame2048());
+    public GameHeuristic(Grid2048 grid2048, Scoreboard scoreboard) {
+        this.grid2048 = grid2048;
+        this.scoreboard = scoreboard;
+        this.keyEventUp = Grid2048Event.UP.buildKeyEventHandlerOnKeyEventNoRandomTile(grid2048, scoreboard);
+        this.keyEventDown = Grid2048Event.DOWN.buildKeyEventHandlerOnKeyEventNoRandomTile(grid2048, scoreboard);
+        this.keyEventLeft = Grid2048Event.LEFT.buildKeyEventHandlerOnKeyEventNoRandomTile(grid2048, scoreboard);
+        this.keyEventRight = Grid2048Event.RIGHT.buildKeyEventHandlerOnKeyEventNoRandomTile(grid2048, scoreboard);
     }
 
     public abstract KeyEventHandler evaluateNextGameState();
 
-    public abstract int evaluateGameStateHeuristicScore(Game2048 game);
+    public Grid2048 getGrid2048() {
+        return grid2048;
+    }
 
-    public Game2048 getGame2048() {
-        return game2048;
+    public Scoreboard getScoreboard() {
+        return scoreboard;
     }
 
     public KeyEventHandler getKeyEventUp() {
         return keyEventUp;
     }
 
-    public void setKeyEventUp(KeyEventHandler keyEventUp) {
-        this.keyEventUp = keyEventUp;
-    }
-
     public KeyEventHandler getKeyEventDown() {
         return keyEventDown;
-    }
-
-    public void setKeyEventDown(KeyEventHandler keyEventDown) {
-        this.keyEventDown = keyEventDown;
     }
 
     public KeyEventHandler getKeyEventLeft() {
         return keyEventLeft;
     }
 
-    public void setKeyEventLeft(KeyEventHandler keyEventLeft) {
-        this.keyEventLeft = keyEventLeft;
-    }
-
     public KeyEventHandler getKeyEventRight() {
         return keyEventRight;
     }
 
-    public void setKeyEventRight(KeyEventHandler keyEventRight) {
-        this.keyEventRight = keyEventRight;
-    }
 }
 

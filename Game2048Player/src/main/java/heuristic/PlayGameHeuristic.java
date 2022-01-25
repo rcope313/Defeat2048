@@ -1,19 +1,19 @@
 package heuristic;
 
-import game2048.Game2048;
-import game2048.KeyEventHandler;
-import game2048.Scoreboard;
+import models.game2048.Game2048;
+import models.game2048.KeyEventHandler;
+import models.game2048.Scoreboard;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
-import models.board2048.Board2048;
+import models.grid2048.Grid2048;
 import models.square.Square;
-
 import java.awt.*;
 
+
 public class PlayGameHeuristic extends World {
-    public final Game2048 game2048;
+    private final Game2048 game2048;
     public final GameHeuristic heuristic;
 
     public PlayGameHeuristic(Game2048 game2048, GameHeuristic heuristic) {
@@ -22,27 +22,25 @@ public class PlayGameHeuristic extends World {
     }
 
     public static void main (String[] args) {
-
-        Game2048 game2048 = new Game2048(new Board2048().initializeStartingGrid(), new Scoreboard(0));
-        GameHeuristic h = new PreferUpHeuristic(game2048);
-        PlayGameHeuristic g = new PlayGameHeuristic(game2048, h);
+        Game2048 newGame = new Game2048(new Grid2048(), new Scoreboard(0));
+        PlayGameHeuristic g = new PlayGameHeuristic(newGame, new PreferUpHeuristic(newGame.getGrid2048(), newGame.getScoreboard()));
         g.bigBang(Square.SIDE_LENGTH * 6,Square.SIDE_LENGTH * 6,.25);
     }
 
     @Override
     public WorldScene makeScene() {
         WorldScene s = new WorldScene(Square.SIDE_LENGTH * 6, Square.SIDE_LENGTH * 6);
-        return s.placeImageXY(this.getGame2048().getBoard2048().drawGrid(), Square.SIDE_LENGTH * 3, Square.SIDE_LENGTH * 3)
+        return s.placeImageXY(this.getGame2048().getGrid2048().drawGrid(), Square.SIDE_LENGTH * 3, Square.SIDE_LENGTH * 3)
                 .placeImageXY(this.getGame2048().getScoreboard().drawScoreboard(), Scoreboard.WIDTH/2 + 10 , Scoreboard.HEIGHT);
     }
 
     @Override
     public World onTick() {
-        KeyEventHandler nextGameState =  this.getHeuristic().evaluateNextGameState();
-        Game2048.addRandomTileOnKeyEventHandler(nextGameState);
-
-        GameHeuristic h = new PreferUpHeuristic(nextGameState.getUpdatedGame2048());
-        return new PlayGameHeuristic(nextGameState.getUpdatedGame2048(), h);
+        KeyEventHandler nextGameState = heuristic.evaluateNextGameState();
+        Grid2048.createRandomTileOnKeyEventHandlerGrid2048(nextGameState);
+        Game2048 newGame2048 = new Game2048(nextGameState.getGrid2048(), nextGameState.getScoreboard());
+        PreferUpHeuristic newHeuristic = new PreferUpHeuristic(nextGameState.getGrid2048(), nextGameState.getScoreboard());
+        return new PlayGameHeuristic(newGame2048, newHeuristic);
     }
 
     @Override
@@ -61,25 +59,19 @@ public class PlayGameHeuristic extends World {
     }
 
     boolean isGameOver () {
+        Grid2048 currentGrid = game2048.getGrid2048();
+        Grid2048 gridUp = currentGrid.handleUpEvent(game2048.getScoreboard(), true).getGrid2048();
+        Grid2048 gridDown = currentGrid.handleDownEvent(game2048.getScoreboard(), true).getGrid2048();
+        Grid2048 gridRight = currentGrid.handleRightEvent(game2048.getScoreboard(), true).getGrid2048();
+        Grid2048 gridLeft = currentGrid.handleLeftEvent(game2048.getScoreboard(), true).getGrid2048();
 
-        Board2048 gridUp = this.getGame2048().handleUpEvent().getUpdatedGame2048().getBoard2048();
-        Board2048 gridDown = this.getGame2048().handleDownEvent().getUpdatedGame2048().getBoard2048();
-        Board2048 gridRight = this.getGame2048().handleRightEvent().getUpdatedGame2048().getBoard2048();
-        Board2048 gridLeft = this.getGame2048().handleLeftEvent().getUpdatedGame2048().getBoard2048();
-        Board2048 currentBoard = this.getGame2048().getBoard2048();
-
-        return
-                gridUp.equals(currentBoard) &&
-                        gridDown.equals(currentBoard) &&
-                        gridRight.equals(currentBoard) &&
-                        gridLeft.equals(currentBoard);
+        return  gridUp.equals(currentGrid)
+                && gridDown.equals(currentGrid)
+                && gridRight.equals(currentGrid)
+                && gridLeft.equals(currentGrid);
     }
 
     public Game2048 getGame2048() {
         return game2048;
-    }
-
-    public GameHeuristic getHeuristic() {
-        return heuristic;
     }
 }

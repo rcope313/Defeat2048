@@ -1,26 +1,27 @@
-package playgame;
+package manual;
 
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import models.game2048.Game2048;
+import models.grid2048.Grid2048Event;
 import models.game2048.KeyEventHandler;
 import models.game2048.Scoreboard;
 import models.grid2048.Grid2048;
 import models.square.Square;
 import java.awt.Color;
 
-public class PlayGame extends World {
+public class PlayGameManual extends World {
     private final Game2048 game2048;
 
-    public PlayGame(Game2048 game2048) {
+    public PlayGameManual(Game2048 game2048) {
         this.game2048 = game2048;
     }
 
     public static void main (String[] args) {
         Game2048 newGame = new Game2048(new Grid2048(), new Scoreboard(0));
-        PlayGame g = new PlayGame(newGame);
+        PlayGameManual g = new PlayGameManual(newGame);
         g.bigBang(Square.SIDE_LENGTH * 6,Square.SIDE_LENGTH * 6,1);
     }
 
@@ -47,38 +48,36 @@ public class PlayGame extends World {
 
     @Override
     public World onKeyEvent(String s) {
-        Grid2048 currentGrid = game2048.getGrid2048();
         if (s.equals("left")) {
-            KeyEventHandler handler = currentGrid.handleLeftEvent(game2048.getScoreboard());
-            return new PlayGame(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
+            KeyEventHandler handler = Grid2048Event.LEFT.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard());
+            return new PlayGameManual(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
         }
         if (s.equals("right")) {
-            KeyEventHandler handler = currentGrid.handleRightEvent(game2048.getScoreboard());
-            return new PlayGame(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
+            KeyEventHandler handler = Grid2048Event.RIGHT.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard());
+            return new PlayGameManual(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
         }
         if (s.equals("down")) {
-            KeyEventHandler handler = currentGrid.handleDownEvent(game2048.getScoreboard());
-            return new PlayGame(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
+            KeyEventHandler handler = Grid2048Event.DOWN.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard());
+            return new PlayGameManual(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
         }
         if (s.equals("up")) {
-            KeyEventHandler handler = currentGrid.handleUpEvent(game2048.getScoreboard());
-            return new PlayGame(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
+            KeyEventHandler handler = Grid2048Event.UP.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard());
+            return new PlayGameManual(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
         } else {
             return this;
         }
     }
 
     boolean isGameOver () {
-        Grid2048 currentGrid = game2048.getGrid2048();
-        Grid2048 gridUp = currentGrid.handleUpEvent(game2048.getScoreboard()).getGrid2048();
-        Grid2048 gridDown = currentGrid.handleDownEvent(game2048.getScoreboard()).getGrid2048();
-        Grid2048 gridRight = currentGrid.handleRightEvent(game2048.getScoreboard()).getGrid2048();
-        Grid2048 gridLeft = currentGrid.handleLeftEvent(game2048.getScoreboard()).getGrid2048();
+        Grid2048 gridUp = Grid2048Event.UP.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard()).getGrid2048();
+        Grid2048 gridDown = Grid2048Event.DOWN.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard()).getGrid2048();
+        Grid2048 gridRight = Grid2048Event.RIGHT.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard()).getGrid2048();
+        Grid2048 gridLeft = Grid2048Event.LEFT.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard()).getGrid2048();
 
-        return  gridUp.equals(currentGrid)
-                && gridDown.equals(currentGrid)
-                && gridRight.equals(currentGrid)
-                && gridLeft.equals(currentGrid);
+        return  gridUp.equals(game2048.getGrid2048())
+                && gridDown.equals(game2048.getGrid2048())
+                && gridRight.equals(game2048.getGrid2048())
+                && gridLeft.equals(game2048.getGrid2048());
     }
 
     public Game2048 getGame2048() {

@@ -11,7 +11,6 @@ public abstract class Square {
     static final double MEDIUM_VALUE_TEXT_SIZE_OFFSET = .35;
     static final double LARGE_VALUE_TEXT_SIZE_OFFSET = .3;
     static final double VERY_LARGE_VALUE_TEXT_SIZE_OFFSET = .3;
-
     private final WorldImage image;
     private final Posn position;
     final int value;

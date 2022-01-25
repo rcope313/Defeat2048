@@ -1,4 +1,4 @@
-package game2048;
+package models.game2048;
 
 import javalib.worldimages.OutlineMode;
 import javalib.worldimages.OverlayImage;
