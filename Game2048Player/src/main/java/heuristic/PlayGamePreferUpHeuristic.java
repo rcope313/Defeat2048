@@ -8,6 +8,7 @@ import javalib.funworld.WorldScene;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import models.grid2048.Grid2048;
+import models.grid2048.KeyEvent;
 import models.square.Square;
 import playgame.PlayGame;
 import java.awt.*;
@@ -59,16 +60,15 @@ public class PlayGamePreferUpHeuristic extends World implements PlayGame {
     }
 
     boolean isGameOver () {
-        Grid2048 currentGrid = game2048.getGrid2048();
-        Grid2048 gridUp = currentGrid.handleUpEvent(game2048.getScoreboard(), true).getGrid2048();
-        Grid2048 gridDown = currentGrid.handleDownEvent(game2048.getScoreboard(), true).getGrid2048();
-        Grid2048 gridRight = currentGrid.handleRightEvent(game2048.getScoreboard(), true).getGrid2048();
-        Grid2048 gridLeft = currentGrid.handleLeftEvent(game2048.getScoreboard(), true).getGrid2048();
+        Grid2048 gridUp = grid.handleKeyEventWithRandomTile(KeyEvent.UP, scoreboard).getGrid2048();
+        Grid2048 gridDown = grid.handleKeyEventWithRandomTile(KeyEvent.DOWN, scoreboard).getGrid2048();
+        Grid2048 gridRight = grid.handleKeyEventWithRandomTile(KeyEvent.RIGHT, scoreboard).getGrid2048();
+        Grid2048 gridLeft = grid.handleKeyEventWithRandomTile(KeyEvent.LEFT, scoreboard).getGrid2048();
 
-        return  gridUp.equals(currentGrid)
-                && gridDown.equals(currentGrid)
-                && gridRight.equals(currentGrid)
-                && gridLeft.equals(currentGrid);
+        return  gridUp.equals(grid)
+                && gridDown.equals(grid)
+                && gridRight.equals(grid)
+                && gridLeft.equals(grid);
     }
 
     public Game2048 getGame2048() {

@@ -3,11 +3,16 @@ package heuristic;
 import models.game2048.KeyEventHandler;
 import models.game2048.Scoreboard;
 import models.grid2048.Grid2048;
+import java.util.HashSet;
 import java.util.Random;
 
 public class PreferUpHeuristic extends GameHeuristic {
     public PreferUpHeuristic(Grid2048 grid2048, Scoreboard scoreboard) {
         super(grid2048, scoreboard);
+    }
+
+    public static void main (String[] args) {
+        HashSet<Integer[]> map = new HashSet<>();
     }
 
     @Override

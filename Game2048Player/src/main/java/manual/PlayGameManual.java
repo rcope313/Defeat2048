@@ -5,7 +5,7 @@ import javalib.funworld.WorldScene;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import models.game2048.Game2048;
-import models.grid2048.Grid2048Event;
+import models.grid2048.KeyEvent;
 import models.game2048.KeyEventHandler;
 import models.game2048.Scoreboard;
 import models.grid2048.Grid2048;
@@ -15,23 +15,24 @@ import playgame.PlayGame;
 import java.awt.Color;
 
 public class PlayGameManual extends World implements PlayGame {
-    private final Game2048 game2048;
+    private final Grid2048 grid;
+    private final Scoreboard scoreboard;
 
-    public PlayGameManual(Game2048 game2048) {
-        this.game2048 = game2048;
+    public PlayGameManual(Grid2048 grid, Scoreboard scoreboard) {
+        this.grid = grid;
+        this.scoreboard = scoreboard;
     }
 
     public static void main (String[] args) {
-        Game2048 newGame = new Game2048(new Grid2048(), new Scoreboard(0));
-        PlayGameManual g = new PlayGameManual(newGame);
+        PlayGameManual g = new PlayGameManual(new Grid2048(), new Scoreboard(0));
         g.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE,Square.SIDE_LENGTH * WINDOW_SIZE,MANUAL_SPEED);
     }
 
     @Override
     public WorldScene makeScene() {
         WorldScene s = new WorldScene(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE);
-        return s.placeImageXY(this.getGame2048().getGrid2048().drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE/2, Square.SIDE_LENGTH * WINDOW_SIZE/2)
-                .placeImageXY(this.getGame2048().getScoreboard().drawScoreboard(), Scoreboard.WIDTH/2 + SCOREBOARD_POSN_OFFSET , Scoreboard.HEIGHT);
+        return s.placeImageXY(grid.drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE/2, Square.SIDE_LENGTH * WINDOW_SIZE/2)
+                .placeImageXY(scoreboard.drawScoreboard(), Scoreboard.WIDTH/2 + SCOREBOARD_POSN_OFFSET , Scoreboard.HEIGHT);
     }
 
     @Override
@@ -50,39 +51,19 @@ public class PlayGameManual extends World implements PlayGame {
 
     @Override
     public World onKeyEvent(String s) {
-        if (s.equals("left")) {
-            KeyEventHandler handler = Grid2048Event.LEFT.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard());
-            return new PlayGameManual(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
-        }
-        if (s.equals("right")) {
-            KeyEventHandler handler = Grid2048Event.RIGHT.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard());
-            return new PlayGameManual(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
-        }
-        if (s.equals("down")) {
-            KeyEventHandler handler = Grid2048Event.DOWN.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard());
-            return new PlayGameManual(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
-        }
-        if (s.equals("up")) {
-            KeyEventHandler handler = Grid2048Event.UP.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard());
-            return new PlayGameManual(new Game2048(handler.getGrid2048(), handler.getScoreboard()));
-        } else {
-            return this;
-        }
+        KeyEventHandler handler = grid.handleKeyEventWithRandomTile(KeyEvent.from(s), scoreboard);
+        return new PlayGameManual(handler.getGrid2048(), handler.getScoreboard());
     }
 
     boolean isGameOver () {
-        Grid2048 gridUp = Grid2048Event.UP.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard()).getGrid2048();
-        Grid2048 gridDown = Grid2048Event.DOWN.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard()).getGrid2048();
-        Grid2048 gridRight = Grid2048Event.RIGHT.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard()).getGrid2048();
-        Grid2048 gridLeft = Grid2048Event.LEFT.buildKeyEventHandlerOnKeyEvent(game2048.getGrid2048(), game2048.getScoreboard()).getGrid2048();
+        Grid2048 gridUp = grid.handleKeyEventWithRandomTile(KeyEvent.UP, scoreboard).getGrid2048();
+        Grid2048 gridDown = grid.handleKeyEventWithRandomTile(KeyEvent.DOWN, scoreboard).getGrid2048();
+        Grid2048 gridRight = grid.handleKeyEventWithRandomTile(KeyEvent.RIGHT, scoreboard).getGrid2048();
+        Grid2048 gridLeft = grid.handleKeyEventWithRandomTile(KeyEvent.LEFT, scoreboard).getGrid2048();
 
-        return  gridUp.equals(game2048.getGrid2048())
-                && gridDown.equals(game2048.getGrid2048())
-                && gridRight.equals(game2048.getGrid2048())
-                && gridLeft.equals(game2048.getGrid2048());
-    }
-
-    public Game2048 getGame2048() {
-        return game2048;
+        return  gridUp.equals(grid)
+                && gridDown.equals(grid)
+                && gridRight.equals(grid)
+                && gridLeft.equals(grid);
     }
 }

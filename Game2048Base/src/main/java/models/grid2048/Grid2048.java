@@ -31,51 +31,100 @@ public class Grid2048 {
         this.grid = grid;
     }
 
-    public KeyEventHandler handleUpEvent(Scoreboard scoreboard, boolean addRandomTile) {
+    public KeyEventHandler handleKeyEventWithRandomTile(KeyEvent event, Scoreboard scoreboard) {
+        return switch (event) {
+            case UP -> handleUpEventWithRandomTile(scoreboard);
+            case DOWN -> handleDownEventWithRandomTile(scoreboard);
+            case LEFT -> handleLeftEventWithRandomTile(scoreboard);
+            case RIGHT -> handleRightEventWithRandomTile(scoreboard);
+            case NOUP -> new KeyEventHandler(false, this, scoreboard);
+        };
+    }
+
+    public KeyEventHandler handleKeyEventWithoutRandomTile(KeyEvent event, Scoreboard scoreboard) {
+        return switch (event) {
+            case UP -> handleUpEventWithoutRandomTile(scoreboard);
+            case DOWN -> handleDownEventWithoutRandomTile(scoreboard);
+            case LEFT -> handleLeftEventWithoutRandomTile(scoreboard);
+            case RIGHT -> handleRightEventWithoutRandomTile(scoreboard);
+            case NOUP -> new KeyEventHandler(false, this, scoreboard);
+        };
+    }
+
+    private KeyEventHandler handleUpEventWithRandomTile(Scoreboard scoreboard) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
         for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++ ) {
             Arrays.stream(grid[idxRow]).forEach((square) ->
                     handleCurrentSquareByUpdatingKeyEventHandler(square,"up", keyEventHandler));
         }
-        if (addRandomTile) {
-            createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
-        }
+        createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
         return keyEventHandler;
     }
 
-    public KeyEventHandler handleDownEvent(Scoreboard scoreboard, boolean addRandomTile) {
+    private KeyEventHandler handleDownEventWithRandomTile(Scoreboard scoreboard) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
         for (int idxRow = SQUARES_PER_AXIS - 1; idxRow >= 0; idxRow--) {
             Arrays.stream(grid[idxRow]).forEach((square) ->
                     handleCurrentSquareByUpdatingKeyEventHandler(square,"down", keyEventHandler));
         }
-        if (addRandomTile) {
-            createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
-        }
+        createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
         return keyEventHandler;
     }
 
-    public KeyEventHandler handleLeftEvent(Scoreboard scoreboard, boolean addRandomTile) {
+    private KeyEventHandler handleLeftEventWithRandomTile(Scoreboard scoreboard) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
         for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
             Arrays.stream(grid[idxRow]).forEach((square) ->
                     handleCurrentSquareByUpdatingKeyEventHandler(square, "left", keyEventHandler));
         }
-        if (addRandomTile) {
-            createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
-        }
+        createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
         return keyEventHandler;
     }
 
-    public KeyEventHandler handleRightEvent(Scoreboard scoreboard, boolean addRandomTile) {
+    private KeyEventHandler handleRightEventWithRandomTile(Scoreboard scoreboard) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
         for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
             for (int idxColumn = SQUARES_PER_AXIS - 1; idxColumn >= 0; idxColumn--) {
                 handleCurrentSquareByUpdatingKeyEventHandler(grid[idxRow][idxColumn],"right", keyEventHandler);
             }
         }
-        if (addRandomTile) {
-            createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
+        createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
+        return keyEventHandler;
+    }
+
+    private KeyEventHandler handleUpEventWithoutRandomTile(Scoreboard scoreboard) {
+        KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++ ) {
+            Arrays.stream(grid[idxRow]).forEach((square) ->
+                    handleCurrentSquareByUpdatingKeyEventHandler(square,"up", keyEventHandler));
+        }
+        return keyEventHandler;
+    }
+
+    private KeyEventHandler handleDownEventWithoutRandomTile(Scoreboard scoreboard) {
+        KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
+        for (int idxRow = SQUARES_PER_AXIS - 1; idxRow >= 0; idxRow--) {
+            Arrays.stream(grid[idxRow]).forEach((square) ->
+                    handleCurrentSquareByUpdatingKeyEventHandler(square,"down", keyEventHandler));
+        }
+        return keyEventHandler;
+    }
+
+    private KeyEventHandler handleLeftEventWithoutRandomTile(Scoreboard scoreboard) {
+        KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
+            Arrays.stream(grid[idxRow]).forEach((square) ->
+                    handleCurrentSquareByUpdatingKeyEventHandler(square, "left", keyEventHandler));
+        }
+        return keyEventHandler;
+    }
+
+    private KeyEventHandler handleRightEventWithoutRandomTile(Scoreboard scoreboard) {
+        KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
+            for (int idxColumn = SQUARES_PER_AXIS - 1; idxColumn >= 0; idxColumn--) {
+                handleCurrentSquareByUpdatingKeyEventHandler(grid[idxRow][idxColumn],"right", keyEventHandler);
+            }
         }
         return keyEventHandler;
     }
