@@ -49,6 +49,36 @@ public class Grid2048 {
         };
     }
 
+    public static void createRandomTileOnKeyEventHandler(KeyEventHandler keyEventHandler) {
+        Grid2048 grid2048 = keyEventHandler.getGrid2048();
+        Square[][] grid = grid2048.grid;
+
+        if (keyEventHandler.isTilesMoved()) {
+            Posn[] emptyTilePosnsArray = grid2048.getEmptyTilePosns().toArray(new Posn[0]);
+            int randomInt = new Random().nextInt(emptyTilePosnsArray.length);
+            Posn randomTilePosn = emptyTilePosnsArray[randomInt];
+            grid[randomTilePosn.x][randomTilePosn.y] = new Tile(Tile.weightedRandomTileValue(), randomTilePosn);
+        }
+        keyEventHandler.setGrid2048(new Grid2048(grid));
+    }
+
+    public WorldImage drawGrid() {
+        WorldImage resultGrid = GRID_IMAGE;
+        int dxOffset = -SQUARES_PER_AXIS/2;
+        int dyOffset = -SQUARES_PER_AXIS/2;
+
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
+            for (int idxColumn = 0; idxColumn < SQUARES_PER_AXIS; idxColumn++) {
+                Square s = grid[idxRow][idxColumn];
+                resultGrid = drawNextSquareOnGridByPosnOffset(resultGrid, s, dxOffset, dyOffset);
+                dxOffset ++;
+            }
+            dyOffset ++;
+            dxOffset = -SQUARES_PER_AXIS/2;
+        }
+        return resultGrid;
+    }
+
     private KeyEventHandler handleUpEventWithRandomTile(Scoreboard scoreboard) {
         KeyEventHandler keyEventHandler = initializeKeyEventMethods(scoreboard);
         for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++ ) {
@@ -233,19 +263,6 @@ public class Grid2048 {
         }
     }
 
-    public static void createRandomTileOnKeyEventHandler(KeyEventHandler keyEventHandler) {
-        Grid2048 grid2048 = keyEventHandler.getGrid2048();
-        Square[][] grid = grid2048.grid;
-
-        if (keyEventHandler.isTilesMoved()) {
-            Posn[] emptyTilePosnsArray = grid2048.getEmptyTilePosns().toArray(new Posn[0]);
-            int randomInt = new Random().nextInt(emptyTilePosnsArray.length);
-            Posn randomTilePosn = emptyTilePosnsArray[randomInt];
-            grid[randomTilePosn.x][randomTilePosn.y] = new Tile(Tile.weightedRandomTileValue(), randomTilePosn);
-        }
-        keyEventHandler.setGrid2048(new Grid2048(grid));
-    }
-
     private static KeyEventHandler initializeKeyEventMethods(Scoreboard scoreboard) {
         Square[][] grid = createEmptySquaresOnGrid();
         return new KeyEventHandler(false, new Grid2048(grid), scoreboard);
@@ -292,23 +309,6 @@ public class Grid2048 {
             result = new ArrayList<>(Arrays.asList(p1, p2));
         }
         return result;
-    }
-
-    public WorldImage drawGrid() {
-        WorldImage resultGrid = GRID_IMAGE;
-        int dxOffset = -SQUARES_PER_AXIS/2;
-        int dyOffset = -SQUARES_PER_AXIS/2;
-
-        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
-            for (int idxColumn = 0; idxColumn < SQUARES_PER_AXIS; idxColumn++) {
-                Square s = grid[idxRow][idxColumn];
-                resultGrid = drawNextSquareOnGridByPosnOffset(resultGrid, s, dxOffset, dyOffset);
-                dxOffset ++;
-            }
-            dyOffset ++;
-            dxOffset = -SQUARES_PER_AXIS/2;
-        }
-        return resultGrid;
     }
 
     private static WorldImage drawNextSquareOnGridByPosnOffset(WorldImage currentGrid, Square s, int dxOffset, int dyOffset) {
