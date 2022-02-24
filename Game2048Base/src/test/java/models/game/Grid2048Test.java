@@ -1,8 +1,6 @@
-package models.grid2048;
+package models.game;
 
 import javalib.worldimages.Posn;
-import models.game2048.KeyEventHandler;
-import models.game2048.Scoreboard;
 import models.square.*;
 import org.junit.Test;
 import java.util.ArrayList;

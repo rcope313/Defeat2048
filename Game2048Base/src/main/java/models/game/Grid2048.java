@@ -1,4 +1,4 @@
-package models.grid2048;
+package models.game;
 
 import com.google.common.annotations.VisibleForTesting;
 import javalib.worldimages.OutlineMode;
@@ -6,8 +6,6 @@ import javalib.worldimages.OverlayOffsetImage;
 import javalib.worldimages.Posn;
 import javalib.worldimages.RectangleImage;
 import javalib.worldimages.WorldImage;
-import models.game2048.KeyEventHandler;
-import models.game2048.Scoreboard;
 import models.square.EmptySquare;
 import models.square.Square;
 import models.square.Tile;
@@ -57,7 +55,7 @@ public class Grid2048 {
             Arrays.stream(grid[idxRow]).forEach((square) ->
                     handleCurrentSquareByUpdatingKeyEventHandler(square,"up", keyEventHandler));
         }
-        createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
+        createRandomTileOnKeyEventHandler(keyEventHandler);
         return keyEventHandler;
     }
 
@@ -67,7 +65,7 @@ public class Grid2048 {
             Arrays.stream(grid[idxRow]).forEach((square) ->
                     handleCurrentSquareByUpdatingKeyEventHandler(square,"down", keyEventHandler));
         }
-        createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
+        createRandomTileOnKeyEventHandler(keyEventHandler);
         return keyEventHandler;
     }
 
@@ -77,7 +75,7 @@ public class Grid2048 {
             Arrays.stream(grid[idxRow]).forEach((square) ->
                     handleCurrentSquareByUpdatingKeyEventHandler(square, "left", keyEventHandler));
         }
-        createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
+        createRandomTileOnKeyEventHandler(keyEventHandler);
         return keyEventHandler;
     }
 
@@ -88,7 +86,7 @@ public class Grid2048 {
                 handleCurrentSquareByUpdatingKeyEventHandler(grid[idxRow][idxColumn],"right", keyEventHandler);
             }
         }
-        createRandomTileOnKeyEventHandlerGrid2048(keyEventHandler);
+        createRandomTileOnKeyEventHandler(keyEventHandler);
         return keyEventHandler;
     }
 
@@ -235,7 +233,7 @@ public class Grid2048 {
         }
     }
 
-    public static void createRandomTileOnKeyEventHandlerGrid2048(KeyEventHandler keyEventHandler) {
+    public static void createRandomTileOnKeyEventHandler(KeyEventHandler keyEventHandler) {
         Grid2048 grid2048 = keyEventHandler.getGrid2048();
         Square[][] grid = grid2048.grid;
 

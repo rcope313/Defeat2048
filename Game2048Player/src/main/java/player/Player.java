@@ -1,31 +1,46 @@
-package manual;
+package player;
 
+import heuristic.GameHeuristic;
+import heuristic.PreferUpHeuristic;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
-import models.game2048.Game2048;
-import models.grid2048.KeyEvent;
-import models.game2048.KeyEventHandler;
-import models.game2048.Scoreboard;
-import models.grid2048.Grid2048;
+import models.game.KeyEvent;
+import models.game.KeyEventHandler;
+import models.game.Scoreboard;
+import models.game.Grid2048;
 import models.square.Square;
-import playgame.PlayGame;
-
 import java.awt.Color;
 
-public class PlayGameManual extends World implements PlayGame {
+public class Player extends World  {
+    int WINDOW_TEXT_SIZE = 100;
     private final Grid2048 grid;
     private final Scoreboard scoreboard;
+    private GameHeuristic heuristic;
+    private final static int WINDOW_SIZE = 6;
+    private final static int MANUAL_SPEED = 1;
+    private final static double HEURISTIC_SPEED = .1;
+    private final static int SCOREBOARD_POSN_OFFSET = 10;
 
-    public PlayGameManual(Grid2048 grid, Scoreboard scoreboard) {
+    public Player(Grid2048 grid, Scoreboard scoreboard) {
         this.grid = grid;
         this.scoreboard = scoreboard;
     }
 
+    public Player(Grid2048 grid, Scoreboard scoreboard, GameHeuristic heuristic) {
+        this.grid = grid;
+        this.scoreboard = scoreboard;
+        this.heuristic = heuristic;
+    }
+
     public static void main (String[] args) {
-        PlayGameManual g = new PlayGameManual(new Grid2048(), new Scoreboard(0));
-        g.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE,Square.SIDE_LENGTH * WINDOW_SIZE,MANUAL_SPEED);
+        Player player = new Player(new Grid2048(), new Scoreboard(0), new PreferUpHeuristic());
+        if (player.heuristic == null) {
+            player.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE, MANUAL_SPEED);
+        } else {
+            player.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE, HEURISTIC_SPEED);
+        }
     }
 
     @Override
@@ -33,6 +48,16 @@ public class PlayGameManual extends World implements PlayGame {
         WorldScene s = new WorldScene(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE);
         return s.placeImageXY(grid.drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE/2, Square.SIDE_LENGTH * WINDOW_SIZE/2)
                 .placeImageXY(scoreboard.drawScoreboard(), Scoreboard.WIDTH/2 + SCOREBOARD_POSN_OFFSET , Scoreboard.HEIGHT);
+    }
+
+    @Override
+    public World onTick() {
+        if (heuristic == null) {
+            return this;
+        }
+        KeyEventHandler handler = heuristic.evaluateNextGameState(grid, scoreboard);
+        Grid2048.createRandomTileOnKeyEventHandler(handler);
+        return new Player(handler.getGrid2048(), handler.getScoreboard(), heuristic);
     }
 
     @Override
@@ -51,8 +76,11 @@ public class PlayGameManual extends World implements PlayGame {
 
     @Override
     public World onKeyEvent(String s) {
+        if (heuristic != null) {
+            return this;
+        }
         KeyEventHandler handler = grid.handleKeyEventWithRandomTile(KeyEvent.from(s), scoreboard);
-        return new PlayGameManual(handler.getGrid2048(), handler.getScoreboard());
+        return new Player(handler.getGrid2048(), handler.getScoreboard());
     }
 
     boolean isGameOver () {

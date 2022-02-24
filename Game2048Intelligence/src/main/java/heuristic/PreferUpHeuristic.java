@@ -1,50 +1,46 @@
 package heuristic;
 
-import models.game2048.KeyEventHandler;
-import models.game2048.Scoreboard;
-import models.grid2048.Grid2048;
-import java.util.HashSet;
+import models.game.KeyEventHandler;
+import models.game.Scoreboard;
+import models.game.Grid2048;
+import models.game.KeyEvent;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PreferUpHeuristic extends GameHeuristic {
-    public PreferUpHeuristic(Grid2048 grid2048, Scoreboard scoreboard) {
-        super(grid2048, scoreboard);
-    }
-
-    public static void main (String[] args) {
-        HashSet<Integer[]> map = new HashSet<>();
-    }
 
     @Override
-    public KeyEventHandler evaluateNextGameState() {
-        KeyEventHandler[] eventSequence = establishKeyEventSequence();
+    public KeyEventHandler evaluateNextGameState(Grid2048 grid, Scoreboard scoreboard) {
+        ArrayList<KeyEventHandler> eventSequence = establishKeyEventSequence(grid, scoreboard);
         int idx = 0;
         while (idx < 4) {
-            if (eventSequence[idx].isTilesMoved()) {
-                return eventSequence[idx];
+            if (eventSequence.get(idx).isTilesMoved()) {
+                return eventSequence.get(idx);
             }
             idx++;
        }
         throw new IllegalStateException("Initial board empty or world ends");
     }
 
-    KeyEventHandler[] establishKeyEventSequence() {
-        KeyEventHandler[] eventSequence = new KeyEventHandler[4];
-        eventSequence[0] = getKeyEventUp();
-        eventSequence[3] =  getKeyEventDown();
-        this.assignLeftOrRightKeyEventAtRandom(eventSequence);
+    static ArrayList<KeyEventHandler> establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard) {
+        ArrayList<KeyEventHandler> eventSequence = new ArrayList<>();
+
+        eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.UP, scoreboard));
+        assignLeftOrRightKeyEventAtRandom(eventSequence, grid, scoreboard);
+        eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, scoreboard));
         return eventSequence;
     }
 
-    void assignLeftOrRightKeyEventAtRandom(KeyEventHandler[] eventSequence) {
+    static void assignLeftOrRightKeyEventAtRandom(ArrayList<KeyEventHandler> eventSequence, Grid2048 grid, Scoreboard scoreboard) {
         Random r = new Random();
         int randomInt = r.nextInt(2);
         if (randomInt == 0) {
-            eventSequence[1] = getKeyEventLeft();
-            eventSequence[2] = getKeyEventRight();
+            eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard));
+            eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, scoreboard));
         } else {
-            eventSequence[2] = getKeyEventLeft();
-            eventSequence[1] = getKeyEventRight();
+            eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, scoreboard));
+            eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard));
+
         }
     }
 

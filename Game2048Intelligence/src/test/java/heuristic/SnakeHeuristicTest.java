@@ -3,7 +3,7 @@
 //import models.game2048.Game2048;
 //import models.game2048.Scoreboard;
 //import javalib.worldimages.Posn;
-//import models.grid2048.Grid2048;
+//import models.game.Grid2048;
 //import models.square.Square;
 //import models.square.Tile;
 //import models.square.EmptySquare;

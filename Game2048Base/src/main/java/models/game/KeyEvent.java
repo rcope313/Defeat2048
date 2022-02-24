@@ -1,4 +1,4 @@
-package models.grid2048;
+package models.game;
 
 public enum KeyEvent {
     UP, DOWN, LEFT, RIGHT, NOUP;
