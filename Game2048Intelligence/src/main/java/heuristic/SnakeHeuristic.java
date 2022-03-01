@@ -73,23 +73,24 @@ public class SnakeHeuristic extends GameHeuristic {
 
     static int evaluateHeuristicScore(Grid2048 grid, int y , int x, int score) {
         Square square = grid.getSquareByCoordinates(y,x);
+        int squareValue = square.getValue();
         if (square.isTile()) {
-            if (x == 0 && y == 0) { return score + 1000000; }
-            else if (x == 1 && y == 0) { return score + 900000; }
-            else if (x == 2 && y == 0) { return score + 800000; }
-            else if (x == 3 && y == 0) { return score + 700000; }
-            else if (x == 3 && y == 1) { return score + 10000; }
-            else if (x == 2 && y == 1) { return score + 9000; }
-            else if (x == 1 && y == 1) { return score + 8000; }
-            else if (x == 0 && y == 1) { return score + 7000; }
-            else if (x == 0 && y == 2) { return score + 100; }
-            else if (x == 1 && y == 2) { return score + 90; }
-            else if (x == 2 && y == 2) { return score + 80; }
-            else if (x == 3 && y == 2) { return score + 70; }
-            else if (x == 3 && y == 3) { return score + 4; }
-            else if (x == 2 && y == 3) { return score + 3; }
-            else if (x == 1 && y == 3) { return score + 2; }
-            else if (x == 0 && y == 3) { return score + 1; }
+            if (x == 0 && y == 0) { return score + 10000 * squareValue; }
+            else if (x == 1 && y == 0) { return score + 9000 * squareValue; }
+            else if (x == 2 && y == 0) { return score + 8000 * squareValue; }
+            else if (x == 3 && y == 0) { return score + 7000 * squareValue; }
+            else if (x == 3 && y == 1) { return score + 1000 * squareValue; }
+            else if (x == 2 && y == 1) { return score + 900 * squareValue; }
+            else if (x == 1 && y == 1) { return score + 800 * squareValue; }
+            else if (x == 0 && y == 1) { return score + 700 * squareValue; }
+            else if (x == 0 && y == 2) { return score + 100 * squareValue; }
+            else if (x == 1 && y == 2) { return score + 90 * squareValue; }
+            else if (x == 2 && y == 2) { return score + 80 * squareValue; }
+            else if (x == 3 && y == 2) { return score + 70 * squareValue; }
+            else if (x == 3 && y == 3) { return score + 10 * squareValue; }
+            else if (x == 2 && y == 3) { return score + 9 * squareValue; }
+            else if (x == 1 && y == 3) { return score + 8 * squareValue; }
+            else if (x == 0 && y == 3) { return score + 7 * squareValue; }
             else {
                 return 0;
             }

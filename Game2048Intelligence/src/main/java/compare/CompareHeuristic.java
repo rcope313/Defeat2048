@@ -12,8 +12,8 @@ import models.game.Scoreboard;
 public class CompareHeuristic {
 
     public static void main(String[] args) {
-        HeuristicComparison comparison = getHeuristicComparison(new PreferUpHeuristic(), 50);
-        System.out.print("PreferUp Heuristic \n");
+        HeuristicComparison comparison = getHeuristicComparison(new SnakeHeuristic(), 50);
+        System.out.print("Snake Heuristic \n");
         System.out.print("Highest Score: " + comparison.getHighestScore() + "\n");
         System.out.print("Average Score: " + comparison.getAverageScore() + "\n");
     }

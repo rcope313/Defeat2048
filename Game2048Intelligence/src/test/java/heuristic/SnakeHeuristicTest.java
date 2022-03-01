@@ -120,28 +120,19 @@ public class SnakeHeuristicTest {
     @Test
     public void itEstablishesKeyEventSequence() {
         this.initData();
-        KeyEventHandler upHandler = g1.handleKeyEventWithoutRandomTile(KeyEvent.UP, new Scoreboard(0));
-        KeyEventHandler downHandler = g1.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, new Scoreboard(0));
-        KeyEventHandler leftHandler = g1.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, new Scoreboard(0));
-        KeyEventHandler rightHandler = g1.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, new Scoreboard(0));
         Map<Integer, KeyEventHandler> handlerMap =  new HashMap<>();
         ArrayList<Integer> scores = new ArrayList<>();
-
         establishKeyEventSequence(g1, new Scoreboard(0), handlerMap, scores);
 
-        assertThat(scores.get(0)).isEqualTo(3407000);
-        assertThat(scores.get(1)).isEqualTo(1015101);
-        assertThat(scores.get(2)).isEqualTo(719074);
-        assertThat(scores.get(3)).isEqualTo(110);
+        assertThat(scores.get(0)).isEqualTo(155400);
+        assertThat(scores.get(1)).isEqualTo(49414);
+        assertThat(scores.get(2)).isEqualTo(39760);
+        assertThat(scores.get(3)).isEqualTo(538);
     }
 
     @Test
     public void itEstablishesKeyEventSequenceOnEmptyBoard() {
         this.initData();
-        KeyEventHandler upHandler = g0.handleKeyEventWithoutRandomTile(KeyEvent.UP, new Scoreboard(0));
-        KeyEventHandler downHandler = g0.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, new Scoreboard(0));
-        KeyEventHandler leftHandler = g0.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, new Scoreboard(0));
-        KeyEventHandler rightHandler = g0.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, new Scoreboard(0));
         Map<Integer, KeyEventHandler> handlerMap =  new HashMap<>();
         ArrayList<Integer> scores = new ArrayList<>();
 
