@@ -2,6 +2,7 @@ package player;
 
 import heuristic.GameHeuristic;
 import heuristic.PreferUpHeuristic;
+import heuristic.SnakeHeuristic;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
 import javalib.worldimages.TextImage;
@@ -35,7 +36,7 @@ public class Player extends World  {
     }
 
     public static void main (String[] args) {
-        Player player = new Player(new Grid2048(), new Scoreboard(0), new PreferUpHeuristic());
+        Player player = new Player(new Grid2048(), new Scoreboard(0), new SnakeHeuristic());
         if (player.heuristic == null) {
             player.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE, MANUAL_SPEED);
         } else {

@@ -1,59 +1,100 @@
-//package heuristic;
-//
-//import javalib.worldimages.Posn;
-//import models.HeuristicScore;
-//import models.game2048.Game2048;
-//import models.game2048.KeyEventHandler;
-//import models.square.Square;
-//import java.util.Arrays;
-//
-//public class  SnakeHeuristic extends GameHeuristic {
-//    public SnakeHeuristic(Game2048 game2048) {
-//        super(game2048);
-//    }
-//
-//    @Override
-//    public KeyEventHandler evaluateNextGameState() {
-//        return null;
-//    }
-//
-//    @Override
-//    public int evaluateGameStateHeuristicScore(Game2048 game) {
-//        HeuristicScore score = new HeuristicScore();
-//        score.setValue(0);
-//
-//        for (Square[] row : game.getGrid2048().getGrid()) {
-//            Arrays.stream(row).forEach((square) -> getHeuristicScoreSquare(square, score));
-//        }
-//        return score.getValue();
-//    }
-//
-//    static void getHeuristicScoreSquare (Square square, HeuristicScore score) {
-//        if (square.isTile()) {
-//            getHeuristicScoreTile(square, score);
-//        }
-//    }
-//
-//    static void getHeuristicScoreTile (Square square, HeuristicScore score) {
-//        int currentScore = score.getValue();
-//        if (square.getPosition().equals(new Posn(0,0))) { score.setValue(1000000 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(0,1))) { score.setValue(900000 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(0,2))) { score.setValue(800000 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(0,3))) { score.setValue(700000 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(1,3))) { score.setValue(10000 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(1,2))) { score.setValue(9000 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(1,1))) { score.setValue(8000 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(1,0))) { score.setValue(7000 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(2,0))) { score.setValue(100 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(2,1))) { score.setValue(90 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(2,2))) { score.setValue(80 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(2,3))) { score.setValue(70 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(3,3))) { score.setValue(4 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(3,2))) { score.setValue(3 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(3,1))) { score.setValue(2 + currentScore); }
-//        else if (square.getPosition().equals(new Posn(3,0))) { score.setValue(1 + currentScore); }
-//        else {
-//            throw new IllegalStateException("Invalid posn of tile");
-//        }
-//    }
-//}
+package heuristic;
+
+import models.HeuristicScore;
+import models.game.Grid2048;
+import models.game.KeyEvent;
+import models.game.KeyEventHandler;
+import models.game.Scoreboard;
+import models.square.Square;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class SnakeHeuristic extends GameHeuristic {
+
+    @Override
+    public KeyEventHandler evaluateNextGameState(Grid2048 grid, Scoreboard scoreboard) {
+        Map<Integer, KeyEventHandler> handlerMap =  new HashMap<>();
+        ArrayList<Integer> scores = new ArrayList<>();
+
+        establishKeyEventSequence(grid, scoreboard, handlerMap, scores);
+        for (int idx = 0; idx < scores.size(); idx++) {
+            int currentScore = scores.get(idx);
+            if (handlerMap.get(currentScore).isTilesMoved()) {
+                return handlerMap.get(currentScore);
+            }
+            if (idx == scores.size() - 1) {
+                return handlerMap.get(currentScore);
+            }
+        }
+        throw new IllegalStateException("Unable to evaluate next game state");
+    }
+
+    static void establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard, Map<Integer, KeyEventHandler> handlerMap, List<Integer> scores) {
+        KeyEventHandler upHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.UP, scoreboard);
+        KeyEventHandler downHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, scoreboard);
+        KeyEventHandler leftHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard);
+        KeyEventHandler rightHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, scoreboard);
+
+        HeuristicScore upScore = evaluateHeuristicScore(upHandler.getGrid2048());
+        HeuristicScore downScore = evaluateHeuristicScore(downHandler.getGrid2048());
+        HeuristicScore leftScore = evaluateHeuristicScore(leftHandler.getGrid2048());
+        HeuristicScore rightScore = evaluateHeuristicScore(rightHandler.getGrid2048());
+
+        handlerMap.put(upScore.getValue(), upHandler);
+        handlerMap.put(downScore.getValue(), downHandler);
+        handlerMap.put(leftScore.getValue(), leftHandler);
+        handlerMap.put(rightScore.getValue(), rightHandler);
+
+        scores.add(upScore.getValue());
+        scores.add(downScore.getValue());
+        scores.add(leftScore.getValue());
+        scores.add(rightScore.getValue());
+        scores.sort(Comparator.reverseOrder());
+    }
+
+    static HeuristicScore evaluateHeuristicScore(Grid2048 grid) {
+        HeuristicScore score = new HeuristicScore(0);
+        int y = 0;
+        int x = 0;
+
+        while (y < Grid2048.SQUARES_PER_AXIS) {
+            while (x < Grid2048.SQUARES_PER_AXIS) {
+                score = new HeuristicScore(evaluateHeuristicScore(grid, y, x, score.getValue()));
+                x++;
+            }
+            y++;
+            x = 0;
+        }
+        return score;
+    }
+
+    static int evaluateHeuristicScore(Grid2048 grid, int y , int x, int score) {
+        Square square = grid.getSquareByCoordinates(y,x);
+        if (square.isTile()) {
+            if (x == 0 && y == 0) { return score + 1000000; }
+            else if (x == 1 && y == 0) { return score + 900000; }
+            else if (x == 2 && y == 0) { return score + 800000; }
+            else if (x == 3 && y == 0) { return score + 700000; }
+            else if (x == 3 && y == 1) { return score + 10000; }
+            else if (x == 2 && y == 1) { return score + 9000; }
+            else if (x == 1 && y == 1) { return score + 8000; }
+            else if (x == 0 && y == 1) { return score + 7000; }
+            else if (x == 0 && y == 2) { return score + 100; }
+            else if (x == 1 && y == 2) { return score + 90; }
+            else if (x == 2 && y == 2) { return score + 80; }
+            else if (x == 3 && y == 2) { return score + 70; }
+            else if (x == 3 && y == 3) { return score + 4; }
+            else if (x == 2 && y == 3) { return score + 3; }
+            else if (x == 1 && y == 3) { return score + 2; }
+            else if (x == 0 && y == 3) { return score + 1; }
+            else {
+                return 0;
+            }
+        } else {
+            return score;
+        }
+    }
+}

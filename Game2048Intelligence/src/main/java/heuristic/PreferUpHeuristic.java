@@ -24,7 +24,6 @@ public class PreferUpHeuristic extends GameHeuristic {
 
     static ArrayList<KeyEventHandler> establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard) {
         ArrayList<KeyEventHandler> eventSequence = new ArrayList<>();
-
         eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.UP, scoreboard));
         assignLeftOrRightKeyEventAtRandom(eventSequence, grid, scoreboard);
         eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, scoreboard));
@@ -40,9 +39,6 @@ public class PreferUpHeuristic extends GameHeuristic {
         } else {
             eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, scoreboard));
             eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard));
-
         }
     }
-
 }
-

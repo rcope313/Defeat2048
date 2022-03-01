@@ -19,7 +19,7 @@ public class Grid2048 {
     @VisibleForTesting
     final Square[][] grid;
     private final static WorldImage GRID_IMAGE = new RectangleImage(Square.SIDE_LENGTH * 4, Square.SIDE_LENGTH * 4, OutlineMode.OUTLINE, Color.BLACK);
-    private final static int SQUARES_PER_AXIS = 4;
+    public final static int SQUARES_PER_AXIS = 4;
 
     public Grid2048() {
         this.grid = initializeStartingGrid();
@@ -77,6 +77,13 @@ public class Grid2048 {
             dxOffset = -SQUARES_PER_AXIS/2;
         }
         return resultGrid;
+    }
+
+    public Square getSquareByCoordinates(int y, int x) {
+        if (x >= SQUARES_PER_AXIS || y >= SQUARES_PER_AXIS || x < 0 || y < 0) {
+            throw new IllegalStateException("Invalid coordinates");
+        }
+        return grid[y][x];
     }
 
     private KeyEventHandler handleUpEventWithRandomTile(Scoreboard scoreboard) {
