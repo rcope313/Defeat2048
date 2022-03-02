@@ -32,7 +32,24 @@ public class SnakeHeuristic extends GameHeuristic {
         throw new IllegalStateException("Unable to evaluate next game state");
     }
 
-    static void establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard, Map<Integer, KeyEventHandler> handlerMap, List<Integer> scores) {
+    @Override
+    public HeuristicScore evaluateHeuristicScore(Grid2048 grid) {
+        HeuristicScore score = new HeuristicScore(0);
+        int y = 0;
+        int x = 0;
+
+        while (y < Grid2048.SQUARES_PER_AXIS) {
+            while (x < Grid2048.SQUARES_PER_AXIS) {
+                score = new HeuristicScore(evaluateHeuristicScore(grid, y, x, score.getValue()));
+                x++;
+            }
+            y++;
+            x = 0;
+        }
+        return score;
+    }
+
+    void establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard, Map<Integer, KeyEventHandler> handlerMap, List<Integer> scores) {
         KeyEventHandler upHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.UP, scoreboard);
         KeyEventHandler downHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, scoreboard);
         KeyEventHandler leftHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard);
@@ -53,22 +70,6 @@ public class SnakeHeuristic extends GameHeuristic {
         scores.add(leftScore.getValue());
         scores.add(rightScore.getValue());
         scores.sort(Comparator.reverseOrder());
-    }
-
-    static HeuristicScore evaluateHeuristicScore(Grid2048 grid) {
-        HeuristicScore score = new HeuristicScore(0);
-        int y = 0;
-        int x = 0;
-
-        while (y < Grid2048.SQUARES_PER_AXIS) {
-            while (x < Grid2048.SQUARES_PER_AXIS) {
-                score = new HeuristicScore(evaluateHeuristicScore(grid, y, x, score.getValue()));
-                x++;
-            }
-            y++;
-            x = 0;
-        }
-        return score;
     }
 
     static int evaluateHeuristicScore(Grid2048 grid, int y , int x, int score) {
