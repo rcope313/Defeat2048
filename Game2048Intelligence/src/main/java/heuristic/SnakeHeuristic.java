@@ -49,16 +49,16 @@ public class SnakeHeuristic extends GameHeuristic {
         return score;
     }
 
-    void establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard, Map<Integer, KeyEventHandler> handlerMap, List<Integer> scores) {
+    static void establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard, Map<Integer, KeyEventHandler> handlerMap, List<Integer> scores) {
         KeyEventHandler upHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.UP, scoreboard);
         KeyEventHandler downHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, scoreboard);
         KeyEventHandler leftHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard);
         KeyEventHandler rightHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, scoreboard);
 
-        HeuristicScore upScore = evaluateHeuristicScore(upHandler.getGrid2048());
-        HeuristicScore downScore = evaluateHeuristicScore(downHandler.getGrid2048());
-        HeuristicScore leftScore = evaluateHeuristicScore(leftHandler.getGrid2048());
-        HeuristicScore rightScore = evaluateHeuristicScore(rightHandler.getGrid2048());
+        HeuristicScore upScore = new SnakeHeuristic().evaluateHeuristicScore(upHandler.getGrid2048());
+        HeuristicScore downScore = new SnakeHeuristic().evaluateHeuristicScore(downHandler.getGrid2048());
+        HeuristicScore leftScore = new SnakeHeuristic().evaluateHeuristicScore(leftHandler.getGrid2048());
+        HeuristicScore rightScore = new SnakeHeuristic().evaluateHeuristicScore(rightHandler.getGrid2048());
 
         handlerMap.put(upScore.getValue(), upHandler);
         handlerMap.put(downScore.getValue(), downHandler);

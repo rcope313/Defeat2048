@@ -1,5 +1,6 @@
 package heuristic;
 
+import models.HeuristicScore;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import models.game.Grid2048;
@@ -20,6 +21,11 @@ public class PreferUpHeuristic extends GameHeuristic {
             idx++;
        }
         throw new IllegalStateException("Initial board empty or world ends");
+    }
+
+    @Override
+    public HeuristicScore evaluateHeuristicScore(Grid2048 grid) {
+        return null;
     }
 
     static ArrayList<KeyEventHandler> establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard) {

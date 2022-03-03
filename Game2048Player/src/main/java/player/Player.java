@@ -5,13 +5,17 @@ import heuristic.PreferUpHeuristic;
 import heuristic.SnakeHeuristic;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
+import javalib.worldimages.Posn;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import models.game.KeyEvent;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import models.game.Grid2048;
+import models.square.EmptySquare;
 import models.square.Square;
+import models.square.Tile;
+
 import java.awt.Color;
 
 public class Player extends World  {
@@ -36,7 +40,7 @@ public class Player extends World  {
     }
 
     public static void main (String[] args) {
-        Player player = new Player(new Grid2048(), new Scoreboard(0), new SnakeHeuristic());
+        Player player = new Player(new Grid2048(), new Scoreboard(0));
         if (player.heuristic == null) {
             player.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE, MANUAL_SPEED);
         } else {
