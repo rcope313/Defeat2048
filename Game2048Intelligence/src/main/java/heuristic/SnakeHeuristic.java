@@ -50,10 +50,10 @@ public class SnakeHeuristic extends GameHeuristic {
     }
 
     static void establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard, Map<Integer, KeyEventHandler> handlerMap, List<Integer> scores) {
-        KeyEventHandler upHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.UP, scoreboard);
-        KeyEventHandler downHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, scoreboard);
-        KeyEventHandler leftHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard);
-        KeyEventHandler rightHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, scoreboard);
+        KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
+        KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
+        KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard);
+        KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
 
         HeuristicScore upScore = new SnakeHeuristic().evaluateHeuristicScore(upHandler.getGrid2048());
         HeuristicScore downScore = new SnakeHeuristic().evaluateHeuristicScore(downHandler.getGrid2048());

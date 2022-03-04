@@ -97,12 +97,12 @@ public class SnakeHeuristicTest {
     @Test
     public void itEvaluatesNextGameState() {
         this.initData();
-        KeyEventHandler upHandler = g1.handleKeyEventWithoutRandomTile(KeyEvent.UP, new Scoreboard(0));
+        KeyEventHandler upHandler = g1.handleKeyEvent(KeyEvent.UP, new Scoreboard(0));
         assertThat(new SnakeHeuristic().evaluateNextGameState(g1, new Scoreboard(0)))
                 .usingRecursiveComparison()
                 .isEqualTo(upHandler);
 
-        KeyEventHandler leftHandler = g2.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, new Scoreboard(0));
+        KeyEventHandler leftHandler = g2.handleKeyEvent(KeyEvent.LEFT, new Scoreboard(0));
         assertThat(new SnakeHeuristic().evaluateNextGameState(g2, new Scoreboard(0)))
                 .usingRecursiveComparison()
                 .isEqualTo(leftHandler);
@@ -111,7 +111,7 @@ public class SnakeHeuristicTest {
     @Test
     public void itEvaluatesNextGameStateOnEmptyBoard() {
         this.initData();
-        KeyEventHandler upHandler = g0.handleKeyEventWithoutRandomTile(KeyEvent.UP, new Scoreboard(0));
+        KeyEventHandler upHandler = g0.handleKeyEvent(KeyEvent.UP, new Scoreboard(0));
         assertThat(new SnakeHeuristic().evaluateNextGameState(g0, new Scoreboard(0)))
                 .usingRecursiveComparison()
                 .isEqualTo(upHandler);

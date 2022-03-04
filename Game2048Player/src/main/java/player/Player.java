@@ -1,20 +1,15 @@
 package player;
 
 import heuristic.GameHeuristic;
-import heuristic.PreferUpHeuristic;
-import heuristic.SnakeHeuristic;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
-import javalib.worldimages.Posn;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import models.game.KeyEvent;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import models.game.Grid2048;
-import models.square.EmptySquare;
 import models.square.Square;
-import models.square.Tile;
 
 import java.awt.Color;
 
@@ -61,7 +56,7 @@ public class Player extends World  {
             return this;
         }
         KeyEventHandler handler = heuristic.evaluateNextGameState(grid, scoreboard);
-        Grid2048.createRandomTileOnKeyEventHandler(handler);
+        Grid2048.addRandomTileOnKeyEventHandler(handler);
         return new Player(handler.getGrid2048(), handler.getScoreboard(), heuristic);
     }
 
@@ -84,19 +79,20 @@ public class Player extends World  {
         if (heuristic != null) {
             return this;
         }
-        KeyEventHandler handler = grid.handleKeyEventWithRandomTile(KeyEvent.from(s), scoreboard);
+        KeyEventHandler handler = grid.handleKeyEvent(KeyEvent.from(s), scoreboard);
+        Grid2048.addRandomTileOnKeyEventHandler(handler);
         return new Player(handler.getGrid2048(), handler.getScoreboard());
     }
 
     boolean isGameOver () {
-        Grid2048 gridUp = grid.handleKeyEventWithRandomTile(KeyEvent.UP, scoreboard).getGrid2048();
-        Grid2048 gridDown = grid.handleKeyEventWithRandomTile(KeyEvent.DOWN, scoreboard).getGrid2048();
-        Grid2048 gridRight = grid.handleKeyEventWithRandomTile(KeyEvent.RIGHT, scoreboard).getGrid2048();
-        Grid2048 gridLeft = grid.handleKeyEventWithRandomTile(KeyEvent.LEFT, scoreboard).getGrid2048();
+        KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
+        KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
+        KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
+        KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard);
 
-        return  gridUp.equals(grid)
-                && gridDown.equals(grid)
-                && gridRight.equals(grid)
-                && gridLeft.equals(grid);
+        return  !upHandler.isTilesMoved() &&
+                !downHandler.isTilesMoved() &&
+                !leftHandler.isTilesMoved() &&
+                !rightHandler.isTilesMoved();
     }
 }

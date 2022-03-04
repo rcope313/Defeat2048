@@ -1,7 +1,6 @@
 package compare;
 
 import heuristic.GameHeuristic;
-import heuristic.PreferUpHeuristic;
 import heuristic.SnakeHeuristic;
 import models.HeuristicComparison;
 import models.game.Grid2048;
@@ -44,19 +43,19 @@ public class CompareHeuristic {
             return board.getPoints();
         }
         KeyEventHandler handler = heuristic.evaluateNextGameState(grid, board);
-        Grid2048.createRandomTileOnKeyEventHandler(handler);
+        Grid2048.addRandomTileOnKeyEventHandler(handler);
         return completePlayerCycle(heuristic, handler.getGrid2048(), handler.getScoreboard());
     }
 
     static boolean isGameOver(Grid2048 grid, Scoreboard scoreboard) {
-        Grid2048 gridUp = grid.handleKeyEventWithRandomTile(KeyEvent.UP, scoreboard).getGrid2048();
-        Grid2048 gridDown = grid.handleKeyEventWithRandomTile(KeyEvent.DOWN, scoreboard).getGrid2048();
-        Grid2048 gridRight = grid.handleKeyEventWithRandomTile(KeyEvent.RIGHT, scoreboard).getGrid2048();
-        Grid2048 gridLeft = grid.handleKeyEventWithRandomTile(KeyEvent.LEFT, scoreboard).getGrid2048();
+        KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
+        KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
+        KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
+        KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard);
 
-        return  gridUp.equals(grid)
-                && gridDown.equals(grid)
-                && gridRight.equals(grid)
-                && gridLeft.equals(grid);
+        return  !upHandler.isTilesMoved() &&
+                !downHandler.isTilesMoved() &&
+                !leftHandler.isTilesMoved() &&
+                !rightHandler.isTilesMoved();
     }
 }

@@ -80,10 +80,10 @@ public class GameStateTree {
     private static void buildChildrenOfGameStateTree(GameStateTree currentNode) {
         Grid2048 grid = currentNode.handler.getGrid2048();
         Scoreboard scoreboard = currentNode.handler.getScoreboard();
-        KeyEventHandler upHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.UP, scoreboard);
-        KeyEventHandler leftHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard);
-        KeyEventHandler rightHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, scoreboard);
-        KeyEventHandler downHandler = grid.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, scoreboard);
+        KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
+        KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard);
+        KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
+        KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
 
         if (upHandler.isTilesMoved()) {
             currentNode.children.add(new GameStateTree(upHandler, KeyEvent.UP, new ArrayList<>(), currentNode));
