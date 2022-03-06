@@ -133,6 +133,7 @@ public class Grid2048Test {
         this.initData();
         KeyEventHandler handler = g0.handleKeyEvent(KeyEvent.UP, new Scoreboard(0));
         Square[][] resultGrid = handler.getGrid2048().grid;
+        assertThat(handler.isTilesMoved()).isTrue();
         assertThat(handler.getScoreboard().getPoints()).isEqualTo(4);
         assertThat(resultGrid[0][1].getValue()).isEqualTo(4);
         assertThat(resultGrid[0][2].getValue()).isEqualTo(2);
@@ -144,6 +145,7 @@ public class Grid2048Test {
         this.initData();
         KeyEventHandler handler = gNoTilesMovedUpLeftRight.handleKeyEvent(KeyEvent.UP, new Scoreboard(100));
         Square[][] resultGrid = handler.getGrid2048().grid;
+        assertThat(handler.isTilesMoved()).isFalse();
         assertThat(handler.getScoreboard().getPoints()).isEqualTo(100);
         assertThat(resultGrid[0][0].getValue()).isEqualTo(2);
         assertThat(resultGrid[0][1].getValue()).isEqualTo(4);
@@ -160,6 +162,7 @@ public class Grid2048Test {
         this.initData();
         KeyEventHandler handler = g0.handleKeyEvent(KeyEvent.DOWN, new Scoreboard(0));
         Square[][] resultGrid = handler.getGrid2048().grid;
+        assertThat(handler.isTilesMoved()).isTrue();
         assertThat(handler.getScoreboard().getPoints()).isEqualTo(4);
         assertThat(resultGrid[3][1].getValue()).isEqualTo(4);
         assertThat(resultGrid[3][2].getValue()).isEqualTo(2);
@@ -171,6 +174,7 @@ public class Grid2048Test {
         this.initData();
         KeyEventHandler handler = gNoTilesMovedDownLeftRight.handleKeyEvent(KeyEvent.DOWN, new Scoreboard(100));
         Square[][] resultGrid = handler.getGrid2048().grid;
+        assertThat(handler.isTilesMoved()).isFalse();
         assertThat(handler.getScoreboard().getPoints()).isEqualTo(100);
         assertThat(resultGrid[2][0].getValue()).isEqualTo(2);
         assertThat(resultGrid[2][1].getValue()).isEqualTo(4);
@@ -187,6 +191,7 @@ public class Grid2048Test {
         this.initData();
         KeyEventHandler handler = g0.handleKeyEvent(KeyEvent.LEFT, new Scoreboard(0));
         Square[][] resultGrid = handler.getGrid2048().grid;
+        assertThat(handler.isTilesMoved()).isTrue();
         assertThat(handler.getScoreboard().getPoints()).isEqualTo(4);
         assertThat(resultGrid[0][0].getValue()).isEqualTo(2);
         assertThat(resultGrid[1][0].getValue()).isEqualTo(4);
@@ -198,6 +203,7 @@ public class Grid2048Test {
         this.initData();
         KeyEventHandler handler = gNoTilesMovedUpLeftRight.handleKeyEvent(KeyEvent.LEFT, new Scoreboard(100));
         Square[][] resultGrid = handler.getGrid2048().grid;
+        assertThat(handler.isTilesMoved()).isFalse();
         assertThat(handler.getScoreboard().getPoints()).isEqualTo(100);
         assertThat(resultGrid[0][0].getValue()).isEqualTo(2);
         assertThat(resultGrid[0][1].getValue()).isEqualTo(4);
@@ -214,6 +220,7 @@ public class Grid2048Test {
         this.initData();
         KeyEventHandler handler = g0.handleKeyEvent(KeyEvent.RIGHT, new Scoreboard(0));
         Square[][] resultGrid = handler.getGrid2048().grid;
+        assertThat(handler.isTilesMoved()).isTrue();
         assertThat(handler.getScoreboard().getPoints()).isEqualTo(4);
         assertThat(resultGrid[0][3].getValue()).isEqualTo(2);
         assertThat(resultGrid[1][3].getValue()).isEqualTo(4);
@@ -225,6 +232,7 @@ public class Grid2048Test {
         this.initData();
         KeyEventHandler handler = gNoTilesMovedUpLeftRight.handleKeyEvent(KeyEvent.RIGHT, new Scoreboard(100));
         Square[][] resultGrid = handler.getGrid2048().grid;
+        assertThat(handler.isTilesMoved()).isFalse();
         assertThat(handler.getScoreboard().getPoints()).isEqualTo(100);
         assertThat(resultGrid[0][0].getValue()).isEqualTo(2);
         assertThat(resultGrid[0][1].getValue()).isEqualTo(4);
@@ -238,7 +246,24 @@ public class Grid2048Test {
 
     @Test
     public void itAddsRandomTileToKeyEventHandler() {
+        this.initData();
+        KeyEventHandler handler = g0.handleKeyEvent(KeyEvent.UP, new Scoreboard(100));
+        Grid2048.addRandomTileOnKeyEventHandler(handler);
+        Square[][] resultGrid = handler.getGrid2048().grid;
 
+        List<Square> resultList = new ArrayList<>();
+        resultList.addAll(Arrays.stream(resultGrid[0]).filter(Square::isTile).collect(Collectors.toList()));
+        resultList.addAll(Arrays.stream(resultGrid[1]).filter(Square::isTile).collect(Collectors.toList()));
+        resultList.addAll(Arrays.stream(resultGrid[2]).filter(Square::isTile).collect(Collectors.toList()));
+        resultList.addAll(Arrays.stream(resultGrid[3]).filter(Square::isTile).collect(Collectors.toList()));
+        assertThat(resultList.size()).isEqualTo(4);
+    }
+
+    @Test
+    public void itCreatesACopyOfAGrid() {
+        this.initData();
+        Grid2048 copyGrid = g0.createGridCopy();
+        assertThat(g0).usingRecursiveComparison().isEqualTo(copyGrid);
     }
 
     @Test
