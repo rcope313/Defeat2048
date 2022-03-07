@@ -77,7 +77,7 @@ public class Grid2048 {
     }
 
     private KeyEventHandler handleUpEvent(Scoreboard scoreboard) {
-        Boolean[][] tilesChanged = initializeTilesChanged();
+        HashSet<Posn> tilesChanged = new HashSet<>();
         KeyEventHandler resultHandler = new KeyEventHandler(false, createGridCopy(), scoreboard);
 
         for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
@@ -92,7 +92,7 @@ public class Grid2048 {
     }
 
     private KeyEventHandler handleDownEvent(Scoreboard scoreboard) {
-        Boolean[][] tilesChanged = initializeTilesChanged();
+        HashSet<Posn> tilesChanged = new HashSet<>();
         KeyEventHandler resultHandler = new KeyEventHandler(false, createGridCopy(), scoreboard);
 
         for (int idxRow = SQUARES_PER_AXIS - 1; idxRow >= 0; idxRow--) {
@@ -107,7 +107,7 @@ public class Grid2048 {
     }
 
     private KeyEventHandler handleLeftEvent(Scoreboard scoreboard) {
-        Boolean[][] tilesChanged = initializeTilesChanged();
+        HashSet<Posn> tilesChanged = new HashSet<>();
         KeyEventHandler resultHandler = new KeyEventHandler(false, createGridCopy(), scoreboard);
 
         for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
@@ -122,10 +122,10 @@ public class Grid2048 {
     }
 
     private KeyEventHandler handleRightEvent(Scoreboard scoreboard) {
-        Boolean[][] tilesChanged = initializeTilesChanged();
+        HashSet<Posn> tilesChanged = new HashSet<>();
         KeyEventHandler resultHandler = new KeyEventHandler(false, createGridCopy(), scoreboard);
 
-        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS - 1; idxRow++) {
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow++) {
             for (int idxCol = SQUARES_PER_AXIS - 1; idxCol >= 0; idxCol--) {
                 Grid2048 resultGrid = resultHandler.getGrid2048();
                 if (resultGrid.grid[idxRow][idxCol] instanceof Tile) {
@@ -136,16 +136,16 @@ public class Grid2048 {
         return resultHandler;
     }
 
-    private void moveTileUp(int idxRow, int idxCol, Boolean[][] tilesChanged, KeyEventHandler handler) {
+    private void moveTileUp(int idxRow, int idxCol, HashSet<Posn> tilesChanged, KeyEventHandler handler) {
         Square square = this.getSquareByCoordinates(idxCol, idxRow);
 
         while (idxRow > 0) {
             Square squareUp = this.grid[idxRow - 1][idxCol];
             this.grid[idxRow][idxCol] = new EmptySquare(new Posn(idxCol, idxRow));
             if (squareUp.isTile()) {
-                if (squareUp.getValue() == square.getValue() && !tilesChanged[idxRow - 1][idxCol]) {
+                if (squareUp.getValue() == square.getValue() && !tilesChanged.contains(new Posn(idxRow - 1, idxCol))) {
                     this.grid[idxRow - 1][idxCol] = new Tile(square.getValue() * 2, new Posn(idxCol, idxRow - 1));
-                    tilesChanged[idxRow - 1][idxCol] = true;
+                    tilesChanged.add(new Posn(idxRow - 1, idxCol));
                     handler.setScoreboard(new Scoreboard(handler.getScoreboard().getPoints() + square.getValue() * 2));
                     handler.setTilesMoved(true);
                 } else {
@@ -161,16 +161,16 @@ public class Grid2048 {
         }
     }
 
-    private void moveTileDown(int idxRow, int idxCol, Boolean[][] tilesChanged, KeyEventHandler handler) {
+    private void moveTileDown(int idxRow, int idxCol, HashSet<Posn> tilesChanged, KeyEventHandler handler) {
         Square square = this.getSquareByCoordinates(idxCol, idxRow);
 
         while (idxRow < SQUARES_PER_AXIS - 1) {
             Square squareDown = this.grid[idxRow + 1][idxCol];
             this.grid[idxRow][idxCol] = new EmptySquare(new Posn(idxCol, idxRow));
             if (squareDown.isTile()) {
-                if (squareDown.getValue() == square.getValue() && !tilesChanged[idxRow + 1][idxCol]) {
+                if (squareDown.getValue() == square.getValue() && !tilesChanged.contains(new Posn(idxRow + 1, idxCol))) {
                     this.grid[idxRow + 1][idxCol] = new Tile(square.getValue() * 2, new Posn(idxCol, idxRow + 1));
-                    tilesChanged[idxRow + 1][idxCol] = true;
+                    tilesChanged.add(new Posn(idxRow + 1, idxCol));
                     handler.setScoreboard(new Scoreboard(handler.getScoreboard().getPoints() + square.getValue() * 2));
                     handler.setTilesMoved(true);
                 } else {
@@ -186,16 +186,16 @@ public class Grid2048 {
         }
     }
 
-    private void moveTileLeft(int idxRow, int idxCol, Boolean[][] tilesChanged, KeyEventHandler handler) {
+    private void moveTileLeft(int idxRow, int idxCol, HashSet<Posn> tilesChanged, KeyEventHandler handler) {
         Square square = this.getSquareByCoordinates(idxCol, idxRow);
 
         while (idxCol > 0) {
             Square squareLeft = this.grid[idxRow][idxCol - 1];
             this.grid[idxRow][idxCol] = new EmptySquare(new Posn(idxCol, idxRow));
             if (squareLeft.isTile()) {
-                if (squareLeft.getValue() == square.getValue() && !tilesChanged[idxRow][idxCol - 1]) {
+                if (squareLeft.getValue() == square.getValue() && !tilesChanged.contains(new Posn(idxRow, idxCol - 1))) {
                     this.grid[idxRow][idxCol - 1] = new Tile(square.getValue() * 2, new Posn(idxCol - 1, idxRow));
-                    tilesChanged[idxRow][idxCol - 1] = true;
+                    tilesChanged.add(new Posn(idxRow, idxCol - 1));
                     handler.setScoreboard(new Scoreboard(handler.getScoreboard().getPoints() + square.getValue() * 2));
                     handler.setTilesMoved(true);
                 } else {
@@ -211,16 +211,16 @@ public class Grid2048 {
         }
     }
 
-    private void moveTileRight(int idxRow, int idxCol, Boolean[][] tilesChanged, KeyEventHandler handler) {
+    private void moveTileRight(int idxRow, int idxCol, HashSet<Posn> tilesChanged, KeyEventHandler handler) {
         Square square = this.getSquareByCoordinates(idxCol, idxRow);
 
         while (idxCol < SQUARES_PER_AXIS - 1) {
             Square squareRight = this.grid[idxRow][idxCol + 1];
             this.grid[idxRow][idxCol] = new EmptySquare(new Posn(idxCol, idxRow));
             if (squareRight.isTile()) {
-                if (squareRight.getValue() == square.getValue() && !tilesChanged[idxRow][idxCol + 1]) {
+                if (squareRight.getValue() == square.getValue() && !tilesChanged.contains(new Posn(idxRow, idxCol + 1))) {
                     this.grid[idxRow][idxCol + 1] = new Tile(square.getValue() * 2, new Posn(idxCol + 1, idxRow));
-                    tilesChanged[idxRow][idxCol + 1] = true;
+                    tilesChanged.add(new Posn(idxRow, idxCol + 1));
                     handler.setScoreboard(new Scoreboard(handler.getScoreboard().getPoints() + square.getValue() * 2));
                     handler.setTilesMoved(true);
                 } else {
@@ -250,11 +250,6 @@ public class Grid2048 {
             }
         }
         return new Grid2048(resultGrid);
-    }
-
-    private static Boolean[][] initializeTilesChanged() {
-        Boolean[] row = new Boolean[]{false, false, false, false};
-        return new Boolean[][]{row, row, row, row};
     }
 
     private static Square[][] initializeStartingGrid() {

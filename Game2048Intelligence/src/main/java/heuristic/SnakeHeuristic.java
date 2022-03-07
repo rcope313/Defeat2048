@@ -33,14 +33,14 @@ public class SnakeHeuristic extends GameHeuristic {
     }
 
     @Override
-    public HeuristicScore evaluateHeuristicScore(Grid2048 grid) {
+    public HeuristicScore evaluateHeuristicScore(KeyEventHandler handler) {
         HeuristicScore score = new HeuristicScore(0);
         int y = 0;
         int x = 0;
 
         while (y < Grid2048.SQUARES_PER_AXIS) {
             while (x < Grid2048.SQUARES_PER_AXIS) {
-                score = new HeuristicScore(evaluateHeuristicScore(grid, y, x, score.getValue()));
+                score = new HeuristicScore(evaluateHeuristicScore(handler.getGrid2048(), y, x, score.getValue()));
                 x++;
             }
             y++;
@@ -55,10 +55,10 @@ public class SnakeHeuristic extends GameHeuristic {
         KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard);
         KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
 
-        HeuristicScore upScore = new SnakeHeuristic().evaluateHeuristicScore(upHandler.getGrid2048());
-        HeuristicScore downScore = new SnakeHeuristic().evaluateHeuristicScore(downHandler.getGrid2048());
-        HeuristicScore leftScore = new SnakeHeuristic().evaluateHeuristicScore(leftHandler.getGrid2048());
-        HeuristicScore rightScore = new SnakeHeuristic().evaluateHeuristicScore(rightHandler.getGrid2048());
+        HeuristicScore upScore = new SnakeHeuristic().evaluateHeuristicScore(upHandler);
+        HeuristicScore downScore = new SnakeHeuristic().evaluateHeuristicScore(downHandler);
+        HeuristicScore leftScore = new SnakeHeuristic().evaluateHeuristicScore(leftHandler);
+        HeuristicScore rightScore = new SnakeHeuristic().evaluateHeuristicScore(rightHandler);
 
         handlerMap.put(upScore.getValue(), upHandler);
         handlerMap.put(downScore.getValue(), downHandler);
@@ -73,7 +73,7 @@ public class SnakeHeuristic extends GameHeuristic {
     }
 
     static int evaluateHeuristicScore(Grid2048 grid, int y , int x, int score) {
-        Square square = grid.getSquareByCoordinates(y,x);
+        Square square = grid.getSquareByCoordinates(x,y);
         int squareValue = square.getValue();
         if (square.isTile()) {
             if (x == 0 && y == 0) { return score + 10000 * squareValue; }

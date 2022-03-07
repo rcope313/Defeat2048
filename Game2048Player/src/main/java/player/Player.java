@@ -3,13 +3,16 @@ package player;
 import heuristic.GameHeuristic;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
+import javalib.worldimages.Posn;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import models.game.KeyEvent;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import models.game.Grid2048;
+import models.square.EmptySquare;
 import models.square.Square;
+import models.square.Tile;
 
 import java.awt.Color;
 
@@ -35,7 +38,30 @@ public class Player extends World  {
     }
 
     public static void main (String[] args) {
-        Player player = new Player(new Grid2048(), new Scoreboard(0));
+        Square[] rowEmpty0 = new Square[]{
+                new Tile(4, new Posn(0, 0)),
+                new EmptySquare(new Posn(1, 0)),
+                new EmptySquare(new Posn(2, 0)),
+                new EmptySquare(new Posn(3, 0))};
+        Square[] rowEmpty1 = new Square[]{
+                new Tile(4, new Posn(0, 1)),
+                new Tile(8, new Posn(1, 1)),
+                new EmptySquare(new Posn(2, 1)),
+                new EmptySquare(new Posn(3, 1))};
+        Square[] rowEmpty2 = new Square[]{
+                new Tile(2, new Posn(0, 2)),
+                new EmptySquare(new Posn(1, 2)),
+                new EmptySquare(new Posn(2, 2)),
+                new EmptySquare(new Posn(3, 2))};
+        Square[] rowEmpty3 = new Square[]{
+                new Tile(2, new Posn(0, 3)),
+                new EmptySquare(new Posn(1, 3)),
+                new EmptySquare(new Posn(2, 3)),
+                new EmptySquare(new Posn(3, 3))};
+
+        Grid2048 g0 = new Grid2048(new Square[][]{rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3});
+
+        Player player = new Player(g0, new Scoreboard(0));
         if (player.heuristic == null) {
             player.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE, MANUAL_SPEED);
         } else {

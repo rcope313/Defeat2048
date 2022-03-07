@@ -56,7 +56,9 @@ public class GameStateTree {
         GameStateTree bestNode = new GameStateTree();
 
         for (GameStateTree node : bottomRow) {
-            if (heuristic.evaluateHeuristicScore(node.handler.getGrid2048()).getValue() > highestScore) {
+            int currentScore = heuristic.evaluateHeuristicScore(node.handler).getValue();
+            if (currentScore > highestScore) {
+                highestScore = currentScore;
                 bestNode = node;
             }
         }

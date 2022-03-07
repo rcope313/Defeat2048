@@ -24,7 +24,7 @@ public class PreferUpHeuristic extends GameHeuristic {
     }
 
     @Override
-    public HeuristicScore evaluateHeuristicScore(Grid2048 grid) {
+    public HeuristicScore evaluateHeuristicScore(KeyEventHandler handler) {
         return null;
     }
 

@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Grid2048Test {
-    Grid2048 g0, gNoTilesMovedUpLeftRight, gNoTilesMovedDownLeftRight, g2;
-    Square[][] squareArray0, squareArrayNoTilesMovedUpLeftRight, getSquareArrayNoTilesMovedDownLeftRight, squareArray2;
+    Grid2048 g0, gNoTilesMovedUpLeftRight, gNoTilesMovedDownLeftRight, g2, g3, g4;
+    Square[][] squareArray0, squareArrayNoTilesMovedUpLeftRight, getSquareArrayNoTilesMovedDownLeftRight,
+            squareArray2, squareArray3, squareArray4;
 
     void initData() {
         squareArray0 = new Square[][] {
@@ -102,10 +103,34 @@ public class Grid2048Test {
                         new EmptySquare(new Posn(2,3)),
                         new EmptySquare(new Posn(3,3))}};
 
+        squareArray3 = new Square[][] {
+                new Square[]{
+                        new Tile(4, new Posn(0,0)),
+                        new EmptySquare(new Posn(1,0)),
+                        new EmptySquare(new Posn(2,0)),
+                        new EmptySquare(new Posn(3,0))},
+                new Square[]{
+                        new Tile(4, new Posn(0,1)),
+                        new EmptySquare(new Posn(1,1)),
+                        new EmptySquare(new Posn(2,1)),
+                        new EmptySquare(new Posn(3,1))},
+                new Square[]{
+                        new Tile(2, new Posn(0,2)),
+                        new EmptySquare(new Posn(1,2)),
+                        new EmptySquare(new Posn(2,2)),
+                        new EmptySquare(new Posn(3,2))},
+                new Square[]{
+                        new Tile(2, new Posn(0,3)),
+                        new EmptySquare(new Posn(1,3)),
+                        new EmptySquare(new Posn(2,3)),
+                        new EmptySquare(new Posn(3,3))}};
+
+
         g0 = new Grid2048(squareArray0);
         gNoTilesMovedUpLeftRight = new Grid2048(squareArrayNoTilesMovedUpLeftRight);
         gNoTilesMovedDownLeftRight = new Grid2048(getSquareArrayNoTilesMovedDownLeftRight);
         g2 = new Grid2048(squareArray2);
+        g3 = new Grid2048(squareArray3);
     }
 
     @Test
@@ -126,6 +151,15 @@ public class Grid2048Test {
         assertThat(resultGrid[0][1].getValue()).isEqualTo(8);
         assertThat(resultGrid[0][2].getValue()).isEqualTo(2);
         assertThat(resultGrid[1][0].getValue()).isEqualTo(2);
+    }
+
+    @Test
+    public void itHandlesDoubleBlocking() {
+        this.initData();
+        KeyEventHandler handler = g3.handleKeyEvent(KeyEvent.UP, new Scoreboard(0));
+        Square[][] resultGrid = handler.getGrid2048().grid;
+        assertThat(resultGrid[0][0].getValue()).isEqualTo(8);
+        assertThat(resultGrid[1][0].getValue()).isEqualTo(4);
     }
 
     @Test
@@ -218,13 +252,14 @@ public class Grid2048Test {
     @Test
     public void itHandlesRightEventWithTilesMoved() {
         this.initData();
-        KeyEventHandler handler = g0.handleKeyEvent(KeyEvent.RIGHT, new Scoreboard(0));
+        KeyEventHandler handler = g3.handleKeyEvent(KeyEvent.RIGHT, new Scoreboard(0));
         Square[][] resultGrid = handler.getGrid2048().grid;
         assertThat(handler.isTilesMoved()).isTrue();
-        assertThat(handler.getScoreboard().getPoints()).isEqualTo(4);
-        assertThat(resultGrid[0][3].getValue()).isEqualTo(2);
+        assertThat(handler.getScoreboard().getPoints()).isEqualTo(0);
+        assertThat(resultGrid[0][3].getValue()).isEqualTo(4);
         assertThat(resultGrid[1][3].getValue()).isEqualTo(4);
-        assertThat(resultGrid[1][2].getValue()).isEqualTo(2);
+        assertThat(resultGrid[2][3].getValue()).isEqualTo(2);
+        assertThat(resultGrid[3][3].getValue()).isEqualTo(2);
     }
 
     @Test
