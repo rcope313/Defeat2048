@@ -1,7 +1,6 @@
 package models;
 
 import heuristic.SnakeHeuristic;
-import javalib.worldimages.Posn;
 import models.game.Grid2048;
 import models.game.KeyEvent;
 import models.game.KeyEventHandler;
@@ -22,119 +21,34 @@ public class GameStateTreeTest {
     Grid2048 g0, g1, g2, g3, g4;
 
     void initData() {
-        rowEmpty0 = new Square[]{
-                new EmptySquare(new Posn(0, 0)),
-                new EmptySquare(new Posn(1, 0)),
-                new EmptySquare(new Posn(2, 0)),
-                new EmptySquare(new Posn(3, 0))};
-        rowEmpty1 = new Square[]{
-                new EmptySquare(new Posn(0, 1)),
-                new EmptySquare(new Posn(1, 1)),
-                new EmptySquare(new Posn(2, 1)),
-                new EmptySquare(new Posn(3, 1))};
-        rowEmpty2 = new Square[]{
-                new EmptySquare(new Posn(0, 2)),
-                new EmptySquare(new Posn(1, 2)),
-                new EmptySquare(new Posn(2, 2)),
-                new EmptySquare(new Posn(3, 2))};
-        rowEmpty3 = new Square[]{
-                new EmptySquare(new Posn(0, 3)),
-                new EmptySquare(new Posn(1, 3)),
-                new EmptySquare(new Posn(2, 3)),
-                new EmptySquare(new Posn(3, 3))};
-
+        rowEmpty0 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        rowEmpty1 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        rowEmpty2 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        rowEmpty3 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
         g0 = new Grid2048(new Square[][]{rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3});
 
-        row10 = new Square[]{
-                new Tile(4, new Posn(0, 0)),
-                new EmptySquare(new Posn(1, 0)),
-                new EmptySquare(new Posn(2, 0)),
-                new EmptySquare(new Posn(3, 0))};
-        row11 = new Square[]{
-                new EmptySquare(new Posn(0, 1)),
-                new Tile(4, new Posn(1, 1)),
-                new Tile(8, new Posn(2, 1)),
-                new EmptySquare(new Posn(3, 1))};
-        row12 = new Square[]{
-                new Tile(2, new Posn(0, 2)),
-                new EmptySquare(new Posn(1, 2)),
-                new EmptySquare(new Posn(2, 2)),
-                new EmptySquare(new Posn(3, 2))};
-        row13 = new Square[]{
-                new EmptySquare(new Posn(0, 3)),
-                new EmptySquare(new Posn(1, 3)),
-                new EmptySquare(new Posn(2, 3)),
-                new Tile(2, new Posn(3, 3))};
-
+        row10 = new Square[]{new Tile(4), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        row11 = new Square[]{new EmptySquare(), new Tile(4), new Tile(8), new EmptySquare()};
+        row12 = new Square[]{new Tile(2), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        row13 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new Tile(2)};
         g1 = new Grid2048(new Square[][]{row10, row11, row12, row13});
 
-        row20 = new Square[]{
-                new Tile(4, new Posn(0, 0)),
-                new Tile(4, new Posn(1, 0)),
-                new Tile(8, new Posn(2, 0)),
-                new Tile(2, new Posn(3, 0))};
-        row21 = new Square[]{
-                new Tile(2, new Posn(0, 1)),
-                new EmptySquare(new Posn(1, 1)),
-                new EmptySquare(new Posn(2, 1)),
-                new EmptySquare(new Posn(3, 1))};
-        row22 = new Square[]{
-                new EmptySquare(new Posn(0, 2)),
-                new EmptySquare(new Posn(1, 2)),
-                new EmptySquare(new Posn(2, 2)),
-                new EmptySquare(new Posn(3, 2))};
-        row23 = new Square[]{
-                new EmptySquare(new Posn(0, 3)),
-                new EmptySquare(new Posn(1, 3)),
-                new EmptySquare(new Posn(2, 3)),
-                new EmptySquare(new Posn(3, 3))};
-
+        row20 = new Square[]{new Tile(4), new Tile(4), new Tile(8), new Tile(2)};
+        row21 = new Square[]{new Tile(2), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        row22 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        row23 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
         g2 = new Grid2048(new Square[][]{row20, row21, row22, row23});
 
-        row30 = new Square[]{
-                new Tile(4, new Posn(0, 0)),
-                new Tile(2, new Posn(1, 0)),
-                new Tile(4, new Posn(2, 0)),
-                new Tile(2, new Posn(3, 0))};
-        row31 = new Square[]{
-                new Tile(2, new Posn(0, 1)),
-                new Tile(4, new Posn(1, 1)),
-                new Tile(2, new Posn(2, 1)),
-                new Tile(4, new Posn(3, 1))};
-        row32 = new Square[]{
-                new EmptySquare(new Posn(0, 2)),
-                new EmptySquare(new Posn(1, 2)),
-                new EmptySquare(new Posn(2, 2)),
-                new EmptySquare(new Posn(3, 2))};
-        row33 = new Square[]{
-                new EmptySquare(new Posn(0, 3)),
-                new EmptySquare(new Posn(1, 3)),
-                new EmptySquare(new Posn(2, 3)),
-                new EmptySquare(new Posn(3, 3))};
-
+        row30 = new Square[]{new Tile(4), new Tile(2), new Tile(4), new Tile(2)};
+        row31 = new Square[]{new Tile(2), new Tile(4), new Tile(2), new Tile(4)};
+        row32 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        row33 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
         g3 = new Grid2048(new Square[][]{row30, row31, row32, row33});
 
-        row40 = new Square[]{
-                new EmptySquare(new Posn(0, 0)),
-                new EmptySquare(new Posn(1, 0)),
-                new EmptySquare(new Posn(2, 0)),
-                new EmptySquare(new Posn(3, 0))};
-        row41 = new Square[]{
-                new EmptySquare(new Posn(0, 1)),
-                new EmptySquare(new Posn(1, 1)),
-                new EmptySquare(new Posn(2, 1)),
-                new EmptySquare(new Posn(3, 1))};
-        row42 = new Square[]{
-                new Tile(4, new Posn(0, 2)),
-                new Tile(2, new Posn(1, 2)),
-                new Tile(4, new Posn(2, 2)),
-                new Tile(2, new Posn(3, 2))};
-        row43 = new Square[]{
-                new Tile(2, new Posn(0, 3)),
-                new Tile(4, new Posn(1, 3)),
-                new Tile(2, new Posn(2, 3)),
-                new Tile(4, new Posn(3, 3))};
-
+        row40 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        row41 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
+        row42 = new Square[]{new Tile(4), new Tile(2), new Tile(4), new Tile(2)};
+        row43 = new Square[]{new Tile(2), new Tile(4), new Tile(2), new Tile(4)};
         g4 = new Grid2048(new Square[][]{row40, row41, row42, row43});
     }
 

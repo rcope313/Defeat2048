@@ -17,73 +17,24 @@ public class PlayerTest {
 
     void initData() {
         squareArrayGameOver = new Square[][]{
-                new Square[]{
-                        new Tile(4, new Posn(0, 0)),
-                        new Tile(2, new Posn(0, 1)),
-                        new Tile(4, new Posn(0, 2)),
-                        new Tile(2, new Posn(0, 3))},
-                new Square[]{
-                        new Tile(2, new Posn(1, 0)),
-                        new Tile(4, new Posn(1, 1)),
-                        new Tile(2, new Posn(1, 2)),
-                        new Tile(4, new Posn(1, 3))},
-                new Square[]{
-                        new Tile(4, new Posn(2, 0)),
-                        new Tile(2, new Posn(2, 1)),
-                        new Tile(4, new Posn(2, 2)),
-                        new Tile(2, new Posn(2, 3))},
-                new Square[]{
-                        new Tile(2, new Posn(3, 0)),
-                        new Tile(4, new Posn(3, 1)),
-                        new Tile(2, new Posn(3, 2)),
-                        new Tile(4, new Posn(3, 3))}
-        };
-        squareArrayGameContinuesWithUpOrLeft = new Square[][]{
-                new Square[]{
-                        new EmptySquare(new Posn(0, 0)),
-                        new Tile(2, new Posn(0, 1)),
-                        new Tile(4, new Posn(0, 2)),
-                        new Tile(2, new Posn(0, 3))},
-                new Square[]{
-                        new Tile(2, new Posn(1, 0)),
-                        new Tile(4, new Posn(1, 1)),
-                        new Tile(2, new Posn(1, 2)),
-                        new Tile(4, new Posn(1, 3))},
-                new Square[]{
-                        new Tile(4, new Posn(2, 0)),
-                        new Tile(2, new Posn(2, 1)),
-                        new Tile(4, new Posn(2, 2)),
-                        new Tile(2, new Posn(2, 3))},
-                new Square[]{
-                        new Tile(2, new Posn(3, 0)),
-                        new Tile(4, new Posn(3, 1)),
-                        new Tile(2, new Posn(3, 2)),
-                        new Tile(4, new Posn(3, 3))}
-        };
-        squareArrayGameContinuesWithDownOrRight = new Square[][]{
-                new Square[]{
-                        new Tile(4, new Posn(0, 0)),
-                        new Tile(2, new Posn(0, 1)),
-                        new Tile(4, new Posn(0, 2)),
-                        new Tile(2, new Posn(0, 3))},
-                new Square[]{
-                        new Tile(2, new Posn(1, 0)),
-                        new Tile(4, new Posn(1, 1)),
-                        new Tile(2, new Posn(1, 2)),
-                        new Tile(4, new Posn(1, 3))},
-                new Square[]{
-                        new Tile(4, new Posn(2, 0)),
-                        new Tile(2, new Posn(2, 1)),
-                        new Tile(4, new Posn(2, 2)),
-                        new Tile(2, new Posn(2, 3))},
-                new Square[]{
-                        new Tile(2, new Posn(3, 0)),
-                        new Tile(4, new Posn(3, 1)),
-                        new Tile(2, new Posn(3, 2)),
-                        new EmptySquare(new Posn(3, 3))}
-        };
+                new Square[]{new Tile(4), new Tile(2), new Tile(4), new Tile(2)},
+                new Square[]{new Tile(2), new Tile(4), new Tile(2), new Tile(4)},
+                new Square[]{new Tile(4), new Tile(2), new Tile(4), new Tile(2)},
+                new Square[]{new Tile(2), new Tile(4), new Tile(2), new Tile(4)}};
         gameOver = new Player(new Grid2048(squareArrayGameOver), new Scoreboard(0));
+
+        squareArrayGameContinuesWithUpOrLeft = new Square[][]{
+                new Square[]{new EmptySquare(), new Tile(2), new Tile(4), new Tile(2)},
+                new Square[]{new Tile(2), new Tile(4), new Tile(2), new Tile(4)},
+                new Square[]{new Tile(4), new Tile(2), new Tile(4), new Tile(2)},
+                new Square[]{new Tile(2), new Tile(4), new Tile(2), new Tile(4)}};
         gameContinuesWithUpOrLeft = new Player(new Grid2048(squareArrayGameContinuesWithUpOrLeft), new Scoreboard(0));
+
+        squareArrayGameContinuesWithDownOrRight = new Square[][]{
+                new Square[]{new Tile(4), new Tile(2), new Tile(4), new Tile(2)},
+                new Square[]{new Tile(2), new Tile(4), new Tile(2), new Tile(4)},
+                new Square[]{new Tile(4), new Tile(2), new Tile(4), new Tile(2)},
+                new Square[]{new Tile(2), new Tile(4), new Tile(2), new EmptySquare()}};
         gameContinuesWithDownOrRight = new Player(new Grid2048(squareArrayGameContinuesWithDownOrRight), new Scoreboard(0));
 
     }

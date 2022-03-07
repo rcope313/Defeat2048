@@ -1,6 +1,5 @@
 package models.game;
 
-import javalib.worldimages.Posn;
 import models.square.*;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -10,121 +9,40 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Grid2048Test {
-    Grid2048 g0, gNoTilesMovedUpLeftRight, gNoTilesMovedDownLeftRight, g2, g3, g4;
+    Grid2048 g0, gNoTilesMovedUpLeftRight, gNoTilesMovedDownLeftRight, g2, g3;
     Square[][] squareArray0, squareArrayNoTilesMovedUpLeftRight, getSquareArrayNoTilesMovedDownLeftRight,
-            squareArray2, squareArray3, squareArray4;
+            squareArray2, squareArray3;
 
     void initData() {
         squareArray0 = new Square[][] {
-            new Square[]{
-                new EmptySquare(new Posn(0,0)),
-                new Tile(2, new Posn(1,0)),
-                new EmptySquare(new Posn(2,0)),
-                new EmptySquare(new Posn(3,0))},
-            new Square[]{
-                new EmptySquare(new Posn(0,1)),
-                new Tile(2, new Posn(1,1)),
-                new Tile(2, new Posn(2,1)),
-                new Tile(2, new Posn(3,1))},
-            new Square[]{
-                new EmptySquare(new Posn(0,2)),
-                new EmptySquare(new Posn(1,2)),
-                new EmptySquare(new Posn(2,2)),
-                new EmptySquare(new Posn(3,2))},
-            new Square[]{
-                new EmptySquare(new Posn(0,3)),
-                new EmptySquare(new Posn(1,3)),
-                new EmptySquare(new Posn(2,3)),
-                new EmptySquare(new Posn(3,3))}};
+            new Square[]{new EmptySquare(), new Tile(2), new EmptySquare(), new EmptySquare()},
+            new Square[]{new EmptySquare(), new Tile(2), new Tile(2), new Tile(2)},
+            new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()},
+            new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()}};
 
         squareArrayNoTilesMovedUpLeftRight = new Square[][] {
-                new Square[]{
-                        new Tile(2, new Posn(0,0)),
-                        new Tile(4, new Posn(1,1)),
-                        new Tile(2, new Posn(2,2)),
-                        new Tile(4, new Posn(3,3))},
-                new Square[]{
-                        new Tile(4, new Posn(0,1)),
-                        new Tile(2, new Posn(1,1)),
-                        new Tile(4, new Posn(2,1)),
-                        new Tile(2, new Posn(3,1))},
-                new Square[]{
-                        new EmptySquare(new Posn(0,2)),
-                        new EmptySquare(new Posn(1,2)),
-                        new EmptySquare(new Posn(2,2)),
-                        new EmptySquare(new Posn(3,2))},
-                new Square[]{
-                        new EmptySquare(new Posn(0,3)),
-                        new EmptySquare(new Posn(1,3)),
-                        new EmptySquare(new Posn(2,3)),
-                        new EmptySquare(new Posn(3,3))}};
+                new Square[]{new Tile(2), new Tile(4), new Tile(2), new Tile(4)},
+                new Square[]{new Tile(4), new Tile(2), new Tile(4), new Tile(2)},
+                new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()},
+                new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()}};
 
         getSquareArrayNoTilesMovedDownLeftRight = new Square[][] {
-                new Square[]{
-                        new EmptySquare(new Posn(0,0)),
-                        new EmptySquare(new Posn(1,1)),
-                        new EmptySquare(new Posn(2,2)),
-                        new EmptySquare(new Posn(3,3))},
-                new Square[]{
-                        new EmptySquare(new Posn(0,1)),
-                        new EmptySquare(new Posn(1,1)),
-                        new EmptySquare(new Posn(2,1)),
-                        new EmptySquare(new Posn(3,1))},
-                new Square[]{
-                        new Tile(2, new Posn(0,2)),
-                        new Tile(4, new Posn(1,2)),
-                        new Tile(2, new Posn(2,2)),
-                        new Tile(4, new Posn(3,2))},
-                new Square[]{
-                        new Tile(4, new Posn(0,3)),
-                        new Tile(2, new Posn(1,3)),
-                        new Tile(4, new Posn(2,3)),
-                        new Tile(2, new Posn(3,3))}};
+                new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()},
+                new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()},
+                new Square[]{new Tile(2), new Tile(4), new Tile(2), new Tile(4)},
+                new Square[]{new Tile(4), new Tile(2), new Tile(4), new Tile(2)}};
 
         squareArray2 = new Square[][] {
-                new Square[]{
-                        new Tile(4, new Posn(0,0)),
-                        new Tile(4, new Posn(1,0)),
-                        new Tile(8, new Posn(2,0)),
-                        new Tile(2, new Posn(3,0))},
-                new Square[]{
-                        new Tile(2, new Posn(0,1)),
-                        new EmptySquare(new Posn(1,1)),
-                        new EmptySquare(new Posn(2,1)),
-                        new EmptySquare(new Posn(3,1))},
-                new Square[]{
-                        new EmptySquare(new Posn(0,2)),
-                        new EmptySquare(new Posn(1,2)),
-                        new EmptySquare(new Posn(2,2)),
-                        new EmptySquare(new Posn(3,2))},
-                new Square[]{
-                        new EmptySquare(new Posn(0,3)),
-                        new EmptySquare(new Posn(1,3)),
-                        new EmptySquare(new Posn(2,3)),
-                        new EmptySquare(new Posn(3,3))}};
+                new Square[]{new Tile(4), new Tile(4), new Tile(8), new Tile(2)},
+                new Square[]{new Tile(2), new EmptySquare(), new EmptySquare(), new EmptySquare()},
+                new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()},
+                new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()}};
 
         squareArray3 = new Square[][] {
-                new Square[]{
-                        new Tile(4, new Posn(0,0)),
-                        new EmptySquare(new Posn(1,0)),
-                        new EmptySquare(new Posn(2,0)),
-                        new EmptySquare(new Posn(3,0))},
-                new Square[]{
-                        new Tile(4, new Posn(0,1)),
-                        new EmptySquare(new Posn(1,1)),
-                        new EmptySquare(new Posn(2,1)),
-                        new EmptySquare(new Posn(3,1))},
-                new Square[]{
-                        new Tile(2, new Posn(0,2)),
-                        new EmptySquare(new Posn(1,2)),
-                        new EmptySquare(new Posn(2,2)),
-                        new EmptySquare(new Posn(3,2))},
-                new Square[]{
-                        new Tile(2, new Posn(0,3)),
-                        new EmptySquare(new Posn(1,3)),
-                        new EmptySquare(new Posn(2,3)),
-                        new EmptySquare(new Posn(3,3))}};
-
+                new Square[]{new Tile(4), new EmptySquare(), new EmptySquare(), new EmptySquare()},
+                new Square[]{new Tile(4), new EmptySquare(), new EmptySquare(), new EmptySquare()},
+                new Square[]{new Tile(2), new EmptySquare(), new EmptySquare(), new EmptySquare()},
+                new Square[]{new Tile(2), new EmptySquare(), new EmptySquare(), new EmptySquare()}};
 
         g0 = new Grid2048(squareArray0);
         gNoTilesMovedUpLeftRight = new Grid2048(squareArrayNoTilesMovedUpLeftRight);
