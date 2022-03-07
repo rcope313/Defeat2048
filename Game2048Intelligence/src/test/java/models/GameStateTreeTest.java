@@ -14,8 +14,12 @@ import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.*;
 
 public class GameStateTreeTest {
-    Square[] rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3, row0, row1, row2, row3;
-    Grid2048 g0, g1;
+    Square[] rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3,
+            row10, row11, row12, row13,
+            row20, row21, row22, row23,
+            row30, row31, row32, row33,
+            row40, row41, row42, row43;
+    Grid2048 g0, g1, g2, g3, g4;
 
     void initData() {
         rowEmpty0 = new Square[]{
@@ -41,28 +45,113 @@ public class GameStateTreeTest {
 
         g0 = new Grid2048(new Square[][]{rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3});
 
-        row0 = new Square[]{
+        row10 = new Square[]{
                 new Tile(4, new Posn(0, 0)),
                 new EmptySquare(new Posn(1, 0)),
                 new EmptySquare(new Posn(2, 0)),
                 new EmptySquare(new Posn(3, 0))};
-        row1 = new Square[]{
+        row11 = new Square[]{
                 new EmptySquare(new Posn(0, 1)),
                 new Tile(4, new Posn(1, 1)),
                 new Tile(8, new Posn(2, 1)),
                 new EmptySquare(new Posn(3, 1))};
-        row2 = new Square[]{
+        row12 = new Square[]{
                 new Tile(2, new Posn(0, 2)),
                 new EmptySquare(new Posn(1, 2)),
                 new EmptySquare(new Posn(2, 2)),
                 new EmptySquare(new Posn(3, 2))};
-        row3 = new Square[]{
+        row13 = new Square[]{
                 new EmptySquare(new Posn(0, 3)),
                 new EmptySquare(new Posn(1, 3)),
                 new EmptySquare(new Posn(2, 3)),
                 new Tile(2, new Posn(3, 3))};
 
-        g1 = new Grid2048(new Square[][]{row0, row1, row2, row3});
+        g1 = new Grid2048(new Square[][]{row10, row11, row12, row13});
+
+        row20 = new Square[]{
+                new Tile(4, new Posn(0, 0)),
+                new Tile(4, new Posn(1, 0)),
+                new Tile(8, new Posn(2, 0)),
+                new Tile(2, new Posn(3, 0))};
+        row21 = new Square[]{
+                new Tile(2, new Posn(0, 1)),
+                new EmptySquare(new Posn(1, 1)),
+                new EmptySquare(new Posn(2, 1)),
+                new EmptySquare(new Posn(3, 1))};
+        row22 = new Square[]{
+                new EmptySquare(new Posn(0, 2)),
+                new EmptySquare(new Posn(1, 2)),
+                new EmptySquare(new Posn(2, 2)),
+                new EmptySquare(new Posn(3, 2))};
+        row23 = new Square[]{
+                new EmptySquare(new Posn(0, 3)),
+                new EmptySquare(new Posn(1, 3)),
+                new EmptySquare(new Posn(2, 3)),
+                new EmptySquare(new Posn(3, 3))};
+
+        g2 = new Grid2048(new Square[][]{row20, row21, row22, row23});
+
+        row30 = new Square[]{
+                new Tile(4, new Posn(0, 0)),
+                new Tile(2, new Posn(1, 0)),
+                new Tile(4, new Posn(2, 0)),
+                new Tile(2, new Posn(3, 0))};
+        row31 = new Square[]{
+                new Tile(2, new Posn(0, 1)),
+                new Tile(4, new Posn(1, 1)),
+                new Tile(2, new Posn(2, 1)),
+                new Tile(4, new Posn(3, 1))};
+        row32 = new Square[]{
+                new EmptySquare(new Posn(0, 2)),
+                new EmptySquare(new Posn(1, 2)),
+                new EmptySquare(new Posn(2, 2)),
+                new EmptySquare(new Posn(3, 2))};
+        row33 = new Square[]{
+                new EmptySquare(new Posn(0, 3)),
+                new EmptySquare(new Posn(1, 3)),
+                new EmptySquare(new Posn(2, 3)),
+                new EmptySquare(new Posn(3, 3))};
+
+        g3 = new Grid2048(new Square[][]{row30, row31, row32, row33});
+
+        row40 = new Square[]{
+                new EmptySquare(new Posn(0, 0)),
+                new EmptySquare(new Posn(1, 0)),
+                new EmptySquare(new Posn(2, 0)),
+                new EmptySquare(new Posn(3, 0))};
+        row41 = new Square[]{
+                new EmptySquare(new Posn(0, 1)),
+                new EmptySquare(new Posn(1, 1)),
+                new EmptySquare(new Posn(2, 1)),
+                new EmptySquare(new Posn(3, 1))};
+        row42 = new Square[]{
+                new Tile(4, new Posn(0, 2)),
+                new Tile(2, new Posn(1, 2)),
+                new Tile(4, new Posn(2, 2)),
+                new Tile(2, new Posn(3, 2))};
+        row43 = new Square[]{
+                new Tile(2, new Posn(0, 3)),
+                new Tile(4, new Posn(1, 3)),
+                new Tile(2, new Posn(2, 3)),
+                new Tile(4, new Posn(3, 3))};
+
+        g4 = new Grid2048(new Square[][]{row40, row41, row42, row43});
+    }
+
+    @Test
+    public void itDeterminesNextMove() {
+        this.initData();
+        KeyEventHandler currentHandler = new KeyEventHandler(true, g1, new Scoreboard(0));
+        KeyEventHandler resultHandler = GameStateTree.getNextMove(3, new SnakeHeuristic(), currentHandler);
+        assertThat(resultHandler).usingRecursiveComparison().isEqualTo(new KeyEventHandler(true, g2, new Scoreboard(0)));
+    }
+
+    @Test
+    public void itDeterminesNextMoveDownOnly() {
+        this.initData();
+        KeyEventHandler currentHandler = new KeyEventHandler(true, g3, new Scoreboard(0));
+        KeyEventHandler resultHandler = GameStateTree.getNextMove(3, new SnakeHeuristic(), currentHandler);
+        assertThat(resultHandler).usingRecursiveComparison().isEqualTo(new KeyEventHandler(true, g3, new Scoreboard(0)));
     }
 
     @Test

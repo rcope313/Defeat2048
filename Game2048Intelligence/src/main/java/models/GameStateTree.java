@@ -6,7 +6,6 @@ import models.game.KeyEvent;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import org.assertj.core.util.VisibleForTesting;
-
 import java.util.ArrayList;
 
 public class GameStateTree {
@@ -32,22 +31,20 @@ public class GameStateTree {
         this.parent = parent;
     }
 
-    public static ArrayList<KeyEventHandler> getKeyEventSequence(int treeDepth, GameHeuristic heuristic, KeyEventHandler currentHandler) {
+    public static KeyEventHandler getNextMove(int treeDepth, GameHeuristic heuristic, KeyEventHandler currentHandler) {
         GameStateTree headNode = new GameStateTree(currentHandler, KeyEvent.NOUP, new ArrayList<>(), null);
         ArrayList<GameStateTree> bottomRow = buildGameStateTreeAndGetBottomRow(headNode, treeDepth, new ArrayList<>());
         GameStateTree bestNode = getHighestScoringNodeOfBottomRow(bottomRow, heuristic);
-        return getKeyEventSequence(bestNode);
+        return getNextMove(bestNode);
     }
 
-    private static ArrayList<KeyEventHandler> getKeyEventSequence(GameStateTree bestNode) {
-        ArrayList<KeyEventHandler> keyEventSequence = new ArrayList<>();
+    private static KeyEventHandler getNextMove(GameStateTree bestNode) {
         GameStateTree currentNode = bestNode;
 
-        while (currentNode.parent != null) {
-            keyEventSequence.add(0, currentNode.handler);
+        while (currentNode.parent.direction != KeyEvent.NOUP) {
             currentNode = currentNode.parent;
         }
-        return keyEventSequence;
+        return currentNode.getHandler();
     }
 
     @VisibleForTesting
@@ -105,15 +102,4 @@ public class GameStateTree {
         return handler;
     }
 
-    public KeyEvent getDirection() {
-        return direction;
-    }
-
-    public ArrayList<GameStateTree> getChildren() {
-        return children;
-    }
-
-    public GameStateTree getParent() {
-        return parent;
-    }
 }
