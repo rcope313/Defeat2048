@@ -11,9 +11,10 @@ import models.square.Square;
 
 public class CompareHeuristic {
     private final static int TREE_DEPTH = 4;
+    private final static int TIMES_TO_COMPLETE = 50;
 
     public static void main(String[] args) {
-        HeuristicComparison comparison = getHeuristicComparison(new SnakeHeuristic(), 50);
+        HeuristicComparison comparison = getHeuristicComparison(new SnakeHeuristic());
         System.out.print("Snake Heuristic \n");
         System.out.print("Average Score: " + comparison.getAverageScore() + "\n");
         System.out.print("Highest Score: " + comparison.getHighestScore() + "\n");
@@ -28,12 +29,12 @@ public class CompareHeuristic {
         }
     }
 
-    static HeuristicComparison getHeuristicComparison (GameHeuristic heuristic, int timesToComplete) {
+    private static HeuristicComparison getHeuristicComparison(GameHeuristic heuristic) {
         int highestScore = 0;
         int averageScore = 0;
         int idx = 0;
         Grid2048 bestGrid = new Grid2048();
-        while (idx < timesToComplete) {
+        while (idx < TIMES_TO_COMPLETE) {
             KeyEventHandler currentHandler = completePlayerCycle(heuristic);
             int currentScore = currentHandler.getScoreboard().getPoints();
             if (currentScore > highestScore) {
@@ -43,15 +44,15 @@ public class CompareHeuristic {
             averageScore += currentScore;
             idx++;
         }
-        return new HeuristicComparison(highestScore, averageScore/timesToComplete, bestGrid);
+        return new HeuristicComparison(highestScore, averageScore/TIMES_TO_COMPLETE, bestGrid);
     }
 
-    static KeyEventHandler completePlayerCycle(GameHeuristic heuristic) {
+    private static KeyEventHandler completePlayerCycle(GameHeuristic heuristic) {
         KeyEventHandler handler = new KeyEventHandler(false, new Grid2048(), new Scoreboard(0));
         return completePlayerCycle(heuristic, handler);
     }
 
-    static KeyEventHandler completePlayerCycle(GameHeuristic heuristic, KeyEventHandler handler) {
+    private static KeyEventHandler completePlayerCycle(GameHeuristic heuristic, KeyEventHandler handler) {
         if (isGameOver(handler)){
             return handler;
         }
@@ -60,7 +61,7 @@ public class CompareHeuristic {
         return completePlayerCycle(heuristic, newHandler);
     }
 
-    static boolean isGameOver(KeyEventHandler handler) {
+    private static boolean isGameOver(KeyEventHandler handler) {
         Grid2048 grid = handler.getGrid2048();
         Scoreboard scoreboard = handler.getScoreboard();
 
