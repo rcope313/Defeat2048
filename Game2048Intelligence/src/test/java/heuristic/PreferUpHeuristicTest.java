@@ -1,5 +1,6 @@
 package heuristic;
 
+import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import models.game.Grid2048;
 import models.square.EmptySquare;
@@ -79,33 +80,36 @@ public class PreferUpHeuristicTest {
     @Test
     public void testEvaluateNextGameStateEmptyBoard() {
         this.initData();
-        assertThatThrownBy(() -> preferUp.evaluateNextGameState(gridEmpty, new Scoreboard(0)))
-                .hasMessage("Initial board empty or world ends");
+        KeyEventHandler handler = new KeyEventHandler(true, gridEmpty, new Scoreboard(0));
+        assertThatThrownBy(() -> preferUp.getNextMove(1, handler)).hasMessage("Initial board empty or world ends");
     }
 
     @Test
     public void testEvaluateNextGameStateUp() {
         this.initData();
-        assertThat(preferUp.evaluateNextGameState(grid0Up, new Scoreboard(0)).getGrid2048()).isEqualTo(grid1Up);
+        KeyEventHandler handler = new KeyEventHandler(true, grid0Up, new Scoreboard(0));
+        assertThat(preferUp.getNextMove(1, handler).getGrid2048()).isEqualTo(grid1Up);
     }
 
     @Test
     public void testEvaluateNextGameStateLeftOrRight() {
         this.initData();
         ArrayList<Grid2048> leftRightList = new ArrayList<>(Arrays.asList(grid2LR, grid3LR));
-        assertThat(leftRightList).contains(preferUp.evaluateNextGameState(grid1Up, new Scoreboard(0)).getGrid2048());
+        KeyEventHandler handler = new KeyEventHandler(true, grid1Up, new Scoreboard(0));
+        assertThat(leftRightList).contains(preferUp.getNextMove(1, handler).getGrid2048());
     }
 
     @Test
     public void testEvaluateNextGameStateDown() {
         this.initData();
-        assertThat(preferUp.evaluateNextGameState(grid4D, new Scoreboard(0)).getGrid2048()).isEqualTo(grid5D);
+        KeyEventHandler handler = new KeyEventHandler(true, grid4D, new Scoreboard(0));
+        assertThat(preferUp.getNextMove(1, handler).getGrid2048()).isEqualTo(grid5D);
     }
 
     @Test
     public void testEvaluateNextGameStateWorldEnds() {
         this.initData();
-        assertThatThrownBy(() -> preferUp.evaluateNextGameState(grid6WE, new Scoreboard(0)))
-                .hasMessage("Initial board empty or world ends");
+        KeyEventHandler handler = new KeyEventHandler(true, grid6WE, new Scoreboard(0));
+        assertThatThrownBy(() -> preferUp.getNextMove(1,handler)).hasMessage("Initial board empty or world ends");
     }
 }

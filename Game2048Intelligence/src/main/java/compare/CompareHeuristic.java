@@ -7,47 +7,63 @@ import models.game.Grid2048;
 import models.game.KeyEvent;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
+import models.square.Square;
 
 public class CompareHeuristic {
+    private final static int TREE_DEPTH = 4;
 
     public static void main(String[] args) {
         HeuristicComparison comparison = getHeuristicComparison(new SnakeHeuristic(), 50);
         System.out.print("Snake Heuristic \n");
-        System.out.print("Highest Score: " + comparison.getHighestScore() + "\n");
         System.out.print("Average Score: " + comparison.getAverageScore() + "\n");
+        System.out.print("Highest Score: " + comparison.getHighestScore() + "\n");
+        System.out.print("Highest Score Grid: \n");
+
+        for (int idxRow = 0; idxRow < Grid2048.SQUARES_PER_AXIS; idxRow++) {
+            for (int idxCol = 0; idxCol < Grid2048.SQUARES_PER_AXIS; idxCol++) {
+                Square currentSquare = comparison.getBestGrid().getSquareByCoordinates(idxRow, idxCol);
+                System.out.printf("%-10s", currentSquare.getValue());
+            }
+            System.out.print("\n");
+        }
     }
 
     static HeuristicComparison getHeuristicComparison (GameHeuristic heuristic, int timesToComplete) {
         int highestScore = 0;
         int averageScore = 0;
         int idx = 0;
+        Grid2048 bestGrid = new Grid2048();
         while (idx < timesToComplete) {
-            int currentScore = completePlayerCycle(heuristic);
+            KeyEventHandler currentHandler = completePlayerCycle(heuristic);
+            int currentScore = currentHandler.getScoreboard().getPoints();
             if (currentScore > highestScore) {
                 highestScore = currentScore;
+                bestGrid = currentHandler.getGrid2048();
             }
             averageScore += currentScore;
             idx++;
         }
-        return new HeuristicComparison(highestScore, averageScore/timesToComplete);
+        return new HeuristicComparison(highestScore, averageScore/timesToComplete, bestGrid);
     }
 
-    static int completePlayerCycle(GameHeuristic heuristic) {
-        Grid2048 initGrid = new Grid2048();
-        Scoreboard initBoard = new Scoreboard(0);
-        return completePlayerCycle(heuristic, initGrid, initBoard);
+    static KeyEventHandler completePlayerCycle(GameHeuristic heuristic) {
+        KeyEventHandler handler = new KeyEventHandler(false, new Grid2048(), new Scoreboard(0));
+        return completePlayerCycle(heuristic, handler);
     }
 
-    static int completePlayerCycle(GameHeuristic heuristic, Grid2048 grid, Scoreboard board) {
-        if (isGameOver(grid, board)) {
-            return board.getPoints();
+    static KeyEventHandler completePlayerCycle(GameHeuristic heuristic, KeyEventHandler handler) {
+        if (isGameOver(handler)){
+            return handler;
         }
-        KeyEventHandler handler = heuristic.evaluateNextGameState(grid, board);
-        Grid2048.addRandomTileOnKeyEventHandler(handler);
-        return completePlayerCycle(heuristic, handler.getGrid2048(), handler.getScoreboard());
+        KeyEventHandler newHandler = heuristic.getNextMove(TREE_DEPTH, handler);
+        Grid2048.addRandomTileOnKeyEventHandler(newHandler);
+        return completePlayerCycle(heuristic, newHandler);
     }
 
-    static boolean isGameOver(Grid2048 grid, Scoreboard scoreboard) {
+    static boolean isGameOver(KeyEventHandler handler) {
+        Grid2048 grid = handler.getGrid2048();
+        Scoreboard scoreboard = handler.getScoreboard();
+
         KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
         KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
         KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);

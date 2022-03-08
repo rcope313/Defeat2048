@@ -1,6 +1,7 @@
 package player;
 
 import heuristic.GameHeuristic;
+import heuristic.SnakeHeuristic;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
 import javalib.worldimages.Posn;
@@ -25,6 +26,7 @@ public class Player extends World  {
     private final static int MANUAL_SPEED = 1;
     private final static double HEURISTIC_SPEED = .1;
     private final static int SCOREBOARD_POSN_OFFSET = 10;
+    private final static int TREE_DEPTH = 3;
 
     public Player(Grid2048 grid, Scoreboard scoreboard) {
         this.grid = grid;
@@ -38,7 +40,7 @@ public class Player extends World  {
     }
 
     public static void main (String[] args) {
-        Player player = new Player(new Grid2048(), new Scoreboard(0));
+        Player player = new Player(new Grid2048(), new Scoreboard(0), new SnakeHeuristic());
         if (player.heuristic == null) {
             player.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE, MANUAL_SPEED);
         } else {
@@ -58,7 +60,7 @@ public class Player extends World  {
         if (heuristic == null) {
             return this;
         }
-        KeyEventHandler handler = heuristic.evaluateNextGameState(grid, scoreboard);
+        KeyEventHandler handler = heuristic.getNextMove(TREE_DEPTH, new KeyEventHandler(false, grid, scoreboard));
         Grid2048.addRandomTileOnKeyEventHandler(handler);
         return new Player(handler.getGrid2048(), handler.getScoreboard(), heuristic);
     }

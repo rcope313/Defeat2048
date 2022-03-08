@@ -65,7 +65,7 @@ public class GameStateTreeTest {
         this.initData();
         KeyEventHandler currentHandler = new KeyEventHandler(true, g3, new Scoreboard(0));
         KeyEventHandler resultHandler = GameStateTree.getNextMove(3, new SnakeHeuristic(), currentHandler);
-        assertThat(resultHandler).usingRecursiveComparison().isEqualTo(new KeyEventHandler(true, g3, new Scoreboard(0)));
+        assertThat(resultHandler).usingRecursiveComparison().isEqualTo(new KeyEventHandler(true, g4, new Scoreboard(0)));
     }
 
     @Test

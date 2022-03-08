@@ -2,35 +2,10 @@ package heuristic;
 
 import models.HeuristicScore;
 import models.game.Grid2048;
-import models.game.KeyEvent;
 import models.game.KeyEventHandler;
-import models.game.Scoreboard;
 import models.square.Square;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class SnakeHeuristic extends GameHeuristic {
-
-    @Override
-    public KeyEventHandler evaluateNextGameState(Grid2048 grid, Scoreboard scoreboard) {
-        Map<Integer, KeyEventHandler> handlerMap =  new HashMap<>();
-        ArrayList<Integer> scores = new ArrayList<>();
-
-        establishKeyEventSequence(grid, scoreboard, handlerMap, scores);
-        for (int idx = 0; idx < scores.size(); idx++) {
-            int currentScore = scores.get(idx);
-            if (handlerMap.get(currentScore).isTilesMoved()) {
-                return handlerMap.get(currentScore);
-            }
-            if (idx == scores.size() - 1) {
-                return handlerMap.get(currentScore);
-            }
-        }
-        throw new IllegalStateException("Unable to evaluate next game state");
-    }
 
     @Override
     public HeuristicScore evaluateHeuristicScore(KeyEventHandler handler) {
@@ -47,29 +22,6 @@ public class SnakeHeuristic extends GameHeuristic {
             x = 0;
         }
         return score;
-    }
-
-    static void establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard, Map<Integer, KeyEventHandler> handlerMap, List<Integer> scores) {
-        KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
-        KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
-        KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard);
-        KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
-
-        HeuristicScore upScore = new SnakeHeuristic().evaluateHeuristicScore(upHandler);
-        HeuristicScore downScore = new SnakeHeuristic().evaluateHeuristicScore(downHandler);
-        HeuristicScore leftScore = new SnakeHeuristic().evaluateHeuristicScore(leftHandler);
-        HeuristicScore rightScore = new SnakeHeuristic().evaluateHeuristicScore(rightHandler);
-
-        handlerMap.put(upScore.getValue(), upHandler);
-        handlerMap.put(downScore.getValue(), downHandler);
-        handlerMap.put(leftScore.getValue(), leftHandler);
-        handlerMap.put(rightScore.getValue(), rightHandler);
-
-        scores.add(upScore.getValue());
-        scores.add(downScore.getValue());
-        scores.add(leftScore.getValue());
-        scores.add(rightScore.getValue());
-        scores.sort(Comparator.reverseOrder());
     }
 
     static int evaluateHeuristicScore(Grid2048 grid, int y , int x, int score) {

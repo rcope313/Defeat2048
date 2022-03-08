@@ -1,23 +1,19 @@
 package heuristic;
 
 import models.game.Grid2048;
-import models.game.KeyEvent;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import models.square.Square;
 import models.square.Tile;
 import models.square.EmptySquare;
 import org.junit.Test;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import static heuristic.SnakeHeuristic.establishKeyEventSequence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SnakeHeuristicTest {
 
     Square[] rowEmpty0, rowEmpty1, rowEmpty2, rowEmpty3, row0, row1, row2, row3, row10, row11, row12, row13;
     Grid2048 g0, g1, g2;
+    SnakeHeuristic snakeHeuristic = new SnakeHeuristic();
 
     void initData() {
         rowEmpty0 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
@@ -43,52 +39,13 @@ public class SnakeHeuristicTest {
     }
 
     @Test
-    public void itEvaluatesNextGameState() {
+    public void itEvaluatesHeuristicScore() {
         this.initData();
-        KeyEventHandler upHandler = g1.handleKeyEvent(KeyEvent.UP, new Scoreboard(0));
-        assertThat(new SnakeHeuristic().evaluateNextGameState(g1, new Scoreboard(0)))
-                .usingRecursiveComparison()
-                .isEqualTo(upHandler);
-
-        KeyEventHandler leftHandler = g2.handleKeyEvent(KeyEvent.LEFT, new Scoreboard(0));
-        assertThat(new SnakeHeuristic().evaluateNextGameState(g2, new Scoreboard(0)))
-                .usingRecursiveComparison()
-                .isEqualTo(leftHandler);
-    }
-
-    @Test
-    public void itEvaluatesNextGameStateOnEmptyBoard() {
-        this.initData();
-        KeyEventHandler upHandler = g0.handleKeyEvent(KeyEvent.UP, new Scoreboard(0));
-        assertThat(new SnakeHeuristic().evaluateNextGameState(g0, new Scoreboard(0)))
-                .usingRecursiveComparison()
-                .isEqualTo(upHandler);
-    }
-
-    @Test
-    public void itEstablishesKeyEventSequence() {
-        this.initData();
-        Map<Integer, KeyEventHandler> handlerMap =  new HashMap<>();
-        ArrayList<Integer> scores = new ArrayList<>();
-        establishKeyEventSequence(g1, new Scoreboard(0), handlerMap, scores);
-
-        assertThat(scores.get(0)).isEqualTo(155400);
-        assertThat(scores.get(1)).isEqualTo(49414);
-        assertThat(scores.get(2)).isEqualTo(39760);
-        assertThat(scores.get(3)).isEqualTo(538);
-    }
-
-    @Test
-    public void itEstablishesKeyEventSequenceOnEmptyBoard() {
-        this.initData();
-        Map<Integer, KeyEventHandler> handlerMap =  new HashMap<>();
-        ArrayList<Integer> scores = new ArrayList<>();
-
-        establishKeyEventSequence(g0, new Scoreboard(0), handlerMap, scores);
-
-        assertThat(scores.get(0)).isEqualTo(0);
-        assertThat(scores.get(1)).isEqualTo(0);
-        assertThat(scores.get(2)).isEqualTo(0);
-        assertThat(scores.get(3)).isEqualTo(0);
+        KeyEventHandler handler0 = new KeyEventHandler(true, g0, new Scoreboard(0));
+        KeyEventHandler handler1 = new KeyEventHandler(true, g1, new Scoreboard(0));
+        KeyEventHandler handler2 = new KeyEventHandler(true, g2, new Scoreboard(0));
+        assertThat(snakeHeuristic.evaluateHeuristicScore(handler0).getValue()).isEqualTo(0);
+        assertThat(snakeHeuristic.evaluateHeuristicScore(handler1).getValue()).isEqualTo(50620);
+        assertThat(snakeHeuristic.evaluateHeuristicScore(handler2).getValue()).isEqualTo(110640);
     }
 }

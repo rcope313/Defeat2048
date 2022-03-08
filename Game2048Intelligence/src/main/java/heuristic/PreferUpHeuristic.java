@@ -11,15 +11,15 @@ import java.util.Random;
 public class PreferUpHeuristic extends GameHeuristic {
 
     @Override
-    public KeyEventHandler evaluateNextGameState(Grid2048 grid, Scoreboard scoreboard) {
-        ArrayList<KeyEventHandler> eventSequence = establishKeyEventSequence(grid, scoreboard);
+    public KeyEventHandler getNextMove(int treeDepth, KeyEventHandler handler) {
+        ArrayList<KeyEventHandler> eventSequence = establishKeyEventSequence(handler.getGrid2048(), handler.getScoreboard());
         int idx = 0;
         while (idx < 4) {
             if (eventSequence.get(idx).isTilesMoved()) {
                 return eventSequence.get(idx);
             }
             idx++;
-       }
+        }
         throw new IllegalStateException("Initial board empty or world ends");
     }
 
