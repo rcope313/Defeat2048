@@ -7,7 +7,11 @@ import models.game.KeyEventHandler;
 public abstract class GameHeuristic {
 
     public abstract HeuristicScore evaluateHeuristicScore(KeyEventHandler handler);
+
     public KeyEventHandler getNextMove(int treeDepth, KeyEventHandler handler) {
         return GameStateTree.getNextMove(treeDepth, this, handler);
     }
+
+    public abstract String getHeuristicName();
+
 }

@@ -28,6 +28,11 @@ public class PreferUpHeuristic extends GameHeuristic {
         return null;
     }
 
+    @Override
+    public String getHeuristicName() {
+        return "Prefer Up Heuristic";
+    }
+
     static ArrayList<KeyEventHandler> establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard) {
         ArrayList<KeyEventHandler> eventSequence = new ArrayList<>();
         eventSequence.add(grid.handleKeyEvent(KeyEvent.UP, scoreboard));

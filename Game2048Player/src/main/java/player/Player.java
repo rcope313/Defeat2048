@@ -4,6 +4,7 @@ import heuristic.GameHeuristic;
 import heuristic.SnakeHeuristic;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
+import javalib.worldimages.FontStyle;
 import javalib.worldimages.Posn;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
@@ -51,8 +52,15 @@ public class Player extends World  {
     @Override
     public WorldScene makeScene() {
         WorldScene s = new WorldScene(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE);
-        return s.placeImageXY(grid.drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE/2, Square.SIDE_LENGTH * WINDOW_SIZE/2)
-                .placeImageXY(scoreboard.drawScoreboard(), Scoreboard.WIDTH/2 + SCOREBOARD_POSN_OFFSET , Scoreboard.HEIGHT);
+        TextImage heuristicText = new TextImage("Heuristic: " + heuristic.getHeuristicName(), 20, FontStyle.BOLD, Color.BLACK);
+        if (heuristic != null) {
+            return s.placeImageXY(grid.drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE / 2, Square.SIDE_LENGTH * WINDOW_SIZE / 2)
+                    .placeImageXY(scoreboard.drawScoreboard(), Scoreboard.WIDTH / 2 + SCOREBOARD_POSN_OFFSET, Scoreboard.HEIGHT)
+                    .placeImageXY(heuristicText, WINDOW_TEXT_SIZE + SCOREBOARD_POSN_OFFSET * 4, Square.SIDE_LENGTH * WINDOW_SIZE - Scoreboard.HEIGHT);
+        } else {
+            return s.placeImageXY(grid.drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE / 2, Square.SIDE_LENGTH * WINDOW_SIZE / 2)
+                    .placeImageXY(scoreboard.drawScoreboard(), WINDOW_TEXT_SIZE + SCOREBOARD_POSN_OFFSET, Scoreboard.HEIGHT);
+        }
     }
 
     @Override

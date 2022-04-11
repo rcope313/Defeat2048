@@ -8,6 +8,11 @@ import models.square.Square;
 public class SnakeHeuristic extends GameHeuristic {
 
     @Override
+    public String getHeuristicName() {
+        return "Snake Heuristic";
+    }
+
+    @Override
     public HeuristicScore evaluateHeuristicScore(KeyEventHandler handler) {
         HeuristicScore score = new HeuristicScore(0);
         int y = 0;

@@ -33,7 +33,7 @@ public class GameStateTree {
 
     public static KeyEventHandler getNextMove(int treeDepth, GameHeuristic heuristic, KeyEventHandler currentHandler) {
         GameStateTree headNode = new GameStateTree(currentHandler, KeyEvent.NOUP, new ArrayList<>(), null);
-        ArrayList<GameStateTree> bottomRow = buildGameStateTreeAndGetBottomRow(headNode, treeDepth, new ArrayList<>());
+        ArrayList<GameStateTree> bottomRow = buildGameStateTreeAndGetBottomRow(headNode, treeDepth, new ArrayList<>(), heuristic);
         GameStateTree bestNode = getHighestScoringNodeOfBottomRow(bottomRow, heuristic);
         return getNextMove(bestNode);
     }
@@ -63,20 +63,20 @@ public class GameStateTree {
     }
 
     @VisibleForTesting
-    static ArrayList<GameStateTree> buildGameStateTreeAndGetBottomRow(GameStateTree currentNode, int treeDepth, ArrayList<GameStateTree> bottomRow) {
+    static ArrayList<GameStateTree> buildGameStateTreeAndGetBottomRow(GameStateTree currentNode, int treeDepth, ArrayList<GameStateTree> bottomRow, GameHeuristic heuristic) {
         treeDepth--;
         if (treeDepth == 0) {
             bottomRow.add(currentNode);
             return bottomRow;
         }
-        buildChildrenOfGameStateTree(currentNode);
+        buildChildrenOfGameStateTree(currentNode, heuristic);
         for (GameStateTree child : currentNode.children) {
-            buildGameStateTreeAndGetBottomRow(child, treeDepth, bottomRow);
+            buildGameStateTreeAndGetBottomRow(child, treeDepth, bottomRow, heuristic);
         }
         return bottomRow;
     }
 
-    private static void buildChildrenOfGameStateTree(GameStateTree currentNode) {
+    private static void buildChildrenOfGameStateTree(GameStateTree currentNode, GameHeuristic heuristic) {
         Grid2048 grid = currentNode.handler.getGrid2048();
         Scoreboard scoreboard = currentNode.handler.getScoreboard();
         KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
@@ -84,13 +84,13 @@ public class GameStateTree {
         KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
         KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
 
-        if (upHandler.isTilesMoved()) {
+        if (upHandler.isTilesMoved() && heuristic.evaluateHeuristicScore(upHandler).getValue() != 0) {
             currentNode.children.add(new GameStateTree(upHandler, KeyEvent.UP, new ArrayList<>(), currentNode));
         }
-        if (leftHandler.isTilesMoved()) {
+        if (leftHandler.isTilesMoved() && heuristic.evaluateHeuristicScore(leftHandler).getValue() != 0) {
             currentNode.children.add(new GameStateTree(leftHandler, KeyEvent.LEFT, new ArrayList<>(), currentNode));
         }
-        if (rightHandler.isTilesMoved()) {
+        if (rightHandler.isTilesMoved() && heuristic.evaluateHeuristicScore(rightHandler).getValue() != 0) {
             currentNode.children.add(new GameStateTree(rightHandler, KeyEvent.RIGHT, new ArrayList<>(), currentNode));
         }
         if (currentNode.children.isEmpty() && downHandler.isTilesMoved()) {

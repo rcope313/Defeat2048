@@ -1,6 +1,7 @@
 package compare;
 
 import heuristic.GameHeuristic;
+import heuristic.SnakeAndWorstCaseHeuristic;
 import heuristic.SnakeHeuristic;
 import models.HeuristicComparison;
 import models.game.Grid2048;
@@ -10,12 +11,14 @@ import models.game.Scoreboard;
 import models.square.Square;
 
 public class CompareHeuristic {
-    private final static int TREE_DEPTH = 4;
-    private final static int TIMES_TO_COMPLETE = 50;
+    private final static int TREE_DEPTH = 3;
+    private final static int TIMES_TO_COMPLETE = 10;
+    private final static GameHeuristic HEURISTIC = new SnakeHeuristic();
+    private final static String CONSOLE_HEADING = "Snake and Worst Case Heuristic";
 
     public static void main(String[] args) {
-        HeuristicComparison comparison = getHeuristicComparison(new SnakeHeuristic());
-        System.out.print("Snake Heuristic \n");
+        HeuristicComparison comparison = getHeuristicComparison(HEURISTIC);
+        System.out.print(CONSOLE_HEADING + "\n");
         System.out.print("Average Score: " + comparison.getAverageScore() + "\n");
         System.out.print("Highest Score: " + comparison.getHighestScore() + "\n");
         System.out.print("Highest Score Grid: \n");

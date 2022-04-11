@@ -1,5 +1,6 @@
 package heuristic;
 
+import com.google.common.annotations.VisibleForTesting;
 import models.HeuristicScore;
 import models.WorstCase;
 import models.game.Grid2048;
@@ -17,7 +18,12 @@ public class SnakeAndWorstCaseHeuristic extends GameHeuristic {
         }
     }
 
-    public boolean isGameStateForWorstCase(KeyEventHandler handler) {
+    @Override
+    public String getHeuristicName() {
+        return "Snake and Worst Case Heuristic";
+    }
+
+    public static boolean isGameStateForWorstCase(KeyEventHandler handler) {
         WorstCase worstCase = new WorstCase(0, false);
         for (int idxRow = 0; idxRow < Grid2048.SQUARES_PER_AXIS; idxRow++) {
             checkRowForWorstCase(idxRow, handler, worstCase);
@@ -25,20 +31,26 @@ public class SnakeAndWorstCaseHeuristic extends GameHeuristic {
         return worstCase.isWorstCase();
     }
 
-    private void checkRowForWorstCase(int idxRow, KeyEventHandler handler, WorstCase worstCase) {
-        int stackValue = 0;
+    @VisibleForTesting
+    static void checkRowForWorstCase(int idxRow, KeyEventHandler handler, WorstCase worstCase) {
+        int lastSeenTile = 0;
+        int numEmptySquares = 0;
+        Grid2048 grid = handler.getGrid2048();
+
         for (int idxCol = 0 ; idxCol < Grid2048.SQUARES_PER_AXIS; idxCol++) {
-            Grid2048 grid = handler.getGrid2048();
-            Square currentSquare = grid.getSquareByCoordinates(idxRow, idxCol);
+            Square currentSquare = grid.getSquareByCoordinates(idxCol, idxRow);
             if (currentSquare.isEmptyTile()) {
-                worstCase.setNumEmptySquare(worstCase.getNumEmptySquare() + 1);
+                numEmptySquares++;
             } else {
-                if (stackValue != currentSquare.getValue()) {
-                    stackValue = currentSquare.getValue();
+                if (lastSeenTile != currentSquare.getValue()) {
+                    lastSeenTile = currentSquare.getValue();
                 } else {
                     worstCase.setStackable(true);
                 }
             }
+        }
+        if (numEmptySquares != 4) {
+            worstCase.setNumEmptySquare(worstCase.getNumEmptySquare() + numEmptySquares);
         }
     }
 }
