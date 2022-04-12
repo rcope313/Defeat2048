@@ -81,38 +81,38 @@ public class GameStateTreeTest {
     @Test
     public void itDeterminesNextMove() {
         this.initData();
-        KeyEventHandler resultHandler1 = GameStateTree.getNextMove(3, snakeHeuristic, h1);
+        KeyEventHandler resultHandler1 = new GameStateTree(snakeHeuristic, 3, h1).getNextMove();
         assertThat(resultHandler1).usingRecursiveComparison().isEqualTo(h2);
-        KeyEventHandler resultHandler5 = GameStateTree.getNextMove(2, snakeAndWorstCaseHeuristic, h5);
+        KeyEventHandler resultHandler5 = new GameStateTree(snakeAndWorstCaseHeuristic, 2, h5).getNextMove();
         assertThat(resultHandler5).usingRecursiveComparison().isEqualTo(h6);
     }
 
     @Test
     public void itDeterminesNextMoveDownOnly() {
         this.initData();
-        KeyEventHandler resultHandler = GameStateTree.getNextMove(3, snakeHeuristic, h3);
+        KeyEventHandler resultHandler = new GameStateTree(snakeHeuristic, 3, h3).getNextMove();
         assertThat(resultHandler).usingRecursiveComparison().isEqualTo(h4);
     }
 
     @Test
     public void itReturnsBestNodeOfBottomRowAsDeterminedByHeuristicScore() {
         this.initData();
-        GameStateTree headNode1 = new GameStateTree(h1, KeyEvent.NOUP, new ArrayList<>(), null);
-        ArrayList<GameStateTree> bottomRow1 = GameStateTree.buildGameStateTreeAndGetBottomRow(headNode1,3, new ArrayList<>(), snakeHeuristic);
-        GameStateTree bestNode1 = GameStateTree.getHighestScoringNodeOfBottomRow(bottomRow1, snakeHeuristic);
+        GameStateTree headNode1 = new GameStateTree(snakeHeuristic, 3, h1);
+        ArrayList<GameStateTree> bottomRow1 = headNode1.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 3);
+        GameStateTree bestNode1 = headNode1.getHighestScoringNodeOfBottomRow(bottomRow1);
         assertThat(snakeHeuristic.evaluateHeuristicScore(bestNode1.getHandler()).getValue()).isEqualTo(169400);
 
-        GameStateTree headNode5 = new GameStateTree(h5, KeyEvent.NOUP, new ArrayList<>(), null);
-        ArrayList<GameStateTree> bottomRow5 = GameStateTree.buildGameStateTreeAndGetBottomRow(headNode5,2, new ArrayList<>(), snakeAndWorstCaseHeuristic);
-        GameStateTree bestNode5 = GameStateTree.getHighestScoringNodeOfBottomRow(bottomRow5, snakeAndWorstCaseHeuristic);
+        GameStateTree headNode5 = new GameStateTree(snakeAndWorstCaseHeuristic, 2, h5);
+        ArrayList<GameStateTree> bottomRow5 = headNode5.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 2);
+        GameStateTree bestNode5 = headNode5.getHighestScoringNodeOfBottomRow(bottomRow5);
         assertThat(snakeAndWorstCaseHeuristic.evaluateHeuristicScore(bestNode5.getHandler()).getValue()).isEqualTo(70774);
     }
 
     @Test
     public void itCreatesGameStateTreeAndReturnBottomRow() {
         this.initData();
-        GameStateTree headNode1 = new GameStateTree(h1, KeyEvent.NOUP, new ArrayList<>(), null);
-        ArrayList<GameStateTree> bottomRow1 = GameStateTree.buildGameStateTreeAndGetBottomRow(headNode1,3, new ArrayList<>(), snakeHeuristic);
+        GameStateTree headNode1 = new GameStateTree(snakeHeuristic, 3, h1);
+        ArrayList<GameStateTree> bottomRow1 = headNode1.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 3);
         assertThat(bottomRow1.size()).isEqualTo(6);
         assertThat(snakeHeuristic.evaluateHeuristicScore(bottomRow1.get(0).getHandler()).getValue()).isEqualTo(169400);
         assertThat(snakeHeuristic.evaluateHeuristicScore(bottomRow1.get(1).getHandler()).getValue()).isEqualTo(152000);
@@ -121,8 +121,8 @@ public class GameStateTreeTest {
         assertThat(snakeHeuristic.evaluateHeuristicScore(bottomRow1.get(4).getHandler()).getValue()).isEqualTo(68280);
         assertThat(snakeHeuristic.evaluateHeuristicScore(bottomRow1.get(5).getHandler()).getValue()).isEqualTo(49414);
 
-        GameStateTree headNode5 = new GameStateTree(h5, KeyEvent.NOUP, new ArrayList<>(), null);
-        ArrayList<GameStateTree> bottomRow5 = GameStateTree.buildGameStateTreeAndGetBottomRow(headNode5,2, new ArrayList<>(), snakeAndWorstCaseHeuristic);
+        GameStateTree headNode5 = new GameStateTree(snakeAndWorstCaseHeuristic, 2, h5);
+        ArrayList<GameStateTree> bottomRow5 = headNode5.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 2);
         assertThat(bottomRow5.size()).isEqualTo(2);
         assertThat(snakeAndWorstCaseHeuristic.evaluateHeuristicScore(bottomRow5.get(0).getHandler()).getValue()).isEqualTo(70774);
         assertThat(snakeAndWorstCaseHeuristic.evaluateHeuristicScore(bottomRow5.get(1).getHandler()).getValue()).isEqualTo(66560);
@@ -132,8 +132,8 @@ public class GameStateTreeTest {
     public void itCreatesGameStateTreeAndReturnBottomRowOnEmptyBoard() {
         this.initData();
         KeyEventHandler handler = new KeyEventHandler(true, g0, new Scoreboard(0));
-        GameStateTree headNode = new GameStateTree(handler, KeyEvent.NOUP, new ArrayList<>(), null);
-        ArrayList<GameStateTree> bottomRow = GameStateTree.buildGameStateTreeAndGetBottomRow(headNode,3, new ArrayList<>(), snakeHeuristic);
+        GameStateTree headNode = new GameStateTree(snakeHeuristic, 3, handler);
+        ArrayList<GameStateTree> bottomRow = headNode.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 3);
         assertThat(bottomRow.size()).isEqualTo(0);
     }
 

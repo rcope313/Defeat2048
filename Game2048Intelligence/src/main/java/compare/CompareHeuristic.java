@@ -13,7 +13,7 @@ import models.square.Square;
 public class CompareHeuristic {
     private final static int TREE_DEPTH = 3;
     private final static int TIMES_TO_COMPLETE = 10;
-    private final static GameHeuristic HEURISTIC = new SnakeHeuristic();
+    private final static GameHeuristic HEURISTIC = new SnakeAndWorstCaseHeuristic();
     private final static String CONSOLE_HEADING = "Snake and Worst Case Heuristic";
 
     public static void main(String[] args) {

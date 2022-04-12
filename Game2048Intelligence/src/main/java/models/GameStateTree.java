@@ -9,32 +9,39 @@ import org.assertj.core.util.VisibleForTesting;
 import java.util.ArrayList;
 
 public class GameStateTree {
+    private final GameHeuristic heuristic;
+    private final int treeDepth;
     private KeyEventHandler handler;
     private KeyEvent direction;
     private ArrayList<GameStateTree> children;
     private GameStateTree parent;
 
-    public GameStateTree() {
+    public GameStateTree(GameHeuristic heuristic, int treeDepth) {
+        this.heuristic = heuristic;
+        this.treeDepth = treeDepth;
     }
 
-    public GameStateTree(KeyEventHandler handler) {
+    public GameStateTree(GameHeuristic heuristic, int treeDepth, KeyEventHandler handler) {
+        this.heuristic = heuristic;
+        this.treeDepth = treeDepth;
         this.handler = handler;
         this.direction = KeyEvent.NOUP;
         this.children = new ArrayList<>();
         this.parent = null;
     }
 
-    public GameStateTree(KeyEventHandler handler, KeyEvent direction, ArrayList<GameStateTree> children, GameStateTree parent) {
+    public GameStateTree(GameHeuristic heuristic, int treeDepth, KeyEventHandler handler, KeyEvent direction, ArrayList<GameStateTree> children, GameStateTree parent) {
+        this.heuristic = heuristic;
+        this.treeDepth = treeDepth;
         this.handler = handler;
         this.direction = direction;
         this.children = children;
         this.parent = parent;
     }
 
-    public static KeyEventHandler getNextMove(int treeDepth, GameHeuristic heuristic, KeyEventHandler currentHandler) {
-        GameStateTree headNode = new GameStateTree(currentHandler, KeyEvent.NOUP, new ArrayList<>(), null);
-        ArrayList<GameStateTree> bottomRow = buildGameStateTreeAndGetBottomRow(headNode, treeDepth, new ArrayList<>(), heuristic);
-        GameStateTree bestNode = getHighestScoringNodeOfBottomRow(bottomRow, heuristic);
+    public KeyEventHandler getNextMove() {
+        ArrayList<GameStateTree> bottomRow = buildGameStateTreeAndGetBottomRow(new ArrayList<>(), treeDepth);
+        GameStateTree bestNode = getHighestScoringNodeOfBottomRow(bottomRow);
         return getNextMove(bestNode);
     }
 
@@ -48,9 +55,9 @@ public class GameStateTree {
     }
 
     @VisibleForTesting
-    static GameStateTree getHighestScoringNodeOfBottomRow(ArrayList<GameStateTree> bottomRow, GameHeuristic heuristic) {
+    GameStateTree getHighestScoringNodeOfBottomRow(ArrayList<GameStateTree> bottomRow) {
         int highestScore = 0;
-        GameStateTree bestNode = new GameStateTree();
+        GameStateTree bestNode = new GameStateTree(heuristic, treeDepth);
 
         for (GameStateTree node : bottomRow) {
             int currentScore = heuristic.evaluateHeuristicScore(node.handler).getValue();
@@ -63,38 +70,38 @@ public class GameStateTree {
     }
 
     @VisibleForTesting
-    static ArrayList<GameStateTree> buildGameStateTreeAndGetBottomRow(GameStateTree currentNode, int treeDepth, ArrayList<GameStateTree> bottomRow, GameHeuristic heuristic) {
+    ArrayList<GameStateTree> buildGameStateTreeAndGetBottomRow(ArrayList<GameStateTree> bottomRow, int treeDepth) {
         treeDepth--;
         if (treeDepth == 0) {
-            bottomRow.add(currentNode);
+            bottomRow.add(this);
             return bottomRow;
         }
-        buildChildrenOfGameStateTree(currentNode, heuristic);
-        for (GameStateTree child : currentNode.children) {
-            buildGameStateTreeAndGetBottomRow(child, treeDepth, bottomRow, heuristic);
+        buildChildrenOfGameStateTree();
+        for (GameStateTree child : children) {
+            child.buildGameStateTreeAndGetBottomRow(bottomRow, treeDepth);
         }
         return bottomRow;
     }
 
-    private static void buildChildrenOfGameStateTree(GameStateTree currentNode, GameHeuristic heuristic) {
-        Grid2048 grid = currentNode.handler.getGrid2048();
-        Scoreboard scoreboard = currentNode.handler.getScoreboard();
+    private void buildChildrenOfGameStateTree() {
+        Grid2048 grid = handler.getGrid2048();
+        Scoreboard scoreboard = handler.getScoreboard();
         KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
         KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard);
         KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
         KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
 
         if (upHandler.isTilesMoved() && heuristic.evaluateHeuristicScore(upHandler).getValue() != 0) {
-            currentNode.children.add(new GameStateTree(upHandler, KeyEvent.UP, new ArrayList<>(), currentNode));
+            children.add(new GameStateTree(heuristic, treeDepth, upHandler, KeyEvent.UP, new ArrayList<>(), this));
         }
         if (leftHandler.isTilesMoved() && heuristic.evaluateHeuristicScore(leftHandler).getValue() != 0) {
-            currentNode.children.add(new GameStateTree(leftHandler, KeyEvent.LEFT, new ArrayList<>(), currentNode));
+            children.add(new GameStateTree(heuristic, treeDepth, leftHandler, KeyEvent.LEFT, new ArrayList<>(), this));
         }
         if (rightHandler.isTilesMoved() && heuristic.evaluateHeuristicScore(rightHandler).getValue() != 0) {
-            currentNode.children.add(new GameStateTree(rightHandler, KeyEvent.RIGHT, new ArrayList<>(), currentNode));
+            children.add(new GameStateTree(heuristic, treeDepth, rightHandler, KeyEvent.RIGHT, new ArrayList<>(), this));
         }
-        if (currentNode.children.isEmpty() && downHandler.isTilesMoved()) {
-            currentNode.children.add(new GameStateTree(downHandler, KeyEvent.DOWN, new ArrayList<>(), currentNode));
+        if (children.isEmpty() && downHandler.isTilesMoved()) {
+            children.add(new GameStateTree(heuristic, treeDepth, downHandler, KeyEvent.DOWN, new ArrayList<>(), this));
         }
     }
 

@@ -9,7 +9,7 @@ public abstract class GameHeuristic {
     public abstract HeuristicScore evaluateHeuristicScore(KeyEventHandler handler);
 
     public KeyEventHandler getNextMove(int treeDepth, KeyEventHandler handler) {
-        return GameStateTree.getNextMove(treeDepth, this, handler);
+        return new GameStateTree(this, treeDepth, handler).getNextMove();
     }
 
     public abstract String getHeuristicName();
