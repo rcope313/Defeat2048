@@ -61,7 +61,7 @@ public class GameStateTree {
 
         for (GameStateTree node : bottomRow) {
             int currentScore = heuristic.evaluateHeuristicScore(node.handler).getValue();
-            if (currentScore > highestScore) {
+            if (currentScore >= highestScore) {
                 highestScore = currentScore;
                 bestNode = node;
             }
@@ -86,21 +86,21 @@ public class GameStateTree {
     private void buildChildrenOfGameStateTree() {
         Grid2048 grid = handler.getGrid2048();
         Scoreboard scoreboard = handler.getScoreboard();
-        KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
-        KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard);
-        KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
-        KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
+        KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard),
+                leftHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard),
+                rightHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard),
+                downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
 
-        if (upHandler.isTilesMoved() && heuristic.evaluateHeuristicScore(upHandler).getValue() != 0) {
+        if (upHandler.isTilesMoved()) {
             children.add(new GameStateTree(heuristic, treeDepth, upHandler, KeyEvent.UP, new ArrayList<>(), this));
         }
-        if (leftHandler.isTilesMoved() && heuristic.evaluateHeuristicScore(leftHandler).getValue() != 0) {
+        if (leftHandler.isTilesMoved()) {
             children.add(new GameStateTree(heuristic, treeDepth, leftHandler, KeyEvent.LEFT, new ArrayList<>(), this));
         }
-        if (rightHandler.isTilesMoved() && heuristic.evaluateHeuristicScore(rightHandler).getValue() != 0) {
+        if (rightHandler.isTilesMoved()) {
             children.add(new GameStateTree(heuristic, treeDepth, rightHandler, KeyEvent.RIGHT, new ArrayList<>(), this));
         }
-        if (children.isEmpty() && downHandler.isTilesMoved()) {
+        if (children.isEmpty()) {
             children.add(new GameStateTree(heuristic, treeDepth, downHandler, KeyEvent.DOWN, new ArrayList<>(), this));
         }
     }

@@ -302,7 +302,7 @@ public class Grid2048 {
                 s.getImage());
     }
 
-    private HashSet<Posn> getEmptyTilePosns() {
+    public HashSet<Posn> getEmptyTilePosns() {
         HashSet<Posn> emptyTilePosns = new HashSet<>();
         for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow ++) {
             for (int idxColumn = 0; idxColumn < SQUARES_PER_AXIS; idxColumn++) {

@@ -3,12 +3,12 @@ package models;
 import heuristic.SnakeAndWorstCaseHeuristic;
 import heuristic.SnakeHeuristic;
 import models.game.Grid2048;
-import models.game.KeyEvent;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import models.square.EmptySquare;
 import models.square.Square;
 import models.square.Tile;
+import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.*;
@@ -20,13 +20,15 @@ public class GameStateTreeTest {
             row30, row31, row32, row33,
             row40, row41, row42, row43,
             row50, row51, row52, row53,
-            row60, row61, row62, row63;
-    Grid2048 g0, g1, g2, g3, g4, g5, g6;
-    KeyEventHandler h0, h1, h2, h3, h4, h5, h6;
+            row60, row61, row62, row63,
+            row70, row71, row72, row73;
+    Grid2048 g0, g1, g2, g3, g4, g5, g6, g7;
+    KeyEventHandler h0, h1, h2, h3, h4, h5, h6, h7;
     SnakeHeuristic snakeHeuristic = new SnakeHeuristic();
     SnakeAndWorstCaseHeuristic snakeAndWorstCaseHeuristic = new SnakeAndWorstCaseHeuristic();
 
-    void initData() {
+    @Before
+    public void initData() {
         rowEmpty0 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
         rowEmpty1 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
         rowEmpty2 = new Square[]{new EmptySquare(), new EmptySquare(), new EmptySquare(), new EmptySquare()};
@@ -76,11 +78,22 @@ public class GameStateTreeTest {
         g6 = new Grid2048(new Square[][]{row60, row61, row62, row63});
         h6 = new KeyEventHandler(true, g6, new Scoreboard(0));
 
+        row70 = new Square[]{new Tile(256), new Tile(512), new Tile(2), new Tile(8)};
+        row71 = new Square[]{new Tile(32), new Tile(64), new Tile(256), new Tile(64)};
+        row72 = new Square[]{new Tile(4), new Tile(16), new Tile(32), new Tile(16)};
+        row73 = new Square[]{new Tile(2), new Tile(2), new Tile(8), new Tile(4)};
+        g7 = new Grid2048(new Square[][]{row70, row71, row72, row73});
+        h7 = new KeyEventHandler(true, g7, new Scoreboard(0));
+
+    }
+
+    @Test
+    public void testWeirdThingHappening() {
+        KeyEventHandler resultHandler = new GameStateTree(snakeAndWorstCaseHeuristic, 3, h7).getNextMove();
     }
 
     @Test
     public void itDeterminesNextMove() {
-        this.initData();
         KeyEventHandler resultHandler1 = new GameStateTree(snakeHeuristic, 3, h1).getNextMove();
         assertThat(resultHandler1).usingRecursiveComparison().isEqualTo(h2);
         KeyEventHandler resultHandler5 = new GameStateTree(snakeAndWorstCaseHeuristic, 2, h5).getNextMove();
@@ -89,14 +102,12 @@ public class GameStateTreeTest {
 
     @Test
     public void itDeterminesNextMoveDownOnly() {
-        this.initData();
-        KeyEventHandler resultHandler = new GameStateTree(snakeHeuristic, 3, h3).getNextMove();
-        assertThat(resultHandler).usingRecursiveComparison().isEqualTo(h4);
+        KeyEventHandler resultHandler1 = new GameStateTree(snakeHeuristic, 3, h3).getNextMove();
+        assertThat(resultHandler1).usingRecursiveComparison().isEqualTo(h4);
     }
 
     @Test
     public void itReturnsBestNodeOfBottomRowAsDeterminedByHeuristicScore() {
-        this.initData();
         GameStateTree headNode1 = new GameStateTree(snakeHeuristic, 3, h1);
         ArrayList<GameStateTree> bottomRow1 = headNode1.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 3);
         GameStateTree bestNode1 = headNode1.getHighestScoringNodeOfBottomRow(bottomRow1);
@@ -110,7 +121,6 @@ public class GameStateTreeTest {
 
     @Test
     public void itCreatesGameStateTreeAndReturnBottomRow() {
-        this.initData();
         GameStateTree headNode1 = new GameStateTree(snakeHeuristic, 3, h1);
         ArrayList<GameStateTree> bottomRow1 = headNode1.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 3);
         assertThat(bottomRow1.size()).isEqualTo(6);
@@ -130,7 +140,6 @@ public class GameStateTreeTest {
 
     @Test
     public void itCreatesGameStateTreeAndReturnBottomRowOnEmptyBoard() {
-        this.initData();
         KeyEventHandler handler = new KeyEventHandler(true, g0, new Scoreboard(0));
         GameStateTree headNode = new GameStateTree(snakeHeuristic, 3, handler);
         ArrayList<GameStateTree> bottomRow = headNode.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 3);
