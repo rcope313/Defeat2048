@@ -133,9 +133,10 @@ public class GameStateTreeTest {
 
         GameStateTree headNode5 = new GameStateTree(snakeAndWorstCaseHeuristic, 2, h5);
         ArrayList<GameStateTree> bottomRow5 = headNode5.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 2);
-        assertThat(bottomRow5.size()).isEqualTo(2);
-        assertThat(snakeAndWorstCaseHeuristic.evaluateHeuristicScore(bottomRow5.get(0).getHandler()).getValue()).isEqualTo(70774);
-        assertThat(snakeAndWorstCaseHeuristic.evaluateHeuristicScore(bottomRow5.get(1).getHandler()).getValue()).isEqualTo(66560);
+        assertThat(bottomRow5.size()).isEqualTo(3);
+        assertThat(snakeAndWorstCaseHeuristic.evaluateHeuristicScore(bottomRow5.get(0).getHandler()).getValue()).isEqualTo(0);
+        assertThat(snakeAndWorstCaseHeuristic.evaluateHeuristicScore(bottomRow5.get(1).getHandler()).getValue()).isEqualTo(70774);
+        assertThat(snakeAndWorstCaseHeuristic.evaluateHeuristicScore(bottomRow5.get(2).getHandler()).getValue()).isEqualTo(66560);
     }
 
     @Test
@@ -143,7 +144,7 @@ public class GameStateTreeTest {
         KeyEventHandler handler = new KeyEventHandler(true, g0, new Scoreboard(0));
         GameStateTree headNode = new GameStateTree(snakeHeuristic, 3, handler);
         ArrayList<GameStateTree> bottomRow = headNode.buildGameStateTreeAndGetBottomRow(new ArrayList<>(), 3);
-        assertThat(bottomRow.size()).isEqualTo(0);
+        assertThat(bottomRow.size()).isEqualTo(1);
     }
 
 }
