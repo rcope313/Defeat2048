@@ -1,6 +1,7 @@
 package compare;
 
 import heuristic.GameHeuristic;
+import heuristic.PreferUpHeuristic;
 import heuristic.SnakeAndWorstCaseHeuristic;
 import heuristic.SnakeHeuristic;
 import models.HeuristicComparison;
@@ -11,33 +12,43 @@ import models.game.Scoreboard;
 import models.square.Square;
 
 public class CompareHeuristic {
-    private final static int TREE_DEPTH = 3;
-    private final static int TIMES_TO_COMPLETE = 10;
-    private final static GameHeuristic HEURISTIC = new SnakeAndWorstCaseHeuristic();
-    private final static String CONSOLE_HEADING = "Snake and Worst Case Heuristic";
+    private final int treeDepth;
+    private final int timesToComplete;
+    private final GameHeuristic heuristic;
+
+    public CompareHeuristic(int treeDepth, int timesToComplete, GameHeuristic heuristic) {
+        this.treeDepth = treeDepth;
+        this.timesToComplete = timesToComplete;
+        this.heuristic = heuristic;
+    }
 
     public static void main(String[] args) {
-        HeuristicComparison comparison = getHeuristicComparison(HEURISTIC);
-        System.out.print(CONSOLE_HEADING + "\n");
-        System.out.print("Average Score: " + comparison.getAverageScore() + "\n");
-        System.out.print("Highest Score: " + comparison.getHighestScore() + "\n");
-        System.out.print("Highest Score Grid: \n");
+        if (args.length == 3) {
+            CompareHeuristic compareHeuristic = new CompareHeuristic(Integer.parseInt(args[0]), Integer.parseInt(args[1]), getHeuristicByStringName(args[2]));
+            HeuristicComparison comparison = compareHeuristic.getHeuristicComparison(compareHeuristic.heuristic);
+            System.out.print(compareHeuristic.heuristic.getHeuristicName() + "\n");
+            System.out.print("Average Score: " + comparison.getAverageScore() + "\n");
+            System.out.print("Highest Score: " + comparison.getHighestScore() + "\n");
+            System.out.print("Highest Score Grid: \n");
 
-        for (int idxRow = 0; idxRow < Grid2048.SQUARES_PER_AXIS; idxRow++) {
-            for (int idxCol = 0; idxCol < Grid2048.SQUARES_PER_AXIS; idxCol++) {
-                Square currentSquare = comparison.getBestGrid().getSquareByCoordinates(idxRow, idxCol);
-                System.out.printf("%-10s", currentSquare.getValue());
+            for (int idxRow = 0; idxRow < Grid2048.SQUARES_PER_AXIS; idxRow++) {
+                for (int idxCol = 0; idxCol < Grid2048.SQUARES_PER_AXIS; idxCol++) {
+                    Square currentSquare = comparison.getBestGrid().getSquareByCoordinates(idxRow, idxCol);
+                    System.out.printf("%-10s", currentSquare.getValue());
+                }
+                System.out.print("\n");
             }
-            System.out.print("\n");
+        } else {
+            throw new IllegalArgumentException("Expecting 3 arguments. Please see read me for proper play game execution");
         }
     }
 
-    private static HeuristicComparison getHeuristicComparison(GameHeuristic heuristic) {
+    private HeuristicComparison getHeuristicComparison(GameHeuristic heuristic) {
         int highestScore = 0;
         int averageScore = 0;
         int idx = 0;
         Grid2048 bestGrid = new Grid2048();
-        while (idx < TIMES_TO_COMPLETE) {
+        while (idx < timesToComplete) {
             KeyEventHandler currentHandler = completePlayerCycle(heuristic);
             int currentScore = currentHandler.getScoreboard().getPoints();
             if (currentScore > highestScore) {
@@ -47,19 +58,19 @@ public class CompareHeuristic {
             averageScore += currentScore;
             idx++;
         }
-        return new HeuristicComparison(highestScore, averageScore/TIMES_TO_COMPLETE, bestGrid);
+        return new HeuristicComparison(highestScore, averageScore/timesToComplete, bestGrid);
     }
 
-    private static KeyEventHandler completePlayerCycle(GameHeuristic heuristic) {
+    private KeyEventHandler completePlayerCycle(GameHeuristic heuristic) {
         KeyEventHandler handler = new KeyEventHandler(false, new Grid2048(), new Scoreboard(0));
         return completePlayerCycle(heuristic, handler);
     }
 
-    private static KeyEventHandler completePlayerCycle(GameHeuristic heuristic, KeyEventHandler handler) {
+    private KeyEventHandler completePlayerCycle(GameHeuristic heuristic, KeyEventHandler handler) {
         if (isGameOver(handler)){
             return handler;
         }
-        KeyEventHandler newHandler = heuristic.getNextMove(TREE_DEPTH, handler);
+        KeyEventHandler newHandler = heuristic.getNextMove(treeDepth, handler);
         Grid2048.addRandomTileOnKeyEventHandler(newHandler);
         return completePlayerCycle(heuristic, newHandler);
     }
@@ -77,5 +88,19 @@ public class CompareHeuristic {
                 !downHandler.isTilesMoved() &&
                 !leftHandler.isTilesMoved() &&
                 !rightHandler.isTilesMoved();
+    }
+
+    private static GameHeuristic getHeuristicByStringName(String str) {
+        if (str.equals("Prefer Up Heuristic")) {
+            return new PreferUpHeuristic();
+        }
+        if (str.equals("Snake Heuristic")) {
+            return new SnakeHeuristic();
+        }
+        if (str.equals("Snake and Worst Case Heuristic")) {
+            return new SnakeAndWorstCaseHeuristic();
+        } else {
+            throw new IllegalArgumentException("Not a valid heuristic. Check read me for all available heuristics and their respective spelling");
+        }
     }
 }

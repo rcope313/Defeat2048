@@ -1,6 +1,8 @@
 package player;
 
 import heuristic.GameHeuristic;
+import heuristic.PreferUpHeuristic;
+import heuristic.SnakeAndWorstCaseHeuristic;
 import heuristic.SnakeHeuristic;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
@@ -18,7 +20,7 @@ import models.square.Tile;
 
 import java.awt.Color;
 
-public class Player extends World  {
+public class Player extends World {
     int WINDOW_TEXT_SIZE = 100;
     private final Grid2048 grid;
     private final Scoreboard scoreboard;
@@ -40,12 +42,17 @@ public class Player extends World  {
         this.heuristic = heuristic;
     }
 
-    public static void main (String[] args) {
-        Player player = new Player(new Grid2048(), new Scoreboard(0), new SnakeHeuristic());
-        if (player.heuristic == null) {
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            Player player = new Player(new Grid2048(), new Scoreboard(0));
             player.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE, MANUAL_SPEED);
-        } else {
+        }
+        if (args.length == 1) {
+            Player player = new Player(new Grid2048(), new Scoreboard(0), getHeuristicByStringName(args[0]));
             player.bigBang(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE, HEURISTIC_SPEED);
+        }
+        else {
+            throw new IllegalArgumentException("Expecting 0 or 1 argument. Please see read me for proper play game execution");
         }
     }
 
@@ -74,8 +81,8 @@ public class Player extends World  {
     }
 
     @Override
-    public WorldScene lastScene (String msg) {
-        return this.makeScene().placeImageXY(new TextImage(msg, WINDOW_TEXT_SIZE, Color.BLACK), Square.SIDE_LENGTH * WINDOW_SIZE/2, Square.SIDE_LENGTH * WINDOW_SIZE/2);
+    public WorldScene lastScene(String msg) {
+        return this.makeScene().placeImageXY(new TextImage(msg, WINDOW_TEXT_SIZE, Color.BLACK), Square.SIDE_LENGTH * WINDOW_SIZE / 2, Square.SIDE_LENGTH * WINDOW_SIZE / 2);
     }
 
     @Override
@@ -97,15 +104,29 @@ public class Player extends World  {
         return new Player(handler.getGrid2048(), handler.getScoreboard());
     }
 
-    boolean isGameOver () {
+    boolean isGameOver() {
         KeyEventHandler upHandler = grid.handleKeyEvent(KeyEvent.UP, scoreboard);
         KeyEventHandler downHandler = grid.handleKeyEvent(KeyEvent.DOWN, scoreboard);
         KeyEventHandler leftHandler = grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard);
         KeyEventHandler rightHandler = grid.handleKeyEvent(KeyEvent.LEFT, scoreboard);
 
-        return  !upHandler.isTilesMoved() &&
+        return !upHandler.isTilesMoved() &&
                 !downHandler.isTilesMoved() &&
                 !leftHandler.isTilesMoved() &&
                 !rightHandler.isTilesMoved();
+    }
+
+    private static GameHeuristic getHeuristicByStringName(String str) {
+        if (str.equals("Prefer Up Heuristic")) {
+            return new PreferUpHeuristic();
+        }
+        if (str.equals("Snake Heuristic")) {
+            return new SnakeHeuristic();
+        }
+        if (str.equals("Snake and Worst Case Heuristic")) {
+            return new SnakeAndWorstCaseHeuristic();
+        } else {
+            throw new IllegalArgumentException("Not a valid heuristic. Check read me for all available heuristics and their respective spelling");
+        }
     }
 }
