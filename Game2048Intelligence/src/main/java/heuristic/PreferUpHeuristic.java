@@ -1,5 +1,6 @@
 package heuristic;
 
+import models.HeuristicScore;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import models.game.Grid2048;
@@ -10,24 +11,33 @@ import java.util.Random;
 public class PreferUpHeuristic extends GameHeuristic {
 
     @Override
-    public KeyEventHandler evaluateNextGameState(Grid2048 grid, Scoreboard scoreboard) {
-        ArrayList<KeyEventHandler> eventSequence = establishKeyEventSequence(grid, scoreboard);
+    public KeyEventHandler getNextMove(int treeDepth, KeyEventHandler handler) {
+        ArrayList<KeyEventHandler> eventSequence = establishKeyEventSequence(handler.getGrid2048(), handler.getScoreboard());
         int idx = 0;
         while (idx < 4) {
             if (eventSequence.get(idx).isTilesMoved()) {
                 return eventSequence.get(idx);
             }
             idx++;
-       }
+        }
         throw new IllegalStateException("Initial board empty or world ends");
+    }
+
+    @Override
+    public HeuristicScore evaluateHeuristicScore(KeyEventHandler handler) {
+        return null;
+    }
+
+    @Override
+    public String getHeuristicName() {
+        return "Prefer Up Heuristic";
     }
 
     static ArrayList<KeyEventHandler> establishKeyEventSequence(Grid2048 grid, Scoreboard scoreboard) {
         ArrayList<KeyEventHandler> eventSequence = new ArrayList<>();
-
-        eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.UP, scoreboard));
+        eventSequence.add(grid.handleKeyEvent(KeyEvent.UP, scoreboard));
         assignLeftOrRightKeyEventAtRandom(eventSequence, grid, scoreboard);
-        eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.DOWN, scoreboard));
+        eventSequence.add(grid.handleKeyEvent(KeyEvent.DOWN, scoreboard));
         return eventSequence;
     }
 
@@ -35,14 +45,11 @@ public class PreferUpHeuristic extends GameHeuristic {
         Random r = new Random();
         int randomInt = r.nextInt(2);
         if (randomInt == 0) {
-            eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard));
-            eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, scoreboard));
+            eventSequence.add(grid.handleKeyEvent(KeyEvent.LEFT, scoreboard));
+            eventSequence.add(grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard));
         } else {
-            eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.RIGHT, scoreboard));
-            eventSequence.add(grid.handleKeyEventWithoutRandomTile(KeyEvent.LEFT, scoreboard));
-
+            eventSequence.add(grid.handleKeyEvent(KeyEvent.RIGHT, scoreboard));
+            eventSequence.add(grid.handleKeyEvent(KeyEvent.LEFT, scoreboard));
         }
     }
-
 }
-

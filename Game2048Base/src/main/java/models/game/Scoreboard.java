@@ -8,7 +8,7 @@ import javalib.worldimages.WorldImage;
 import java.awt.Color;
 
 public class Scoreboard {
-    private final int points;
+    private int points;
     public final static int WIDTH = 200;
     public final static int HEIGHT = 50;
     public final static WorldImage IMAGE = new RectangleImage(WIDTH, HEIGHT, OutlineMode.SOLID, Color.BLACK);
@@ -25,5 +25,9 @@ public class Scoreboard {
 
     public int getPoints() {
         return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

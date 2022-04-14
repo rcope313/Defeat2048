@@ -2,14 +2,12 @@ package models.square;
 
 import javalib.worldimages.OutlineMode;
 import javalib.worldimages.OverlayImage;
-import javalib.worldimages.Posn;
 import javalib.worldimages.RectangleImage;
 import java.awt.Color;
 
 public class EmptySquare extends Square {
 
-    public EmptySquare(Posn position) {
-        super(position);
+    public EmptySquare() {
     }
 
     @Override

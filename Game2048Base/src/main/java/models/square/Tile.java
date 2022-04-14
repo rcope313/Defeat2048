@@ -13,8 +13,8 @@ public class Tile extends Square {
     private static final int TILE_SEED_LOW_VALUE = 2;
     private static final int TILE_SEED_HIGH_VALUE = 4;
 
-    public Tile(int value, Posn position) {
-        super(value, position);
+    public Tile(int value) {
+        super(value);
     }
 
     public static int weightedRandomTileValue() {
