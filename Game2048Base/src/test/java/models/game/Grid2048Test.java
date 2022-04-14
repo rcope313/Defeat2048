@@ -1,8 +1,6 @@
-package models.grid2048;
+package models.game;
 
 import javalib.worldimages.Posn;
-import models.game2048.KeyEventHandler;
-import models.game2048.Scoreboard;
 import models.square.*;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -88,9 +86,18 @@ public class Grid2048Test {
     }
 
     @Test
+    public void itHandlesNOUPEvent() {
+        this.initData();
+        Scoreboard board = new Scoreboard(100);
+        KeyEventHandler handler = g0.handleKeyEventWithRandomTile(KeyEvent.NOUP, board);
+        assertThat(handler.getGrid2048()).isEqualTo(g0);
+        assertThat(handler.getScoreboard()).isEqualTo(board);
+    }
+
+    @Test
     public void itHandlesUpEventWithTilesMoved() {
         this.initData();
-        KeyEventHandler handler = g0.handleUpEvent(new Scoreboard(0));
+        KeyEventHandler handler = g0.handleKeyEventWithRandomTile(KeyEvent.UP, new Scoreboard(0));
         Square[][] resultGrid = handler.getGrid2048().grid;
         assertThat(handler.getScoreboard()).usingRecursiveComparison().isEqualTo(new Scoreboard(4));
         assertThat(resultGrid[0][1]).usingRecursiveComparison().isEqualTo(new Tile(4, new Posn (0,1)));
@@ -108,7 +115,7 @@ public class Grid2048Test {
     @Test
     public void itHandlesUpEventWithTilesNoMoved() {
         this.initData();
-        KeyEventHandler handler = gNoTilesMovedUpLeftRight.handleUpEvent(new Scoreboard(100));
+        KeyEventHandler handler = gNoTilesMovedUpLeftRight.handleKeyEventWithRandomTile(KeyEvent.UP, new Scoreboard(100));
         Square[][] resultGrid = handler.getGrid2048().grid;
         assertThat(handler.getScoreboard()).usingRecursiveComparison().isEqualTo(new Scoreboard(100));
         assertThat(resultGrid[0][0]).usingRecursiveComparison().isEqualTo(new Tile(2, new Posn (0,0)));
@@ -131,7 +138,7 @@ public class Grid2048Test {
     @Test
     public void itHandlesDownEventWithTilesMoved() {
         this.initData();
-        KeyEventHandler handler = g0.handleDownEvent(new Scoreboard(0));
+        KeyEventHandler handler = g0.handleKeyEventWithRandomTile(KeyEvent.DOWN, new Scoreboard(0));
         Square[][] resultGrid = handler.getGrid2048().grid;
         assertThat(handler.getScoreboard()).usingRecursiveComparison().isEqualTo(new Scoreboard(4));
         assertThat(resultGrid[3][1]).usingRecursiveComparison().isEqualTo(new Tile(4, new Posn (3,1)));
@@ -149,7 +156,7 @@ public class Grid2048Test {
     @Test
     public void itHandlesDownEventWithTilesNoMoved() {
         this.initData();
-        KeyEventHandler handler = gNoTilesMovedDownLeftRight.handleDownEvent(new Scoreboard(100));
+        KeyEventHandler handler = gNoTilesMovedDownLeftRight.handleKeyEventWithRandomTile(KeyEvent.DOWN, new Scoreboard(100));
         Square[][] resultGrid = handler.getGrid2048().grid;
         assertThat(handler.getScoreboard()).usingRecursiveComparison().isEqualTo(new Scoreboard(100));
         assertThat(resultGrid[2][0]).usingRecursiveComparison().isEqualTo(new Tile(2, new Posn (2,0)));
@@ -172,7 +179,7 @@ public class Grid2048Test {
     @Test
     public void itHandlesLeftEventWithTilesMoved() {
         this.initData();
-        KeyEventHandler handler = g0.handleLeftEvent(new Scoreboard(0));
+        KeyEventHandler handler = g0.handleKeyEventWithRandomTile(KeyEvent.LEFT, new Scoreboard(0));
         Square[][] resultGrid = handler.getGrid2048().grid;
         assertThat(handler.getScoreboard()).usingRecursiveComparison().isEqualTo(new Scoreboard(4));
         assertThat(resultGrid[0][0]).usingRecursiveComparison().isEqualTo(new Tile(2, new Posn (0,0)));
@@ -190,7 +197,7 @@ public class Grid2048Test {
     @Test
     public void itHandlesLeftEventWithTilesNoMoved() {
         this.initData();
-        KeyEventHandler handler = gNoTilesMovedUpLeftRight.handleLeftEvent(new Scoreboard(100));
+        KeyEventHandler handler = gNoTilesMovedUpLeftRight.handleKeyEventWithRandomTile(KeyEvent.LEFT, new Scoreboard(100));
         Square[][] resultGrid = handler.getGrid2048().grid;
         assertThat(handler.getScoreboard()).usingRecursiveComparison().isEqualTo(new Scoreboard(100));
         assertThat(resultGrid[0][0]).usingRecursiveComparison().isEqualTo(new Tile(2, new Posn (0,0)));
@@ -213,7 +220,7 @@ public class Grid2048Test {
     @Test
     public void itHandlesRightEventWithTilesMoved() {
         this.initData();
-        KeyEventHandler handler = g0.handleRightEvent(new Scoreboard(0));
+        KeyEventHandler handler = g0.handleKeyEventWithRandomTile(KeyEvent.RIGHT, new Scoreboard(0));
         Square[][] resultGrid = handler.getGrid2048().grid;
         assertThat(handler.getScoreboard()).usingRecursiveComparison().isEqualTo(new Scoreboard(4));
         assertThat(resultGrid[0][3]).usingRecursiveComparison().isEqualTo(new Tile(2, new Posn (0,3)));
@@ -231,7 +238,7 @@ public class Grid2048Test {
     @Test
     public void itHandlesRightEventWithTilesNoMoved() {
         this.initData();
-        KeyEventHandler handler = gNoTilesMovedUpLeftRight.handleRightEvent(new Scoreboard(100));
+        KeyEventHandler handler = gNoTilesMovedUpLeftRight.handleKeyEventWithRandomTile(KeyEvent.RIGHT, new Scoreboard(100));
         Square[][] resultGrid = handler.getGrid2048().grid;
         assertThat(handler.getScoreboard()).usingRecursiveComparison().isEqualTo(new Scoreboard(100));
         assertThat(resultGrid[0][0]).usingRecursiveComparison().isEqualTo(new Tile(2, new Posn (0,0)));

@@ -1,6 +1,4 @@
-package models.game2048;
-
-import models.grid2048.Grid2048;
+package models.game;
 
 public class KeyEventHandler {
     private boolean tilesMoved;
