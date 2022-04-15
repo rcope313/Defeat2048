@@ -60,7 +60,7 @@ public class Player extends World {
             TextImage heuristicText = new TextImage("Heuristic: " + heuristic.getHeuristicName(), 20, FontStyle.BOLD, Color.BLACK);
             return s.placeImageXY(grid.drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE / 2, Square.SIDE_LENGTH * WINDOW_SIZE / 2)
                     .placeImageXY(scoreboard.drawScoreboard(), Scoreboard.WIDTH / 2 + SCOREBOARD_POSN_OFFSET, Scoreboard.HEIGHT)
-                    .placeImageXY(heuristicText, WINDOW_TEXT_SIZE + SCOREBOARD_POSN_OFFSET * 4, Square.SIDE_LENGTH * WINDOW_SIZE - Scoreboard.HEIGHT);
+                    .placeImageXY(heuristicText, Square.SIDE_LENGTH * WINDOW_SIZE / 2, Square.SIDE_LENGTH * WINDOW_SIZE - Scoreboard.HEIGHT);
         } else {
             return s.placeImageXY(grid.drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE / 2, Square.SIDE_LENGTH * WINDOW_SIZE / 2)
                     .placeImageXY(scoreboard.drawScoreboard(), WINDOW_TEXT_SIZE + SCOREBOARD_POSN_OFFSET, Scoreboard.HEIGHT);
