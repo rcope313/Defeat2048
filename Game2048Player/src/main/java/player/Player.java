@@ -7,16 +7,13 @@ import heuristic.SnakeHeuristic;
 import javalib.funworld.World;
 import javalib.funworld.WorldScene;
 import javalib.worldimages.FontStyle;
-import javalib.worldimages.Posn;
 import javalib.worldimages.TextImage;
 import javalib.worldimages.WorldEnd;
 import models.game.KeyEvent;
 import models.game.KeyEventHandler;
 import models.game.Scoreboard;
 import models.game.Grid2048;
-import models.square.EmptySquare;
 import models.square.Square;
-import models.square.Tile;
 
 import java.awt.Color;
 
@@ -59,8 +56,8 @@ public class Player extends World {
     @Override
     public WorldScene makeScene() {
         WorldScene s = new WorldScene(Square.SIDE_LENGTH * WINDOW_SIZE, Square.SIDE_LENGTH * WINDOW_SIZE);
-        TextImage heuristicText = new TextImage("Heuristic: " + heuristic.getHeuristicName(), 20, FontStyle.BOLD, Color.BLACK);
         if (heuristic != null) {
+            TextImage heuristicText = new TextImage("Heuristic: " + heuristic.getHeuristicName(), 20, FontStyle.BOLD, Color.BLACK);
             return s.placeImageXY(grid.drawGrid(), Square.SIDE_LENGTH * WINDOW_SIZE / 2, Square.SIDE_LENGTH * WINDOW_SIZE / 2)
                     .placeImageXY(scoreboard.drawScoreboard(), Scoreboard.WIDTH / 2 + SCOREBOARD_POSN_OFFSET, Scoreboard.HEIGHT)
                     .placeImageXY(heuristicText, WINDOW_TEXT_SIZE + SCOREBOARD_POSN_OFFSET * 4, Square.SIDE_LENGTH * WINDOW_SIZE - Scoreboard.HEIGHT);
@@ -128,5 +125,17 @@ public class Player extends World {
         } else {
             throw new IllegalArgumentException("Not a valid heuristic. Check read me for all available heuristics and their respective spelling");
         }
+    }
+
+    public Grid2048 getGrid() {
+        return grid;
+    }
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
+
+    public GameHeuristic getHeuristic() {
+        return heuristic;
     }
 }

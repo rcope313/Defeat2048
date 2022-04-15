@@ -18,12 +18,6 @@
         </dependency>
         <dependency>
             <groupId>org.example</groupId>
-            <artifactId>Game2048Collect</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.example</groupId>
             <artifactId>Game2048Intelligence</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
