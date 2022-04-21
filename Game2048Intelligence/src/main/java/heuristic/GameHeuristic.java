@@ -13,5 +13,4 @@ public abstract class GameHeuristic {
     }
 
     public abstract String getHeuristicName();
-
 }
