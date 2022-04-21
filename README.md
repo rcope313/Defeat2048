@@ -62,13 +62,14 @@ of their Game Heuristic in real-time visually. Please see **Available Game Heuri
 available Game Heuristics and their applicable spellings.
 
 ### Compare Heuristic
-<p align="center">
-  <img src="https://i.postimg.cc/7Z6hqL53/Compare-Heuristic.png" width="250" style="float:right"/>
-</p>
+
 In order to test the efficacy of a given Game Heuristic, the user can supply 
 the given Game Heuristic, the tree depth of the game tree, and the amount of
 times they want the application to run the game with the aforementioned qualifiers.
 
+<p align="center">
+  <img src="https://i.postimg.cc/7Z6hqL53/Compare-Heuristic.png" width="275"/>
+</p>
 
 - Jar File: Game2048Intelligence/target/CompareHeuristics.jar
 - Command: ```java -jar <pathToJar>```
