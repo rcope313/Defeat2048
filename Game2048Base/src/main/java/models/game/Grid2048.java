@@ -69,6 +69,18 @@ public class Grid2048 {
         return resultGrid;
     }
 
+    public HashSet<Posn> getEmptyTilePosns() {
+        HashSet<Posn> emptyTilePosns = new HashSet<>();
+        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow ++) {
+            for (int idxColumn = 0; idxColumn < SQUARES_PER_AXIS; idxColumn++) {
+                if (grid[idxRow][idxColumn].isEmptyTile()) {
+                    emptyTilePosns.add(new Posn(idxRow, idxColumn));
+                }
+            }
+        }
+        return emptyTilePosns;
+    }
+
     public Square getSquareByCoordinates(int posnX, int posnY) {
         if (posnY >= SQUARES_PER_AXIS || posnX >= SQUARES_PER_AXIS || posnY < 0 || posnX < 0) {
             throw new IllegalStateException("Invalid coordinates");
@@ -302,17 +314,7 @@ public class Grid2048 {
                 s.getImage());
     }
 
-    public HashSet<Posn> getEmptyTilePosns() {
-        HashSet<Posn> emptyTilePosns = new HashSet<>();
-        for (int idxRow = 0; idxRow < SQUARES_PER_AXIS; idxRow ++) {
-            for (int idxColumn = 0; idxColumn < SQUARES_PER_AXIS; idxColumn++) {
-                if (grid[idxRow][idxColumn].isEmptyTile()) {
-                    emptyTilePosns.add(new Posn(idxRow, idxColumn));
-                }
-            }
-        }
-        return emptyTilePosns;
-    }
+
 
     @Override
     public boolean equals(Object obj) {
